@@ -34,7 +34,7 @@ exports.generateOtp = asyncHandler(async (req, res) => {
       .json({ status: false, message: "Mobile number is required" });
   }
 
-  const otp = crypto.randomInt(100000, 999999).toString();
+  const otp = crypto.randomInt(1000, 10000).toString();
   const otpCreated = new Date();
 
   // Check if mobile number exists
