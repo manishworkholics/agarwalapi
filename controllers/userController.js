@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const asyncHandler = require("express-async-handler");
-const AppUserReg = require("../models/user.model"); // Adjust path to your model
+const AppUserReg = require("../models/userModel"); 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
@@ -46,7 +46,7 @@ exports.generateOtp = asyncHandler(async (req, res) => {
     await user.save();
     return res
       .status(200)
-      .json({ status: true, message: "OTP sent successfully", otp });
+      .json({ status: true, message: "OTP sent successfullyyy", otp });
   } else {
     return res.status(200).json({ status: false, message: "User Not Exist" });
   }
