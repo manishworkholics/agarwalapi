@@ -39,7 +39,7 @@ exports.generateOtp = asyncHandler(async (req, res) => {
 
   // Check if mobile number exists
   const user = await AppUserReg.findOne({ where: { mobile_no } });
- if (user) {
+  if (user) {
     // Update existing user's OTP
     user.otp = otp;
     user.otp_datetime = otpCreated;
