@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config'); // adjust this according to your project structure
 
-const AppUserReg = sequelize.define('AppUserReg', {
-  app_user_id: {
+const Parents = sequelize.define('Parents', {
+  parents_id: {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
@@ -138,8 +138,8 @@ const AppUserReg = sequelize.define('AppUserReg', {
     allowNull: false,
   },
 }, {
-  tableName: 'app_user_reg',
+  tableName: 'parents',
   timestamps: false, // Since there are no created_at or updated_at fields
 });
 
-module.exports = AppUserReg;
+module.exports = Parents;

@@ -4,8 +4,8 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config'); // adjust this according to your project structure
 
 // Define the Student model
-const disclaimerModel = sequelize.define('disclaimer', {
-  disclaimerid: {
+const appTopWelcomeMsgModel = sequelize.define('app_top_welcome_msg', {
+  welcome_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -15,9 +15,9 @@ const disclaimerModel = sequelize.define('disclaimer', {
     allowNull: true,
   }, 
 }, {
-  tableName: 'disclaimer', 
+  tableName: 'app_top_welcome_msg', 
    timestamps: false,
 });
 
 
-module.exports = disclaimerModel;
+module.exports = appTopWelcomeMsgModel;

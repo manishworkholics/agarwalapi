@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const asyncHandler = require("express-async-handler");
-const AppUserReg = require("../models/userModel"); 
+const ParentReg = require("../models/parentModel"); 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
@@ -38,7 +38,7 @@ exports.generateOtp = asyncHandler(async (req, res) => {
   const otpCreated = new Date();
 
   // Check if mobile number exists
-  const user = await AppUserReg.findOne({ where: { mobile_no } });
+  const user = await ParentReg.findOne({ where: { mobile_no } });
   if (user) {
     // Update existing user's OTP
     user.otp = otp;
@@ -62,7 +62,7 @@ exports.otpverify = asyncHandler(async (req, res) => {
       .json({ status: false, message: "Mobile number and OTP are required" });
   }
 
-  const user = await AppUserReg.findOne({ where: { mobile_no } });
+  const user = await ParentReg.findOne({ where: { mobile_no } });
 
   if (!user) {
     return res
@@ -100,3 +100,4 @@ exports.otpverify = asyncHandler(async (req, res) => {
       .json({ status: false, message: "Invalid or expired OTP" });
   }
 });
+
