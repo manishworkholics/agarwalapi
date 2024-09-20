@@ -9,6 +9,7 @@ const appScrollerMsgRoutes = require('./routes/appScrollerMsgRoutes');
  const welcomeMsgRoutes = require('./routes/appTopWelcomeMsgRoutes');
  const combineRoutes = require('./routes/combinedRoutes');
  const msgRoutes = require('./routes/msgRoute');
+ const scholarRoutes = require('./routes/scholarRoute');
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/parents', parentRoutes);
 app.use('/api/school', schoolRoutes);
+app.use('/api/scholar', scholarRoutes);
 // app.use('/api/appuser', appuserRoutes);
 app.use('/api/notice', noticeBoardRoutes);
 app.use('/api/category', categoryRoutes);

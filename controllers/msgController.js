@@ -12,7 +12,28 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 
+exports.getGroupData = asyncHandler(async (req, res) => {
+  try {
+    const Groups = await groupModel.findAll({
+      // include: [{
+      //   model: groupModel,
+      //   attributes: ['msg_group_id', 'msg_group_name'], // Select relevant fields from group
+      // }],
+    });
 
+    res.status(200).json({
+      status: 'success',
+      data: Groups,
+    });
+  } catch (error) {
+    console.error('Error fetching groups with groups:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+});
 
   exports.getSubGroupData = asyncHandler(async (req, res) => {
     try {
