@@ -47,7 +47,7 @@ const subGroupModel = sequelize.define('msg_sgroup_mst', {
   },
   updatedAt: {
     type: DataTypes.DATE, // Use DATE type for timestamps
-    allowNull: false,     // Set updatedAt to be required
+    allowNull: true,     // Set updatedAt to be required
     defaultValue: DataTypes.NOW, // Automatically set to current time if not provided
   },
 }, {

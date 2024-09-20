@@ -2,8 +2,9 @@ const asyncHandler = require("express-async-handler");
 const appScrollerModel = require("../models/appScrollerMsgModel"); 
 const welcomeModel = require("../models/welcomeMsgModel"); 
 const CategoryModel = require("../models/categoryModel"); 
-const GroupModel = require("../models/msgGroupModel"); 
-const SubGroupModel = require("../models/msgSubGroupModel"); 
+// const GroupModel = require("../models/msgGroupModel"); 
+// const SubGroupModel = require("../models/msgSubGroupModel"); 
+const { groupModel, subGroupModel } = require('../models/associations');
 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
@@ -15,28 +16,23 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
   exports.getSubGroupData = asyncHandler(async (req, res) => {
     try {
-      const subgroups = await subGroupModel.findAll({
-        include: [
-          {
-            model: GroupModel,
-           },
-        ],
+      const subGroups = await subGroupModel.findAll({
+        include: [{
+          model: groupModel,
+          attributes: ['msg_group_id', 'msg_group_name'], // Select relevant fields from group
+        }],
       });
-      res.status(200).json({
-        status: true,
-        message: "Data_Found",
-        data: subgroups,
-      });
-
-    } catch (error) {
-      // Log the error to the console for debugging
-      console.error("Error fetching   details:", error.message);
   
-      // Send an error response to the client
+      res.status(200).json({
+        status: 'success',
+        data: subGroups,
+      });
+    } catch (error) {
+      console.error('Error fetching subgroups with groups:', error);
       res.status(500).json({
-        status: false,
-        message: "An error occurred",
-        error: error.message, // Return the error message for debugging (optional)
+        status: 'error',
+        message: 'Internal server error',
+        error: error.message,
       });
     }
   });

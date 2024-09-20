@@ -41,5 +41,7 @@ const groupModel = sequelize.define('msg_group_mst', {
 });
 
 // Define the association (Group has many SubGroups)
-groupModel.hasMany(subGroupModel, { foreignKey: 'msg_group_id' });
+// groupModel has many subgroups
+
+//groupModel.hasMany(subGroupModel, { foreignKey: 'msg_group_id' });
 module.exports = groupModel;
