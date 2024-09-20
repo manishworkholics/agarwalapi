@@ -4,7 +4,7 @@ const welcomeModel = require("../models/welcomeMsgModel");
 const CategoryModel = require("../models/categoryModel"); 
 // const GroupModel = require("../models/msgGroupModel"); 
 // const SubGroupModel = require("../models/msgSubGroupModel"); 
-const { groupModel, subGroupModel } = require('../models/associations');
+const { groupModel, subGroupModel,msgMasterModel } = require('../models/associations');
 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
@@ -57,3 +57,26 @@ exports.getGroupData = asyncHandler(async (req, res) => {
       });
     }
   });
+
+  // exports.getmsgMaster = asyncHandler(async (req, res) => {
+  //   try {
+  //     // const msgMaster = await msgMasterModel.findAll({
+  //     //   // include: [{
+  //     //   //   model: groupModel,
+  //     //   //   attributes: ['msg_group_id', 'msg_group_name'], // Select relevant fields from group
+  //     //   // }],
+  //     // });
+  
+  //     res.status(200).json({
+  //       status: 'success',
+  //       data: "msgMaster",
+  //     });
+  //   } catch (error) {
+  //     console.error('Error fetching msgMaster with msgMaster:', error);
+  //     res.status(500).json({
+  //       status: 'error',
+  //       message: 'Internal server error',
+  //       error: error.message,
+  //     });
+  //   }
+  // });
