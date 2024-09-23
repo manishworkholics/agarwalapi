@@ -47,7 +47,7 @@ const msgMasterModel = sequelize.define('msg_mst', {
     allowNull: true,
   }, 
   edit_date : {
-    type: DataTypes.Date,
+    type: DataTypes.DATE,
     allowNull: true,
   }, 
   edit_by : {
@@ -55,7 +55,7 @@ const msgMasterModel = sequelize.define('msg_mst', {
     allowNull: true,
   }, 
   createdAt : {
-    type: DataTypes.Date,
+    type: DataTypes.DATE,
     allowNull: true,
   }, 
 }, {
