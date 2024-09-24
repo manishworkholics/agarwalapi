@@ -13,6 +13,49 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 
+exports.insertMsgData = asyncHandler(async (req, res) => {
+  try {
+    // Extract data from the request body
+    const { subject_text,show_upto ,msg_priority,msg_sgroup_id,is_reply_type,is_reply_required_any,is_active,entry_by,message_body } = req.body;
+const message_body2 = message_body;
+// msg_id ,msg_type,data_text,ordersno  // this message body also insert in difrent table
+   
+const newMasterMessage = await msgMasterModel.create({
+  subject_text,show_upto,msg_priority,msg_sgroup_id,is_reply_type,is_reply_required_any,is_active,entry_by
+});
+const newm_msg_id=newMasterMessage?.msg_id;
+// Parse message_body if it's in JSON format or already structured
+const messageBodyArray = Array.isArray(message_body) ? message_body : [message_body];
+
+// Loop through message body and insert each entry into MsgBodyModel
+for (let i = 0; i < messageBodyArray.length; i++) {
+  const { msg_type, data_text,is_reply_required,order_number } = messageBodyArray[i];
+
+  // Insert the message body data into the MsgBodyModel
+  await msgBodyModel.create({
+    msg_id: newm_msg_id,
+    msg_type,
+    data_text,
+    is_reply_required,
+    ordersno: order_number // Assuming 'ordersno' is sequential based on the array order
+  });
+}
+
+  res.status(200).json({
+      status: 'success',
+      data: newMasterMessage,
+    });
+  } catch (error) {
+    console.error('Error fetching msgBody with msgBody:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+});
+
+
 exports.getGroupData = asyncHandler(async (req, res) => {
   try {
     const Groups = await groupModel.findAll({
