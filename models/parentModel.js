@@ -6,12 +6,26 @@ const Parents = sequelize.define('Parents', {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
     primaryKey: true,
-  },
+  },   
   mobile_no: {
     type: DataTypes.STRING(15),
     allowNull: true,
     defaultValue: null,
   },
+  // ==================
+  scholar_no: {
+    type: DataTypes.STRING(15),
+    allowNull: true,
+  },
+  // msg_seen_no: {
+  //   type: DataTypes.ARRAY(DataTypes.STRING),
+  //   allowNull: true,
+  // },
+  // msg_starred_no: {
+  //   type: DataTypes.ARRAY(DataTypes.STRING),
+  //   allowNull: true,
+  // },
+  // ===================
   otp: {
     type: DataTypes.STRING(10),
     allowNull: true,
@@ -135,7 +149,8 @@ const Parents = sequelize.define('Parents', {
   },
   sch_ids: {
     type: DataTypes.STRING(500),
-    allowNull: false,
+    allowNull: true,
+   
   },
 }, {
   tableName: 'parents',
