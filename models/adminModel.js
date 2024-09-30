@@ -2,46 +2,66 @@
 // models/Student.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config'); // adjust this according to your project structure
-const subGroupModel = require('./msgSubGroupModel'); // Adjust the path accordingly
 
 // Define the Student model
-const groupModel = sequelize.define('msg_group_mst', {
-  msg_group_id : {
+const adminModel = sequelize.define('admin_mst', {
+  admin_id : {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  msg_group_name: {
+  full_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  adminuser_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  admin_password: {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
   is_active: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  }, 
+  admin_type: {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
-  added_date: {
+  lastlogindt: {
     type: DataTypes.DATE,
     allowNull: true,
   }, 
-  added_user_id: {
+  added_date: {
+   type: DataTypes.DATE,
+    allowNull: true,
+  }, 
+  added_admin_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
   }, 
   edited_date: {
     type: DataTypes.DATE,
     allowNull: true,
-  }, 
-  edited_user_id: {
+  },
+  edited_admin_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
   }, 
+  mobile_no: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  }, 
+  parent_admin_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },   
 }, {
-  tableName: 'msg_group_mst', 
+  tableName: 'admin_mst', 
    timestamps: false,
 });
 
-// Define the association (Group has many SubGroups)
-// groupModel has many subgroups
 
-//groupModel.hasMany(subGroupModel, { foreignKey: 'msg_group_id' });
-module.exports = groupModel;
+module.exports = adminModel;

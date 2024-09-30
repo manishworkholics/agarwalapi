@@ -14,6 +14,7 @@ const appScrollerMsgRoutes = require('./routes/appScrollerMsgRoutes');
  const combineRoutes = require('./routes/combinedRoutes');
  const msgRoutes = require('./routes/msgRoute');
  const scholarRoutes = require('./routes/scholarRoute');
+ const adminRoutes = require('./routes/adminRoute');
 
 dotenv.config();
 const app = express();
@@ -39,6 +40,7 @@ app.use(function (req, res, next) {
 });
 
 
+app.use('/api/admin', adminRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/school', schoolRoutes);
 app.use('/api/scholar', scholarRoutes);

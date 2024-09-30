@@ -21,7 +21,7 @@ const subGroupModel = sequelize.define('msg_sgroup_mst', {
     allowNull: true,
   }, 
   added_date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: true,
   }, 
   added_user_id: {
@@ -29,7 +29,7 @@ const subGroupModel = sequelize.define('msg_sgroup_mst', {
     allowNull: true,
   }, 
   edited_date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: true,
   }, 
   edited_user_id: {
