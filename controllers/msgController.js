@@ -1,7 +1,10 @@
+const { Op } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const asyncHandler = require("express-async-handler");
 const appScrollerModel = require("../models/appScrollerMsgModel");
 const welcomeModel = require("../models/welcomeMsgModel");
 const CategoryModel = require("../models/categoryModel");
+const ParentModel = require("../models/parentModel");
 // const MsgBodyModel = require("../models/msgBodyModel");
 // const GroupModel = require("../models/msgGroupModel");
 // const SubGroupModel = require("../models/msgSubGroupModel");
@@ -9,7 +12,7 @@ const {
   groupModel,
   subGroupModel,
   msgMasterModel,
-  msgBodyModel,
+  msgBodyModel,sendedMsgModel,studentMainDetailModel
 } = require("../models/associations");
 
 const db = require("../config/db.config");
@@ -64,9 +67,32 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
         ordersno: order_number, // Assuming 'ordersno' is sequential based on the array order
       });
     }
+// =========== this is where  now get all mobile no and send  onsended model =======
+
+ // Step 1: Fetch all mobile numbers from parents table
+ const parentsData = await ParentModel.findAll({
+ 
+});
+ 
+for (let i = 0; i < parentsData.length; i++) {
+  const parent = parentsData[i]; // Access each parent using index i
+  
+  await sendedMsgModel.create({
+    mobile_no: parent.mobile_no,
+    scholar_no: parent.scholar_no,
+    sch_short_nm: parent.sch_short_nm ? parent?.sch_short_nm : null,
+    msg_id: newm_msg_id, // Ensure newm_msg_id is defined in your scope
+    sended_date: new Date(), // Current date as the sended_date
+    sended_by: entry_by, // Ensure entry_by is defined in your scope
+    is_fcm_sended: 0, // Default value
+  });
+}
+
+//==================================================================================
+
 
     res.status(200).json({
-      status: "success",
+      status: "success",parentsData:parentsData.length,
       data: newMasterMessage,
     });
   } catch (error) {
@@ -136,6 +162,359 @@ exports.getmsgbody = asyncHandler(async (req, res) => {
     });
   }
 });
+// ============================ App Related app ki api start ===================================
+// ============================ App Related app ki api start ===================================
+exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {sended_msg_id} = req.params;
+  
+    const msgSendedMaster = await sendedMsgModel.findOne({
+      limit: 100,
+  order: [['sended_msg_id', 'DESC']] ,
+  where: {
+    sended_msg_id: sended_msg_id // Replace with the mobile number you want to filter by
+  },
+      include: [
+        {
+          model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+         },
+         {
+          model: studentMainDetailModel, // Join with studentMainDetailModel
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Fetch only the student_name
+        },
+        {
+          model: msgBodyModel, // Include msg_body details
+          as: 'msgBody', // Use the alias defined in the association
+          required: true, // Ensures that it only returns records with matching msg_id
+          where: {
+            msg_id: Sequelize.col('sended_msg.msg_id'), // Adjust this to use the correct column reference
+          },
+        },
+        // {
+        //   model: msgBodyModel, // Join with msgBodyModel to get the message body
+        //   as: 'messageBody', // Alias for the join
+        // //  attributes: ['msg_body'], // Fetch only the msg_body field
+        // }
+      ],
+    });
+    if(msgSendedMaster)
+      {
+          res.status(200).json({
+            status: true,
+            length:msgSendedMaster.length,
+            data: msgSendedMaster,
+          });
+        }
+        else
+        {
+          res.status(200).json({
+            status: false,
+            length:msgSendedMaster.length,
+            data: msgSendedMaster,
+          });
+        }
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {mobile} = req.params;
+  
+    const msgSendedMaster = await sendedMsgModel.findAll({
+      limit: 100,
+  order: [['sended_msg_id', 'DESC']] ,
+  where: {
+    mobile_no: mobile // Replace with the mobile number you want to filter by
+  },
+      include: [
+        {
+          model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+         },
+         {
+          model: studentMainDetailModel, // Join with studentMainDetailModel
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Fetch only the student_name
+        }
+      ],
+    });
+    if(msgSendedMaster.length > 0)
+      {
+          res.status(200).json({
+            status: true,
+            length:msgSendedMaster.length,
+            data: msgSendedMaster,
+          });
+        }
+        else
+        {
+          res.status(200).json({
+            status: false,
+            length:msgSendedMaster.length,
+            data: msgSendedMaster,
+          });
+        }
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {mobile} = req.params;
+  
+    const msgSendedMaster = await sendedMsgModel.findAll({
+      limit: 100,
+  order: [['sended_msg_id', 'DESC']] ,
+  where: {
+    mobile_no: mobile,
+    is_seen:1
+  },
+      include: [
+        {
+          model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+         },
+         {
+          model: studentMainDetailModel, // Join with studentMainDetailModel
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Fetch only the student_name
+        }
+      ],
+    });
+if(msgSendedMaster.length > 0)
+{
+    res.status(200).json({
+      status: true,
+      length:msgSendedMaster.length,
+      data: msgSendedMaster,
+    });
+  }
+  else
+  {
+    res.status(200).json({
+      status: false,
+      length:msgSendedMaster.length,
+      data: msgSendedMaster,
+    });
+  }
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.getStaredMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {mobile} = req.params;
+  
+    const msgSendedMaster = await sendedMsgModel.findAll({
+      limit: 100,
+  order: [['sended_msg_id', 'DESC']] ,
+  where: {
+    mobile_no: mobile,
+    is_starred:1
+  },
+      include: [
+        {
+          model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+         },
+         {
+          model: studentMainDetailModel, // Join with studentMainDetailModel
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Fetch only the student_name
+        }
+      ],
+    });
+if(msgSendedMaster.length > 0)
+{
+    res.status(200).json({
+      status: true,
+      length:msgSendedMaster.length,
+      data: msgSendedMaster,
+    });
+  }
+  else
+  {
+    res.status(200).json({
+      status: false,
+      length:msgSendedMaster.length,
+      data: msgSendedMaster,
+    });
+  }
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const { mobile } = req.params;
+
+    // Get the current date and time
+    const now = new Date();
+    
+    // Calculate the start of today (midnight)
+    const startOfToday = new Date(now);
+    startOfToday.setHours(0, 0, 0, 0);
+
+    // Calculate the start of yesterday (midnight)
+    const startOfYesterday = new Date(now);
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+    startOfYesterday.setHours(0, 0, 0, 0);
+
+    // Calculate the end of yesterday (just before midnight)
+    const endOfYesterday = new Date(startOfYesterday);
+    endOfYesterday.setHours(23, 59, 59, 999); // Last millisecond of the day
+
+    const msgSendedMaster = await sendedMsgModel.findAll({
+      order: [['sended_msg_id', 'DESC']],
+      where: {
+        mobile_no: mobile,
+        sended_date: {
+          [Op.gte]: startOfYesterday, // Greater than or equal to the start of yesterday
+          [Op.lte]: endOfYesterday // Less than or equal to the end of yesterday
+        }
+      },
+      include: [
+        {
+          model: msgMasterModel, // Include the msgMasterModel to get additional details
+        },
+        {
+          model: studentMainDetailModel, // Join with studentMainDetailModel
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Fetch only the student_name
+        }
+      ],
+    });
+
+    // Check if any messages were found
+    if (msgSendedMaster.length > 0) {
+      res.status(200).json({
+        status: true,
+        length: msgSendedMaster.length,
+        data: msgSendedMaster,
+      });
+    } else {
+      // Return an empty response if no messages found
+      res.status(200).json({
+        status: false,
+        length: 0,
+        data: [] // Return an empty array
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching last day messages:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.seenStatusUpdateMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {sended_msg_id} = req.params;
+  
+
+     // Step 1: Update the is_seen status for the specified message
+     const change = await sendedMsgModel.update(
+      { is_seen: 1,seen_on:new Date() }, // Set is_seen to 1
+      {
+        where: {
+          sended_msg_id: sended_msg_id,  
+        },
+      }
+    );
+
+    // Step 2: Check if the update was successful
+    if (change[0] === 0) {
+      // No rows were updated, meaning the sended_msg_id might not exist
+      return res.status(200).json({
+        status: false,
+        message: "Message not found or already seen",
+      });
+    }
+
+    // Step 3: Return a success response
+    res.status(200).json({
+      status: true,
+      message: "Seen status updated successfully",
+    });
+
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.staredStatusUpdateMsgDetail = asyncHandler(async (req, res) => {
+  try {
+    const {sended_msg_id} = req.params;
+  
+
+     // Step 1: Update the is_seen status for the specified message
+     const change = await sendedMsgModel.update(
+      { is_starred: 1 ,starred_on:new Date() }, // Set is_seen to 1
+      {
+        where: {
+          sended_msg_id: sended_msg_id,  
+        },
+      }
+    );
+
+    // Step 2: Check if the update was successful
+    if (change[0] === 0) {
+      // No rows were updated, meaning the sended_msg_id might not exist
+      return res.status(200).json({
+        status: false,
+        message: "Message not found or already Starred",
+      });
+    }
+
+    // Step 3: Return a success response
+    res.status(200).json({
+      status: true,
+      message: "Starred status updated successfully",
+    });
+
+  } catch (error) {
+    console.error("Error fetching :", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+// ============================ App Related app ki api End ===================================
+// ============================ App Related app ki api End ===================================
 
 //====================== Group =================================
 exports.addSingleGroupData = asyncHandler(async (req, res) => {

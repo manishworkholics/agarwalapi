@@ -38,6 +38,7 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
           where: {
             mobile_no: item.mobile_no,
             scholar_no: item.scholar_no,
+            
           },
           attributes: ["mobile_no", "scholar_no"], // Fetch the existing records
         });
@@ -50,6 +51,7 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
               mobile_no: item.mobile_no,
               scholar_no: item.scholar_no,
               is_verified: 1,
+              sch_short_nm:item.sch_short_nm
             },
             {
               ignoreDuplicates: true, // Optional: to avoid inserting duplicates

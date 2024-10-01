@@ -31,6 +31,11 @@ const Parents = sequelize.define('Parents', {
     allowNull: true,
     defaultValue: null,
   },
+  sch_short_nm: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+    defaultValue: null,
+  },
   otp_datetime: {
     type: DataTypes.DATE,
     allowNull: true,

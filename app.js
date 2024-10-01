@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
+const validateApiKey = require('./middlewares/api-key-middleware'); // Adjust the path accordingly
 
 const parentRoutes = require('./routes/parentRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');

@@ -16,7 +16,7 @@ const studentModel = sequelize.define('student_main_detail', {
     allowNull: true,
   },
   student_number: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
   student_family_mobile_number: {
