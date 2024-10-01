@@ -198,6 +198,7 @@ exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
         // }
       ],
     });
+    
     if(msgSendedMaster)
       {
           res.status(200).json({
