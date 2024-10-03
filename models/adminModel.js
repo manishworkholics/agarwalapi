@@ -22,6 +22,10 @@ const adminModel = sequelize.define('admin_mst', {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
+  admin_password_encrypted: {
+    type: DataTypes.STRING(100), // Ensure sufficient length for hashed password
+    allowNull: true,
+  },
   is_active: {
     type: DataTypes.INTEGER,
     allowNull: true,

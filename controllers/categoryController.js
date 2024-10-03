@@ -39,3 +39,84 @@ exports.getCategoryDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// Add a new category
+exports.addCategory = asyncHandler(async (req, res) => {
+  const { title } = req.body;
+
+  try {
+    const newCategory = await CategoryModel.create({ title });
+
+    res.status(201).json({
+      status: true,
+      message: "Category added successfully",
+      data: newCategory,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Error adding category",
+      error: error.message,
+    });
+  }
+});
+
+// Get a single category by ID
+exports.getCategoryDetail = asyncHandler(async (req, res) => {
+  const { categoryid } = req.params;
+
+  try {
+    const category = await CategoryModel.findByPk(categoryid);
+
+    if (category) {
+      res.status(200).json({
+        status: true,
+        message: "Category found",
+        data: category,
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        message: "Category not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Error fetching category",
+      error: error.message,
+    });
+  }
+});
+
+// Update an existing category
+exports.updateCategory = asyncHandler(async (req, res) => {
+  const { categoryid } = req.params;
+  const { title } = req.body;
+
+  try {
+    const category = await CategoryModel.findByPk(categoryid);
+
+    if (category) {
+      category.title = title;
+      await category.save();
+
+      res.status(200).json({
+        status: true,
+        message: "Category updated successfully",
+        data: category,
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        message: "Category not found",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Error updating category",
+      error: error.message,
+    });
+  }
+});

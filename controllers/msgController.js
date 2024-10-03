@@ -164,10 +164,21 @@ exports.getmsgbody = asyncHandler(async (req, res) => {
 });
 // ============================ App Related app ki api start ===================================
 // ============================ App Related app ki api start ===================================
+
 exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {sended_msg_id} = req.params;
   
+  // Step 1: Update the is_seen status for the specified message
+  const change = await sendedMsgModel.update(
+    { is_seen: 1,seen_on:new Date() }, // Set is_seen to 1
+    {
+      where: {
+        sended_msg_id: sended_msg_id,  
+      },
+    }
+  );
+
     const msgSendedMaster = await sendedMsgModel.findOne({
       limit: 100,
   order: [['sended_msg_id', 'DESC']] ,
@@ -477,11 +488,12 @@ exports.seenStatusUpdateMsgDetail = asyncHandler(async (req, res) => {
 exports.staredStatusUpdateMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {sended_msg_id} = req.params;
-  
+    const { star_status } = req.body;
 
+    
      // Step 1: Update the is_seen status for the specified message
      const change = await sendedMsgModel.update(
-      { is_starred: 1 ,starred_on:new Date() }, // Set is_seen to 1
+      { is_starred: star_status ,starred_on:new Date() }, // Set is_seen to 1
       {
         where: {
           sended_msg_id: sended_msg_id,  

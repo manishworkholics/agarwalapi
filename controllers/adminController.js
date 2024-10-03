@@ -1,5 +1,6 @@
 const db = require("../config/db.config");
 const adminModel = require("../models/adminModel.js");
+const bcrypt = require('bcrypt');
 
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
@@ -19,10 +20,40 @@ exports.createAdmin = asyncHandler(async (req, res) => {
       parent_admin_id,
     } = req.body;
 
+    // Check if the username already exists
+    const existingUser = await adminModel.findOne({
+      where: { adminuser_name }
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        status: false,
+        message: "Username already exists. Please choose another username.",
+      });
+    }
+
+    // Check if the mobile number already exists
+    const existingMobile = await adminModel.findOne({
+      where: { mobile_no }
+    });
+
+    if (existingMobile) {
+      return res.status(400).json({
+        status: false,
+        message: "Mobile number already exists. Please use another mobile number.",
+      });
+    }
+
+    // Hash the password before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(admin_password, salt);
+
+    // Create the new admin record
     const newAdmin = await adminModel.create({
       full_name,
-      adminuser_name,
-      admin_password,
+      adminuser_name,admin_password,
+      admin_password_encrypted: hashedPassword, // Save the hashed password
+     
       is_active,
       admin_type,
       mobile_no,
@@ -36,9 +67,9 @@ exports.createAdmin = asyncHandler(async (req, res) => {
       message: "New admin created successfully",
       data: newAdmin,
     });
+
   } catch (error) {
-    // Log the error to the console for debugging
-    console.error("Error fetching appScrollerMsg  details:", error.message);
+    console.error("Error creating new admin:", error.message);
 
     // Send an error response to the client
     res.status(500).json({
@@ -49,9 +80,40 @@ exports.createAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+exports.loginAdmin = asyncHandler(async (req, res) => {
+  const { adminuser_name, admin_password } = req.body;
+
+  try {
+    // Find user by username
+    const user = await adminModel.findOne({ where: { adminuser_name: adminuser_name } });
+    
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+
+    // Compare the password with the hashed password in the database
+    const isMatch = await bcrypt.compare(admin_password, user.admin_password_encrypted);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Successful login, proceed further (e.g., generate token, send response)
+    res.status(200).json({ message: 'Login successful', admin_id: user.admin_id });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+
+
 exports.updatePassword = asyncHandler(async (req, res) => {
   try {
     const { admin_id, old_password, new_password } = req.body;
+// Hash the password before saving
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(admin_password, salt);
 
     // Step 1: Find the admin by admin_id
     const admin = await adminModel.findOne({
@@ -75,7 +137,7 @@ exports.updatePassword = asyncHandler(async (req, res) => {
 
     // Step 3: Update the password with the new one
     await adminModel.update(
-      { admin_password: new_password }, // Update password
+      { admin_password: new_password,admin_password_encrypted:hashedPassword }, // Update password
       { where: { admin_id: admin_id } } // Match by admin_id
     );
 
@@ -109,6 +171,9 @@ exports.updateProfileDetail = asyncHandler(async (req, res) => {
       added_admin_id,
       parent_admin_id,
     } = req.body; // Get the admin details from the request body
+// Hash the password before saving
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(admin_password, salt);
 
     // Step 1: Find the admin by admin_id
     const admin = await adminModel.findOne({
@@ -129,6 +194,7 @@ exports.updateProfileDetail = asyncHandler(async (req, res) => {
         full_name: full_name,
         adminuser_name: adminuser_name,
         admin_password: admin_password,
+        admin_password_encrypted:hashedPassword,
         is_active: is_active,
         admin_type: admin_type,
         mobile_no: mobile_no,
@@ -254,3 +320,4 @@ exports.updatePasswordAdmin = asyncHandler(async (req, res) => {
     });
   }
 });
+
