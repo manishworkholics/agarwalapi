@@ -1,12 +1,9 @@
-
 const asyncHandler = require("express-async-handler");
-const appTopWelcomeMsgModel = require("../models/welcomeMsgModel"); 
+const appTopWelcomeMsgModel = require("../models/welcomeMsgModel");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
-
-
 
 exports.getappTopWelcomeMsgDetail = asyncHandler(async (req, res) => {
   try {
@@ -45,7 +42,7 @@ exports.createAppTopWelcomeMsg = asyncHandler(async (req, res) => {
     const { detail } = req.body;
 
     const newWelcomeMsg = await appTopWelcomeMsgModel.create({
-      detail
+      detail,
     });
 
     res.status(201).json({
@@ -91,7 +88,6 @@ exports.getSingleAppTopWelcomeMsg = asyncHandler(async (req, res) => {
   }
 });
 
-
 exports.updateAppTopWelcomeMsg = asyncHandler(async (req, res) => {
   try {
     const { welcome_id } = req.params;
@@ -128,7 +124,9 @@ exports.deleteAppTopWelcomeMsg = asyncHandler(async (req, res) => {
     const { welcome_id } = req.params;
 
     // Find the record by welcome_id
-    const appTopWelcomeMsg = await appTopWelcomeMsgModel.findOne({ where: { welcome_id } });
+    const appTopWelcomeMsg = await appTopWelcomeMsgModel.findOne({
+      where: { welcome_id },
+    });
 
     if (!appTopWelcomeMsg) {
       return res.status(404).json({
