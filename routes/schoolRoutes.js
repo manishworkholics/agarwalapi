@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const schoolController = require('../controllers/schoolController');
+const schoolController = require("../controllers/schoolController");
 
-router.get('/getSchool', schoolController.getSchool);
-router.get('/getSingleSchool/:id', schoolController.getSingleSchool);
-router.post('/createSchool', schoolController.createSchool);
-router.put('/updateSchool/:id', schoolController.updateSchool);
+const { authMiddleware } = require('../middlewares/authMiddleware.js');
+
+router.get('/getSchool',authMiddleware, schoolController.getSchool);
+router.get('/getSingleSchool/:id',authMiddleware, schoolController.getSingleSchool);
+router.post('/createSchool',authMiddleware, schoolController.createSchool);
+router.put('/updateSchool/:id',authMiddleware, schoolController.updateSchool);
 
 module.exports = router;

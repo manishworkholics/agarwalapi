@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const NoticeBoardController = require('../controllers/noticeboardController');
+const { authMiddleware } = require('../middlewares/authMiddleware.js');
 
-router.get('/getNoticeBoardDetail', NoticeBoardController.getNoticeBoardDetail);
-router.post('/addDocument', NoticeBoardController.addDocument);
-router.get('/getSingleDocumentDetail/:id', NoticeBoardController.getSingleDocumentDetail);
-router.put('/updateDocument/:id', NoticeBoardController.updateDocument);
+router.get('/getNoticeBoardDetail',authMiddleware, NoticeBoardController.getNoticeBoardDetail);
+router.post('/addDocument',authMiddleware, NoticeBoardController.addDocument);
+router.get('/getSingleDocumentDetail/:id',authMiddleware, NoticeBoardController.getSingleDocumentDetail);
+router.put('/updateDocument/:id',authMiddleware, NoticeBoardController.updateDocument);
 
 module.exports = router;

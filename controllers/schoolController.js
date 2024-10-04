@@ -4,8 +4,8 @@ const schoolModel = require("../models/schoolMasterModel");
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
-
+const JWT_SECRET = process.env.JWT_SECRET ;
+const { generateToken } = require('../middlewares/jwtUtils');
 
 // Function to create a new school
 exports.createSchool = asyncHandler(async (req, res) => {

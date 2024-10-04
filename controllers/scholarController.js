@@ -4,8 +4,8 @@ const parentModel = require("../models/parentModel");
 const student_main_detailModel = require("../models/studentModel");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-// Secret key for signing JWT (use a secure key and store it in env variables)
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET = process.env.JWT_SECRET ;
+const { generateToken } = require('../middlewares/jwtUtils');
 
 exports.insertScholarRecord = asyncHandler(async (req, res) => {
   try {
@@ -124,8 +124,15 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
       }
       }
     else {
+      const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+      
       // If student_number does not exist, insert the student details
       await student_main_detailModel.create({
+        color:color,
         student_number: item.scholar_no,
         student_name: item.name,
         student_family_mobile_number: item.mobile_no, // Insert new mobile number
@@ -161,12 +168,22 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
 
 exports.getscholarDetail = asyncHandler(async (req, res) => {
   try {
-    // Fetch all records from the NoticeBoard table
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+    // Fetch records with pagination
     const scholar_detail = await scholarModel.findAll({
       order: [
-        ["scholar_data_id", "DESC"], // Replace 'createdAt' with the column you want to sort by
+        ["scholar_data_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
       ],
+      limit: limit,
+      offset: offset,
     });
+
+    // Fetch the total count of records
+    const totalCount = await scholarModel.count(); // Get total count of records for pagination
 
     // Check if any data exists
     if (scholar_detail.length > 0) {
@@ -174,17 +191,19 @@ exports.getscholarDetail = asyncHandler(async (req, res) => {
         status: true,
         message: "Data_Found",
         data: scholar_detail,
+        totalCount: totalCount, // Include total count in the response
       });
     } else {
       res.status(200).json({
         status: false,
         message: "No_Data_Found",
         data: null,
+        totalCount: 0, // Return total count as 0 if no data found
       });
     }
   } catch (error) {
     // Log the error to the console for debugging
-    console.error("Error fetching scholar  details:", error.message);
+    console.error("Error fetching scholar details:", error.message);
 
     // Send an error response to the client
     res.status(500).json({
@@ -194,3 +213,39 @@ exports.getscholarDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// exports.getscholarDetail = asyncHandler(async (req, res) => {
+//   try {
+//     // Fetch all records from the NoticeBoard table
+//     const scholar_detail = await scholarModel.findAll({
+//       order: [
+//         ["scholar_data_id", "DESC"], // Replace 'createdAt' with the column you want to sort by
+//       ],
+//     });
+
+//     // Check if any data exists
+//     if (scholar_detail.length > 0) {
+//       res.status(200).json({
+//         status: true,
+//         message: "Data_Found",
+//         data: scholar_detail,
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         message: "No_Data_Found",
+//         data: null,
+//       });
+//     }
+//   } catch (error) {
+//     // Log the error to the console for debugging
+//     console.error("Error fetching scholar  details:", error.message);
+
+//     // Send an error response to the client
+//     res.status(500).json({
+//       status: false,
+//       message: "An error occurred",
+//       error: error.message, // Return the error message for debugging (optional)
+//     });
+//   }
+// });

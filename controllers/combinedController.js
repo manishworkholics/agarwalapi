@@ -7,8 +7,8 @@ const { Op } = require('sequelize');
 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
-// Secret key for signing JWT (use a secure key and store it in env variables)
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET = process.env.JWT_SECRET ;
+const { generateToken } = require('../middlewares/jwtUtils');
 
 exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
     try {

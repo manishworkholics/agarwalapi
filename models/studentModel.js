@@ -15,6 +15,10 @@ const studentModel = sequelize.define('student_main_detail', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   student_number: {
     type: DataTypes.INTEGER,
     allowNull: true,

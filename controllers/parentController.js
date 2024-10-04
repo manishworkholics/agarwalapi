@@ -4,7 +4,8 @@ const ParentReg = require("../models/parentModel");
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET = process.env.JWT_SECRET ;
+const { generateToken } = require('../middlewares/jwtUtils');
 
 // SignUp function
 exports.signUp = async (req, res) => {
@@ -69,7 +70,16 @@ exports.otpverify = asyncHandler(async (req, res) => {
       .status(200)
       .json({ status: false, message: "Mobile number not found" });
   }
+  // ================  Token end   ==============================
+  const tokenuser = {
+    id: user?.parents_id,  // Replace with actual user ID
+    role: 'AppUser', // Replace with actual role
+};
 
+// Generate token using the utility function
+const token = generateToken(tokenuser);
+// ===================   Token end   ==============================
+  
   const storedOtp = user.otp;
   const otpCreated = new Date(user.otp_datetime);
 
@@ -83,17 +93,18 @@ exports.otpverify = asyncHandler(async (req, res) => {
     await user.save();
 
     // Generate JWT token after OTP is verified
-    const token = jwt.sign(
-      { mobile_no: user.mobile_no, userId: user.app_user_id }, // Payload: mobile_no and app_user_id
-      JWT_SECRET, // Secret key
-      { expiresIn: "1h" } // Token expiry time (1 hour)
-    );
+    // const token = jwt.sign(
+    //   { mobile_no: user.mobile_no, userId: user.app_user_id }, // Payload: mobile_no and app_user_id
+    //   JWT_SECRET, // Secret key
+    //   { expiresIn: "1h" } // Token expiry time (1 hour)
+    // );
 
     return res.status(200).json({
       status: true,
       message: "OTP verified successfully",
       token: token, // Return the JWT token
     });
+    
   } else {
     return res
       .status(200)

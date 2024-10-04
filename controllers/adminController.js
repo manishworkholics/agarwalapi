@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt');
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+const JWT_SECRET = process.env.JWT_SECRET ;
+const { generateToken } = require('../middlewares/jwtUtils');
 
 exports.createAdmin = asyncHandler(async (req, res) => {
   try {
@@ -97,15 +98,22 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid password' });
     }
+  // ================  Token end   ==============================
+    const tokenuser = {
+      id: user?.admin_id,  // Replace with actual user ID
+      role: 'Admin', // Replace with actual role
+  };
 
+  // Generate token using the utility function
+  const token = generateToken(tokenuser);
+  // ===================   Token end   ==============================
     // Successful login, proceed further (e.g., generate token, send response)
-    res.status(200).json({ message: 'Login successful', admin_id: user.admin_id });
+    res.status(200).json({ message: 'Login successful', admin_id: user.admin_id,token });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
-
 
 
 exports.updatePassword = asyncHandler(async (req, res) => {

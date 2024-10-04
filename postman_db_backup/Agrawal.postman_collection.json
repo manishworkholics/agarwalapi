@@ -1,0 +1,1395 @@
+{
+	"info": {
+		"_postman_id": "723c5bf5-fbee-49b8-8c85-f66171bf047e",
+		"name": "Agrawal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26268927",
+		"_collection_link": "https://galactic-trinity-271068.postman.co/workspace/My-Workspace~34f284ed-428e-4701-8a15-e5db28e3eb5a/collection/26268927-723c5bf5-fbee-49b8-8c85-f66171bf047e?action=share&source=collection_link&creator=26268927"
+	},
+	"item": [
+		{
+			"name": "Otp",
+			"item": [
+				{
+					"name": "otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_no\":\"7692898921\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/parents/otp",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"parents",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "otp-verify",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_no\":\"84353601415\",\r\n    \"otp\": \"1929\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/parents/otp-verify",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"parents",
+								"otp-verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "appScrollerMsg",
+			"item": [
+				{
+					"name": "appScrollerMsg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/appScrollerMsg/getAppScrollerMsgDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"appScrollerMsg",
+								"getAppScrollerMsgDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"detail\":\"test detailgggggggggggg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/appScrollerMsg/createScrollerData",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"appScrollerMsg",
+								"createScrollerData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"detail\":\"test detail22222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/appScrollerMsg/updateScrollerData/6",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"appScrollerMsg",
+								"updateScrollerData",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/appScrollerMsg/deleteScrollerData/7",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"appScrollerMsg",
+								"deleteScrollerData",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"detail\":\"test detail\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/appScrollerMsg/getSingleScrollerData/6",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"appScrollerMsg",
+								"getSingleScrollerData",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catgorys",
+			"item": [
+				{
+					"name": "get Category Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/category/getCategoryDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"category",
+								"getCategoryDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/category/addCategory",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"category",
+								"addCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/category/getSingleCategoryDetail/5",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"category",
+								"getSingleCategoryDetail",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"testin77777777777g\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/category/updateCategory/5",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"category",
+								"updateCategory",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notice Board",
+			"item": [
+				{
+					"name": "Get Notice Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/notice/getNoticeBoardDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"notice",
+								"getNoticeBoardDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/notice/getSingleDocumentDetail/10",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"notice",
+								"getSingleDocumentDetail",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n            \"title\": \"testing44444444444444\",\r\n            \"document_type\": \"PDF\",\r\n            \"document_link\": \"https://apsindore.com/wp-content/uploads/2023/01/APS-Fee-Structure-for-Boarder-23-24.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/notice/updateDocument/10",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"notice",
+								"updateDocument",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n            \"title\": \"testing\",\r\n            \"document_type\": \"PDF\",\r\n            \"document_link\": \"https://apsindore.com/wp-content/uploads/2023/01/APS-Fee-Structure-for-Boarder-23-24.pdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/notice/addDocument",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"notice",
+								"addDocument"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "School",
+			"item": [
+				{
+					"name": "Get All School Master",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/school/getSchool",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"getSchool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/school/getSingleSchool/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"getSingleSchool",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cREATE sCHOOL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sch_nm\": \"TESTING, INDORE\",\r\n  \"sch_short_nm\": \"APS\",\r\n  \"is_active\": 1,\r\n  \"entry_by\": 1,\r\n \r\n  \"scroll_news_text\": \"\",\r\n  \"def_msg_ids\": \"38, 39, 40\",\r\n  \"text_color\": \"#fdfdfd\",\r\n  \"bg_color\": \"#234fea\",\r\n  \"address\": \"Bicholi Mardana Road\",\r\n  \"contact_no\": \"0731-4212666,  Manager : 9303333329\",\r\n  \"website\": \"www.apsindore.com\",\r\n  \"email_id\": \"office@apsindore.com\",\r\n  \"logo_img\": \"https://app.actindore.com/uploads/image_5dc40c2515db9_1.png\",\r\n  \"session\": \"''\",\r\n  \"season\": \"''\",\r\n  \"mail_email_id\": \"''\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/school/createSchool",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"createSchool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sch_nm\": \"testing 222222, INDORE\",\r\n  \"sch_short_nm\": \"APS\",\r\n  \"is_active\": 1,\r\n  \r\n  \"edit_by\": 1, // ID of the user making the edit\r\n  \"scroll_news_text\": \"Updated news text\",\r\n  \"def_msg_ids\": \"38, 39, 40\",\r\n  \"text_color\": \"#fdfdfd\",\r\n  \"bg_color\": \"#234fea\",\r\n  \"address\": \"Updated address\",\r\n  \"contact_no\": \"0731-4212666, Manager : 9303333329\",\r\n  \"website\": \"www.apsindore.com\",\r\n  \"email_id\": \"office@apsindore.com\",\r\n  \"logo_img\": \"https://app.actindore.com/uploads/image_5dc40c2515db9_1.png\",\r\n  \"session\": \"''\",\r\n  \"season\": \"''\",\r\n  \"mail_email_id\": \"''\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/school/updateSchool/27",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"updateSchool",
+								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scholar",
+			"item": [
+				{
+					"name": "get all scholar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/scholar/getScholarDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"scholar",
+								"getScholarDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": [\r\n    {\r\n      \"SCHOOL_SHORT_NAME\": \"AO\",\r\n      \"MOBILE_NUMBER\": \"7692898925\",\r\n      \"STUDENT_ID\": \"22010005\",\r\n      \"STUDENT_NAME\": \"viraj\"\r\n    },\r\n    {\r\n     \"SCHOOL_SHORT_NAME\": \"AO\",\r\n      \"MOBILE_NUMBER\": \"7692898925\",\r\n      \"STUDENT_ID\": \"22010007\",\r\n      \"STUDENT_NAME\": \"chandan\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/scholar/insertScholarRecord",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"scholar",
+								"insertScholarRecord"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "welcomemsg",
+			"item": [
+				{
+					"name": "get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/appTopWelcomeMsg",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"appTopWelcomeMsg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/getSingleAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"getSingleAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/createAppTopWelcomeMsg",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"createAppTopWelcomeMsg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"2222  Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/updateAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"updateAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/deleteAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"deleteAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Information",
+			"item": [
+				{
+					"name": "get information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/information/getinformationDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"information",
+								"getinformationDetail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Combine",
+			"item": [
+				{
+					"name": "get Combine homepage info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/combine/getCombineHomePageDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"combine",
+								"getCombineHomePageDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRelatedProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/combine/getRelatedProfile?mobilenumber=7692898925",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"combine",
+								"getRelatedProfile"
+							],
+							"query": [
+								{
+									"key": "mobilenumber",
+									"value": "7692898925"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Msg",
+			"item": [
+				{
+					"name": "Insert Msg",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"subject_text\": \"Information regarding duration of second\",\r\n  \"show_upto\": \"2024-09-30\",\r\n  \"msg_priority\": 1,\r\n  \"msg_sgroup_id\": 5,\r\n  \"is_reply_type\": 0,\r\n  \"is_reply_required_any\": 0,\r\n  \"is_active\": 1,\r\n  \"entry_by\": 1,\r\n  \"message_body\": [\r\n    {\r\n      \"msg_type\": \"text-display\",\r\n      \"data_text\": \"{\\\"title\\\":\\\"Result of WMT APS of July 18\\\",\\\"link\\\":\\\"https://app.actindore.com/uploads/july%2018%20class%209th.pdf\\\"}\",\r\n      \"order_number\": 1,\r\n      \"is_reply_required\":0\r\n    },\r\n    {\r\n      \"msg_type\": \"IMAGE-DISPLAY\",\r\n      \"data_text\": \"{\"link\":\"https://apsindore.com/wp-content/uploads/2022/12/deco.jpg\"}\",\r\n      \"order_number\": 2,\r\n      \"is_reply_required\":0\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/insertMsgData",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"insertMsgData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/test",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All MsgMaster",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getMsgDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getMsgDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single msg detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getSingleMsgDetail/160923",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getSingleMsgDetail",
+								"160923"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Inbox Message By Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getInboxMsgDetail/7692898925",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getInboxMsgDetail",
+								"7692898925"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Seen Message By Number Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getSeenMsgDetail/7692898925",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getSeenMsgDetail",
+								"7692898925"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Last Day Message By Number Copy 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getLastdayMsgDetail/7692898925",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getLastdayMsgDetail",
+								"7692898925"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Starred Message By Number Copy 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getStaredMsgDetail/7692898925",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getStaredMsgDetail",
+								"7692898925"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Seen Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/seenStatusUpdateMsgDetail/160924",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"seenStatusUpdateMsgDetail",
+								"160924"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Stared Status Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"star_status\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/staredStatusUpdateMsgDetail/160924",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"staredStatusUpdateMsgDetail",
+								"160924"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Main Group",
+					"item": [
+						{
+							"name": "Add Group Detail",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg_group_name\": \"New Group\",\r\n  \"is_active\": \"1\",\r\n  \"added_user_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/addSingleGroupData",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"addSingleGroupData"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Group",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg_group_name\": \"New Group  abcd  \",\r\n  \"is_active\": \"1\",\r\n  \"edited_user_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/updateSingleGroupData/3",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"updateSingleGroupData",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get  Group Copy 2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/getGroupDetail",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"getGroupDetail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get  Single Group",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/getSingleGroupData/3",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"getSingleGroupData",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "SubGroup",
+					"item": [
+						{
+							"name": "get All Sub Group Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/getSubGroupDetail",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"getSubGroupDetail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Single Sub Group",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/getSingleSubGroup/24",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"getSingleSubGroup",
+										"24"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add SubGroup",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg_sgroup_name\": \"Marketing Team\",\r\n  \"is_active\": \"1\",\r\n  \"added_user_id\": 1,\r\n  \"msg_group_id\": 3\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/addSubGroup",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"addSubGroup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg_sgroup_name\": \"Updated Marketing Teammmm\",\r\n  \"is_active\": \"1\",\r\n  \"msg_group_id\":3,\r\n  \"edited_user_id\": 2  // ID of the user making the edit\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/updateSubGroup/24",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"updateSubGroup",
+										"24"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Create Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"full_name\": \"Admin Doe\",\r\n  \"adminuser_name\": \"admin\",\r\n  \"admin_password\": \"admin@gmail.com\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567890\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/createAdmin",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"createAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"adminuser_name\": \"admin\",\r\n  \"admin_password\": \"admin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/loginAdmin",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"loginAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Detail",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"full_name\": \"John Doe22\",\r\n  \"adminuser_name\": \"johndoe\",\r\n  \"admin_password\": \"securepassword123\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567890\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/updateProfileDetail/107",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"updateProfileDetail",
+								"107"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"admin_id\": 107,\r\n  \"old_password\": \"securepassword123\",\r\n  \"new_password\": \"newPassword456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/updatePassword",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"full_name\": \"John Doe\",\r\n  \"adminuser_name\": \"johndoe\",\r\n  \"admin_password\": \"securepassword123\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567890\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/getAllAdmin",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"getAllAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sing Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"full_name\": \"John Doe\",\r\n  \"adminuser_name\": \"johndoe\",\r\n  \"admin_password\": \"securepassword123\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567890\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/getSingleAdmin/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"getSingleAdmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
