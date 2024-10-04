@@ -9,4 +9,5 @@ router.get('/getSingleSchool/:id',authMiddleware, schoolController.getSingleScho
 router.post('/createSchool',authMiddleware, schoolController.createSchool);
 router.put('/updateSchool/:id',authMiddleware, schoolController.updateSchool);
 
+
 module.exports = router;
