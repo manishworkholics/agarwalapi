@@ -23,6 +23,10 @@ const NoticeBoardModel = sequelize.define('notice_board_detail', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  thumbnails : {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   tableName: 'notice_board_detail', 
    timestamps: false,

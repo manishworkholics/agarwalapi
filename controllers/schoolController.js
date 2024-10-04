@@ -78,35 +78,58 @@ exports.createSchool = asyncHandler(async (req, res) => {
 
 // Get All School
 exports.getSchool = asyncHandler(async (req, res) => {
-    try {
-     
-      const school_detail = await schoolModel.findAll();
-  
-      if (school_detail.length > 0) {
-        res.status(200).json({
-          status: true,
-          message: "Data_Found",
-          data: school_detail,
-        });
-      } else {
-        res.status(200).json({
-          status: false,
-          message: "No_Data_Found",
-          data: null,
-        });
-      }
-    } catch (error) {
-      // Log the error to the console for debugging
-      console.error("Error fetching category  details:", error.message);
-  
-      // Send an error response to the client
-      res.status(500).json({
+  try {
+    // Get page and limit from query parameters, with default values
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 10; // Default to 10 records per page
+
+    // Calculate the offset for pagination
+    const offset = (page - 1) * limit;
+
+    // Fetch total records count for calculating total pages
+    const totalRecords = await schoolModel.count();
+
+    // Fetch paginated records from the schoolModel
+    const school_detail = await schoolModel.findAll({
+      limit: limit,
+      offset: offset,
+    });
+
+    // Check if any data exists
+    if (school_detail.length > 0) {
+      const totalPages = Math.ceil(totalRecords / limit); // Calculate total pages
+
+      res.status(200).json({
+        status: true,
+        message: "Data Found",
+        data: school_detail,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalRecords: totalRecords,
+          limit: limit,
+        },
+      });
+    } else {
+      res.status(200).json({
         status: false,
-        message: "An error occurred",
-        error: error.message, // Return the error message for debugging (optional)
+        message: "No Data Found",
+        data: null,
       });
     }
-  });
+  } catch (error) {
+    // Log the error to the console for debugging
+    console.error("Error fetching school details:", error.message);
+
+    // Send an error response to the client
+    res.status(500).json({
+      status: false,
+      message: "An error occurred",
+      error: error.message, // Return the error message for debugging (optional)
+    });
+  }
+});
+
 
    exports.getSingleSchool = asyncHandler(async (req, res) => {
   try {

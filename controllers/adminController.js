@@ -231,29 +231,55 @@ const hashedPassword = await bcrypt.hash(admin_password, salt);
 
 exports.getAllAdmin = asyncHandler(async (req, res) => {
   try {
-    const allAdmin = await adminModel.findAll({});
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
 
+    // Fetch records with pagination
+    const allAdmin = await adminModel.findAll({
+      limit: limit,  // Apply limit for pagination
+      offset: offset, // Apply offset for pagination
+    });
+
+    // Fetch the total count of records
+    const totalCount = await adminModel.count(); // Get total count of records for pagination
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
+
+    // Check if any data exists
     if (allAdmin.length > 0) {
       res.status(200).json({
         status: true,
         message: "Admin Found",
         data: allAdmin,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          limit: limit,
+        },
       });
     } else {
       res.status(200).json({
         status: false,
         message: "No Data Found",
         data: allAdmin,
+        pagination: {
+          currentPage: page,
+          totalPages: 0, // No pages if no data is found
+          limit: limit,
+        },
       });
     }
   } catch (error) {
     // Log the error to the console for debugging
-    console.error("Error fetching appScrollerMsg  details:", error.message);
+    console.error("Error fetching admin details:", error.message);
 
     // Send an error response to the client
     res.status(500).json({
       status: false,
-      message: "Error  admin record",
+      message: "Error fetching admin record",
       error: error.message, // Return the error message for debugging (optional)
     });
   }

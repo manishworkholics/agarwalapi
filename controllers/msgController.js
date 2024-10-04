@@ -109,36 +109,62 @@ for (let i = 0; i < parentsData.length; i++) {
 
 exports.getmsgMaster = asyncHandler(async (req, res) => {
   try {
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+    // Fetch records with pagination
     const msgMaster = await msgMasterModel.findAll({
-      // include: [{
-      //   model: subGroupModel,
-      //   // attributes: ['msg_sgroup_id', 'msg_group_name'], // Select relevant fields from group
-      // }],
       include: [
         {
           model: subGroupModel, // Include the subGroupModel to get msg_sgroup_mst
           include: [
             {
               model: groupModel, // Include the groupModel within subGroupModel
-              // attributes: ['msg_group_id', 'msg_group_name'], // Specify the fields you want from group
             },
           ],
-          // attributes: ['msg_sgroup_id', 'msg_sgroup_name'], // Specify fields from subGroupModel
         },
         {
           model: msgBodyModel, // Include the msgBodyModel to fetch data from msg_body
-          // attributes: ['msg_id', 'body_text', 'ordersno'], // Specify the fields from msg_body
           order: [["ordersno", "ASC"]], // Order the results by ordersno
         },
       ],
+      limit: limit, // Apply limit for pagination
+      offset: offset, // Apply offset for pagination
     });
 
-    res.status(200).json({
-      status: "success",
-      data: msgMaster,
-    });
+    // Fetch the total count of records
+    const totalCount = await msgMasterModel.count(); // Get total count of records for pagination
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
+
+    // Check if any data exists
+    if (msgMaster.length > 0) {
+      res.status(200).json({
+        status: "success",
+        data: msgMaster,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          limit: limit,
+        },
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        message: "No Data Found",
+        data: null,
+        pagination: {
+          currentPage: page,
+          totalPages: 0, // No pages if no data is found
+          limit: limit,
+        },
+      });
+    }
   } catch (error) {
-    console.error("Error fetching msgMaster with msgMaster:", error);
+    console.error("Error fetching msgMaster:", error);
     res.status(500).json({
       status: "error",
       message: "Internal server error",
@@ -146,6 +172,46 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
     });
   }
 });
+
+// exports.getmsgMaster = asyncHandler(async (req, res) => {
+//   try {
+//     const msgMaster = await msgMasterModel.findAll({
+//       // include: [{
+//       //   model: subGroupModel,
+//       //   // attributes: ['msg_sgroup_id', 'msg_group_name'], // Select relevant fields from group
+//       // }],
+//       include: [
+//         {
+//           model: subGroupModel, // Include the subGroupModel to get msg_sgroup_mst
+//           include: [
+//             {
+//               model: groupModel, // Include the groupModel within subGroupModel
+//               // attributes: ['msg_group_id', 'msg_group_name'], // Specify the fields you want from group
+//             },
+//           ],
+//           // attributes: ['msg_sgroup_id', 'msg_sgroup_name'], // Specify fields from subGroupModel
+//         },
+//         {
+//           model: msgBodyModel, // Include the msgBodyModel to fetch data from msg_body
+//           // attributes: ['msg_id', 'body_text', 'ordersno'], // Specify the fields from msg_body
+//           order: [["ordersno", "ASC"]], // Order the results by ordersno
+//         },
+//       ],
+//     });
+
+//     res.status(200).json({
+//       status: "success",
+//       data: msgMaster,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching msgMaster with msgMaster:", error);
+//     res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });
 
 exports.getmsgbody = asyncHandler(async (req, res) => {
   try {
@@ -617,19 +683,48 @@ exports.updateSingleGroupData = asyncHandler(async (req, res) => {
 
 exports.getGroupData = asyncHandler(async (req, res) => {
   try {
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+    // Fetch records with pagination
     const Groups = await groupModel.findAll({
-      // include: [{
-      //   model: groupModel,
-      //   attributes: ['msg_group_id', 'msg_group_name'], // Select relevant fields from group
-      // }],
+      limit: limit, // Apply limit for pagination
+      offset: offset, // Apply offset for pagination
     });
 
-    res.status(200).json({
-      status: "success",
-      data: Groups,
-    });
+    // Fetch the total count of records
+    const totalCount = await groupModel.count(); // Get total count of records for pagination
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
+
+    // Check if any data exists
+    if (Groups.length > 0) {
+      res.status(200).json({
+        status: "success",
+        data: Groups,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          limit: limit,
+        },
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        message: "No Data Found",
+        data: null,
+        pagination: {
+          currentPage: page,
+          totalPages: 0, // No pages if no data is found
+          limit: limit,
+        },
+      });
+    }
   } catch (error) {
-    console.error("Error fetching groups with groups:", error);
+    console.error("Error fetching groups:", error);
     res.status(500).json({
       status: "error",
       message: "Internal server error",
@@ -637,6 +732,7 @@ exports.getGroupData = asyncHandler(async (req, res) => {
     });
   }
 });
+
 
 exports.getSingleGroupData = asyncHandler(async (req, res) => {
   try {
@@ -753,6 +849,12 @@ exports.getSingleSubGroup = asyncHandler(async (req, res) => {
 
 exports.getSubGroupData = asyncHandler(async (req, res) => {
   try {
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+    // Fetch records with pagination
     const subGroups = await subGroupModel.findAll({
       include: [
         {
@@ -760,12 +862,39 @@ exports.getSubGroupData = asyncHandler(async (req, res) => {
           attributes: ["msg_group_id", "msg_group_name"], // Select relevant fields from group
         },
       ],
+      limit: limit,  // Apply limit for pagination
+      offset: offset, // Apply offset for pagination
     });
 
-    res.status(200).json({
-      status: "success",
-      data: subGroups,
-    });
+    // Fetch the total count of records
+    const totalCount = await subGroupModel.count(); // Get total count of records for pagination
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
+
+    // Check if any data exists
+    if (subGroups.length > 0) {
+      res.status(200).json({
+        status: "success",
+        data: subGroups,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          limit: limit,
+        },
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        message: "No Data Found",
+        data: null,
+        pagination: {
+          currentPage: page,
+          totalPages: 0, // No pages if no data is found
+          limit: limit,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error fetching subgroups with groups:", error);
     res.status(500).json({
@@ -775,6 +904,7 @@ exports.getSubGroupData = asyncHandler(async (req, res) => {
     });
   }
 });
+
 
 // Update subgroup detail by ID
 exports.updateSubGroup = asyncHandler(async (req, res) => {
