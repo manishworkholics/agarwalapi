@@ -17,6 +17,7 @@ const combineRoutes = require("./routes/combinedRoutes");
 const msgRoutes = require("./routes/msgRoute");
 const scholarRoutes = require("./routes/scholarRoute");
 const adminRoutes = require("./routes/adminRoute");
+const feesRoutes = require("./routes/feesRoute");
 
 dotenv.config();
 const app = express();
@@ -41,6 +42,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/api/admin", adminRoutes);
+app.use("/api/fees", feesRoutes);
 app.use("/api/parents", parentRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/school", schoolRoutes);

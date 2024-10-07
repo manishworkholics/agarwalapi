@@ -3,6 +3,8 @@ const appScrollerModel = require("../models/appScrollerMsgModel");
 const welcomeModel = require("../models/welcomeMsgModel"); 
 const CategoryModel = require("../models/categoryModel"); 
 const studentMainModel = require("../models/studentModel"); 
+const ScholarModel = require("../models/ScholarModel"); 
+const msgMasterModel = require("../models/msgMasterModel"); 
 const { Op } = require('sequelize');
 
 const db = require("../config/db.config");
@@ -85,3 +87,29 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
       });
     }
   });
+
+  exports.dashboardcount = asyncHandler(async (req, res) => {
+    try {
+      // Count the total rows in the student table
+      const studentTotalRows = await studentMainModel.count();
+      const msgTotalRows = await msgMasterModel.count();
+      const distinctMobileCount = await ScholarModel.count({
+        distinct: true,
+        col: 'mobile_no',
+      });
+      res.status(200).json({
+        status: true,
+        message: "Total rows counted successfully",
+        data: {studentTotalRows:studentTotalRows,distinctMobileCount,msgTotalRows},
+      });
+    } catch (error) {
+      console.error("Error fetching row count:", error.message);
+  
+      res.status(500).json({
+        status: false,
+        message: "An error occurred while counting rows",
+        error: error.message,
+      });
+    }
+  });
+  
