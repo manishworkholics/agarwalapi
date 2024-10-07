@@ -408,7 +408,7 @@
 			"name": "Fees",
 			"item": [
 				{
-					"name": "Get All Fees Detail",
+					"name": "Add",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -416,6 +416,44 @@
 								{
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgyOTk1NzQsImV4cCI6MTcyODMwMzE3NH0.7KutKfn-06Dxyvmh1tEi3tvQncOqbxNAGRHkekPZCcI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": [\r\n    {\r\n      \"scholar_no\": \"22010005\",\r\n      \"session_detail\": \"Session 2023-2024\",\r\n      \"term\": 1,\r\n      \"outstandingfees\": \"25000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    },\r\n    {\r\n      \"scholar_no\": \"22010007\",\r\n      \"session_detail\": \"7692898725\",\r\n      \"term\": 2,\r\n      \"outstandingfees\": \"50000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    },\r\n     {\r\n      \"scholar_no\": \"22010202\",\r\n      \"session_detail\": \"Session 2023-2024\",\r\n      \"term\": 1,\r\n      \"outstandingfees\": \"25000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/fees/addfeesDisplay",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"fees",
+								"addfeesDisplay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Fees Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzMDYzNTksImV4cCI6MTcyODMwOTk1OX0.tEof40nOyrqIBQTUzP0g2N_xyTpIqk1-xu8xAwQhN8U",
 									"type": "string"
 								}
 							]
@@ -476,44 +514,6 @@
 									"key": "mobilenumber",
 									"value": "7692898925"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgyOTk1NzQsImV4cCI6MTcyODMwMzE3NH0.7KutKfn-06Dxyvmh1tEi3tvQncOqbxNAGRHkekPZCcI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"data\": [\r\n    {\r\n      \"scholar_no\": \"22010005\",\r\n      \"session_detail\": \"Session 2023-2024\",\r\n      \"term\": 1,\r\n      \"outstandingfees\": \"25000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    },\r\n    {\r\n      \"scholar_no\": \"22010007\",\r\n      \"session_detail\": \"7692898725\",\r\n      \"term\": 2,\r\n      \"outstandingfees\": \"50000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    },\r\n     {\r\n      \"scholar_no\": \"22010202\",\r\n      \"session_detail\": \"Session 2023-2024\",\r\n      \"term\": 1,\r\n      \"outstandingfees\": \"25000\",\r\n      \"duedate\": \"07/12/2024\"\r\n    }\r\n  ]\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Agrawal}}/api/fees/addfeesDisplay",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"fees",
-								"addfeesDisplay"
 							]
 						}
 					},
