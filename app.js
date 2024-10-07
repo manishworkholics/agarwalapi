@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const validateApiKey = require("./middlewares/api-key-middleware"); // Adjust the path accordingly
 
 const parentRoutes = require("./routes/parentRoutes");
+const teacherRoutes = require("./routes/teacherRoute");
 const schoolRoutes = require("./routes/schoolRoutes");
 const appuserRoutes = require("./routes/appuserRoutes");
 const noticeBoardRoutes = require("./routes/noticeboardRoute");
@@ -41,6 +42,7 @@ app.use(function (req, res, next) {
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/parents", parentRoutes);
+app.use("/api/teacher", teacherRoutes);
 app.use("/api/school", schoolRoutes);
 app.use("/api/scholar", scholarRoutes);
 // app.use('/api/appuser', appuserRoutes);
