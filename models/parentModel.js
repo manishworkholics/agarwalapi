@@ -114,7 +114,7 @@ const Parents = sequelize.define('Parents', {
   is_active: {
     type: DataTypes.TINYINT,
     allowNull: true,
-    defaultValue: null,
+    defaultValue: 1,
     index: true,
   },
   active_datetime: {

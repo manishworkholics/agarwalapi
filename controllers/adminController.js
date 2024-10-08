@@ -52,7 +52,8 @@ exports.createAdmin = asyncHandler(async (req, res) => {
     // Create the new admin record
     const newAdmin = await adminModel.create({
       full_name,
-      adminuser_name,admin_password,
+      adminuser_name,
+      admin_password,
       admin_password_encrypted: hashedPassword, // Save the hashed password
      
       is_active,
@@ -121,7 +122,7 @@ exports.updatePassword = asyncHandler(async (req, res) => {
     const { admin_id, old_password, new_password } = req.body;
 // Hash the password before saving
 const salt = await bcrypt.genSalt(10);
-const hashedPassword = await bcrypt.hash(admin_password, salt);
+const hashedPassword = await bcrypt.hash(new_password, salt);
 
     // Step 1: Find the admin by admin_id
     const admin = await adminModel.findOne({

@@ -31,6 +31,11 @@ const feesDisplayModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    feesstatus: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue:0
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: true,

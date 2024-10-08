@@ -151,7 +151,7 @@ exports.resentOtp = asyncHandler(async (req, res) => {
 
 // OTP Verification
 exports.otpverify = asyncHandler(async (req, res) => {
-  const { mobile_no, otp } = req.body;
+  const { mobile_no, otp,fcm_token,mobile_uuid,mobile_info,mobile_platform } = req.body;
 
   if (!mobile_no || !otp) {
     return res
@@ -186,6 +186,16 @@ const token = generateToken(tokenuser);
   if (storedOtp === otp && diffInMinutes <= 10) {
     // Mark the OTP as verified
     user.is_verified = 1;
+    user.otp_datetime = now;
+    user.active_datetime = now;
+    user.last_visit_on = now;
+    // user.is_active = 1;
+    user.app_name = "EMESSANGER";
+    user.active_by = 1;
+    user.fcm_token = fcm_token?fcm_token:'';
+    user.mobile_uuid = mobile_uuid?mobile_uuid:'';
+    user.mobile_info = mobile_info?mobile_info:'';
+    user.mobile_platform = mobile_platform?mobile_platform:'';
     await user.save();
 
     // Generate JWT token after OTP is verified
