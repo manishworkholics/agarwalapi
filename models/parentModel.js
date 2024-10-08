@@ -79,6 +79,12 @@ const Parents = sequelize.define('Parents', {
     defaultValue: null,
     index: true,
   },
+  registerby_mobile: {
+    type: DataTypes.TINYINT,
+    allowNull: true,
+    defaultValue: 0,
+    index: true,
+  },
   fcm_token: {
     type: DataTypes.STRING(250),
     allowNull: true,

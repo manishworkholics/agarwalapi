@@ -6,7 +6,37 @@ const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
 const JWT_SECRET = process.env.JWT_SECRET ;
 const { generateToken } = require('../middlewares/jwtUtils');
+const axios = require('axios');
+const https = require('https');
 
+async function sendOTPToMobile (mobileNumber,otp) {
+  // Validate the mobile number (10 digits assumed)
+  if (!mobileNumber || !/^\d{10}$/.test(mobileNumber)) {
+    return { status: false, message: 'Invalid mobile number' };
+  }
+ const message = `OTP for Login on app is ${otp}. Please do not share this with anyone for security reasons. `;
+const apiUrl=`http://tagsolutions.in/sms-panel/api/http/index.php?username=APSCHOOL&apikey=E669B-455B0&apirequest=Text&sender=ACTIDR&mobile=${mobileNumber}&message=${message}.&route=TRANS&TemplateID=1407167332525147046&format=JSON`;
+try {
+   // Create an Axios instance that ignores SSL certificate validation
+  
+   const agent = new https.Agent({  
+    rejectUnauthorized: false // Disable SSL certificate validation
+  });
+
+  // Make a POST request to the external API
+  const response = await axios.post(apiUrl,{},{ httpsAgent: agent });
+
+  if (response.data.status === 'success') {
+    return { status: true, message: 'OTP sent successfully', mobileNumber, otp };
+  } else {
+    return { status: false, message: 'Failed to send OTP', error: response.data };
+  }
+} catch (error) {
+  return { status: false, message: 'Error occurred while sending OTP', error: error.message };
+} 
+
+return { status: true, message: 'OTP sent successfully', mobileNumber, otp };
+}
 // SignUp function
 exports.signUp = async (req, res) => {
   try {
@@ -36,18 +66,84 @@ exports.generateOtp = asyncHandler(async (req, res) => {
   }
 
   const otp = crypto.randomInt(1000, 10000).toString();
-  const otpCreated = new Date();
+  
+    const otpCreated = new Date();
 
   // Check if mobile number exists
   const user = await ParentReg.findOne({ where: { mobile_no } });
   if (user) {
+    let response ='';
+    // Sms Gateway start
+  //  response = await sendOTPToMobile(mobile_no,otp);
+  // Sms Gateway End
+  
     // Update existing user's OTP
     user.otp = otp;
     user.otp_datetime = otpCreated;
     await user.save();
     return res
       .status(200)
-      .json({ status: true, message: "OTP sent successfullyyy", otp });
+      .json({ status: true, message: "OTP sent successfullyyy", otp ,response});
+  } else {
+    // return res.status(200).json({ status: false, message: "User Not Exist" });
+   
+   const dta= await ParentReg.create(
+      {
+        mobile_no: mobile_no,
+        is_verified: 1,
+        registerby_mobile:1
+      },
+      {
+        ignoreDuplicates: true, // Optional: to avoid inserting duplicates
+      }
+    );
+
+    const otp = crypto.randomInt(1000, 10000).toString();
+  
+    const otpCreated = new Date();
+    let response ='';
+    // Sms Gateway start
+  //  response = await sendOTPToMobile(mobile_no,otp);
+  // Sms Gateway End
+    const user = await ParentReg.findOne({ where: { mobile_no } });
+    user.otp = otp;
+    user.otp_datetime = otpCreated;
+    await user.save();
+   return res.status(200).json({ status: true, message: "Account Created and OTP sent successfullyyy", otp ,response});
+
+  }
+ 
+  
+});
+
+exports.resentOtp = asyncHandler(async (req, res) => {
+  const { mobile_no } = req.body;
+
+  if (!mobile_no) {
+    return res
+      .status(200)
+      .json({ status: false, message: "Mobile number is required" });
+  }
+
+  const otp = crypto.randomInt(1000, 10000).toString();
+  
+    const otpCreated = new Date();
+
+  // Check if mobile number exists
+  const user = await ParentReg.findOne({ where: { mobile_no } });
+  if (user) {
+   let response='';
+    // Sms Gateway start
+  //  response = await sendOTPToMobile(mobile_no,otp);
+  // Sms Gateway End
+  
+    // Update existing user's OTP
+    user.otp = otp;
+    user.otp_datetime = otpCreated;
+    await user.save();
+    return res
+      .status(200)
+      .json({ status: true, message: "OTP sent successfullyyy", otp ,response});
   } else {
     return res.status(200).json({ status: false, message: "User Not Exist" });
   }
