@@ -55,6 +55,46 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logout = asyncHandler(async (req, res) => {
+  try {
+   
+  const { mobile_no } = req.body;
+
+  if (!mobile_no) {
+    return res
+      .status(200)
+      .json({ status: false, message: "Mobile number is required" });
+  }
+
+  
+  // Check if mobile number exists
+  const user = await ParentReg.findOne({ where: { mobile_no } });
+  if (user) {
+    let response ='';
+    const now = new Date();
+    // user.otp_datetime = now;
+    await user.save();
+    return res
+      .status(200)
+      .json({ status: true, message: "Logout Status update Successfully", });
+  } else {
+    // return res.status(200).json({ status: false, message: "User Not Exist" });
+   return res.status(200).json({ status: false, message: "Detail not found"});
+
+  }
+} catch (error) {
+  // Log the error to the console for debugging
+  console.error("Error fetching page  details:", error.message);
+
+  // Send an error response to the client
+  res.status(500).json({
+    status: false,
+    message: "An error occurred",
+    error: error.message, // Return the error message for debugging (optional)
+  });
+}
+  
+});
 // Generate OTP
 exports.generateOtp = asyncHandler(async (req, res) => {
   const { mobile_no } = req.body;
