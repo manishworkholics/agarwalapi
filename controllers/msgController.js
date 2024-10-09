@@ -22,6 +22,7 @@ const JWT_SECRET = process.env.JWT_SECRET ;
 const { generateToken } = require('../middlewares/jwtUtils');
 
 
+
 exports.insertMsgData = asyncHandler(async (req, res) => {
   try {
     // Extract data from the request body
@@ -72,6 +73,56 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
 // =========== this is where  now get all mobile no and send  onsended model =======
 
  // Step 1: Fetch all mobile numbers from parents table
+//  const parentsData = await ParentModel.findAll({
+ 
+// });
+ 
+// for (let i = 0; i < parentsData.length; i++) {
+//   const parent = parentsData[i]; // Access each parent using index i
+  
+//   await sendedMsgModel.create({
+//     mobile_no: parent.mobile_no,
+//     scholar_no: parent.scholar_no,
+//     sch_short_nm: parent.sch_short_nm ? parent?.sch_short_nm : null,
+//     msg_id: newm_msg_id, // Ensure newm_msg_id is defined in your scope
+//     sended_date: new Date(), // Current date as the sended_date
+//     sended_by: entry_by, // Ensure entry_by is defined in your scope
+//     is_fcm_sended: 0, // Default value
+//   });
+// }
+
+//==================================================================================
+
+
+    res.status(200).json({
+      status: "success",parentsData:parentsData.length,
+      data: newMasterMessage,
+    });
+  } catch (error) {
+    console.error("Error fetching msgBody with msgBody:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.SentMsgToScholarData = asyncHandler(async (req, res) => {
+  try {
+    // Extract data from the request body
+   
+  const {new_msg_id,admin_id} = req.query;
+  if(!new_msg_id)
+  {
+    res.status(500).json({
+      status: false, parentsData:0,
+      data: "",message:"Required Message Id"
+    });
+  }
+// =========== this is where  now get all mobile no and send  onsended model =======
+
+ // Step 1: Fetch all mobile numbers from parents table
  const parentsData = await ParentModel.findAll({
  
 });
@@ -83,19 +134,17 @@ for (let i = 0; i < parentsData.length; i++) {
     mobile_no: parent.mobile_no,
     scholar_no: parent.scholar_no,
     sch_short_nm: parent.sch_short_nm ? parent?.sch_short_nm : null,
-    msg_id: newm_msg_id, // Ensure newm_msg_id is defined in your scope
+    msg_id: new_msg_id, // Ensure newm_msg_id is defined in your scope
     sended_date: new Date(), // Current date as the sended_date
-    sended_by: entry_by, // Ensure entry_by is defined in your scope
+    sended_by: admin_id, // Ensure entry_by is defined in your scope
     is_fcm_sended: 0, // Default value
   });
 }
 
 //==================================================================================
-
-
-    res.status(200).json({
+  res.status(200).json({
       status: "success",parentsData:parentsData.length,
-      data: newMasterMessage,
+      message:"Success",
     });
   } catch (error) {
     console.error("Error fetching msgBody with msgBody:", error);
