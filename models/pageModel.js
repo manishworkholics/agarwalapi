@@ -14,7 +14,10 @@ const pageModel = sequelize.define('page', {
     type: DataTypes.INTEGER,
     allowNull: true,
   }, 
-
+  pagecode: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
  title: {
     type: DataTypes.STRING,
     allowNull: true,
