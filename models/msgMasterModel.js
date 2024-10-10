@@ -54,6 +54,10 @@ const msgMasterModel = sequelize.define('msg_mst', {
     type: DataTypes.INTEGER,
     allowNull: true,
   }, 
+  school_id: {
+    type: DataTypes.STRING,
+   allowNull: true, 
+  },
   createdAt : {
     type: DataTypes.DATE,
     allowNull: true,

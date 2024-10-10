@@ -1,4 +1,6 @@
 const { Op } = require('sequelize');
+const { startOfDay, endOfDay } = require('date-fns'); // Import to get today's start and end times
+
 const { Sequelize } = require('sequelize');
 const asyncHandler = require("express-async-handler");
 const appScrollerModel = require("../models/appScrollerMsgModel");
@@ -34,11 +36,12 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
       is_reply_type,
       is_reply_required_any,
       is_active,
-      entry_by,
+      entry_by,school_id,
       message_body,
     } = req.body;
     const message_body2 = message_body;
     // msg_id ,msg_type,data_text,ordersno  // this message body also insert in difrent table
+    const schoolIdsString = school_id.join(','); // Convert array to string "1,2,3"
 
     const newMasterMessage = await msgMasterModel.create({
       subject_text,
@@ -47,7 +50,7 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
       msg_sgroup_id,
       is_reply_type,
       is_reply_required_any,
-      is_active,
+      is_active,school_id:schoolIdsString,
       entry_by,
     });
     const newm_msg_id = newMasterMessage?.msg_id;
@@ -95,7 +98,7 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
 
 
     res.status(200).json({
-      status: "success",parentsData:parentsData.length,
+      status: "success",
       data: newMasterMessage,
     });
   } catch (error) {
@@ -107,47 +110,114 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
     });
   }
 });
+// This is to all sent 100 % working
+// exports.SentMsgToScholarData = asyncHandler(async (req, res) => {
+//   try {
+//     // Extract data from the request body
+   
+//   const {new_msg_id,admin_id} = req.query;
+//   if(!new_msg_id)
+//   {
+//     res.status(500).json({
+//       status: false, parentsData:0,
+//       data: "",message:"Required Message Id"
+//     });
+//   }
+// // =========== this is where  now get all mobile no and send  onsended model =======
+
+//  // Step 1: Fetch all mobile numbers from parents table
+//  const parentsData = await ParentModel.findAll({
+ 
+// });
+ 
+// for (let i = 0; i < parentsData.length; i++) {
+//   const parent = parentsData[i]; // Access each parent using index i
+  
+//   await sendedMsgModel.create({
+//     mobile_no: parent.mobile_no,
+//     scholar_no: parent.scholar_no,
+//     sch_short_nm: parent.sch_short_nm ? parent?.sch_short_nm : null,
+//     msg_id: new_msg_id, // Ensure newm_msg_id is defined in your scope
+//     sended_date: new Date(), // Current date as the sended_date
+//     sended_by: admin_id, // Ensure entry_by is defined in your scope
+//     is_fcm_sended: 0, // Default value
+//   });
+// }
+
+// //==================================================================================
+//   res.status(200).json({
+//       status: "success",parentsData:parentsData.length,
+//       message:"Success",
+//     });
+//   } catch (error) {
+//     console.error("Error fetching msgBody with msgBody:", error);
+//     res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });
+// Thios above 100 % working end
 
 exports.SentMsgToScholarData = asyncHandler(async (req, res) => {
   try {
-    // Extract data from the request body
-   
-  const {new_msg_id,admin_id} = req.query;
-  if(!new_msg_id)
-  {
-    res.status(500).json({
-      status: false, parentsData:0,
-      data: "",message:"Required Message Id"
-    });
-  }
-// =========== this is where  now get all mobile no and send  onsended model =======
+    //Note : - selected_ids   khali ayagi to sab ko jayaga
+    // Extract data from the request query
+    // GET /api/sent-msg?new_msg_id=123&admin_id=456
+// GET /api/sent-msg?new_msg_id=123&admin_id=456&selected_ids=22010005,22010007
 
- // Step 1: Fetch all mobile numbers from parents table
- const parentsData = await ParentModel.findAll({
- 
-});
- 
-for (let i = 0; i < parentsData.length; i++) {
-  const parent = parentsData[i]; // Access each parent using index i
-  
-  await sendedMsgModel.create({
-    mobile_no: parent.mobile_no,
-    scholar_no: parent.scholar_no,
-    sch_short_nm: parent.sch_short_nm ? parent?.sch_short_nm : null,
-    msg_id: new_msg_id, // Ensure newm_msg_id is defined in your scope
-    sended_date: new Date(), // Current date as the sended_date
-    sended_by: admin_id, // Ensure entry_by is defined in your scope
-    is_fcm_sended: 0, // Default value
-  });
-}
+    const { new_msg_id, admin_id, selected_ids } = req.query; // Assuming selected_ids comes as a comma-separated string
 
-//==================================================================================
-  res.status(200).json({
-      status: "success",parentsData:parentsData.length,
-      message:"Success",
+    // Validate the new_msg_id
+    if (!new_msg_id) {
+      return res.status(400).json({
+        status: false,
+        parentsData: 0,
+        data: "",
+        message: "Required Message Id"
+      });
+    }
+
+    // Step 1: Determine which parents to send messages to
+    let parentsData;
+
+    if (selected_ids && selected_ids.length > 0) {
+      // Split the selected IDs and fetch corresponding parents
+      const idsArray = selected_ids.split(',').map(id => id.trim());
+      parentsData = await ParentModel.findAll({
+        where: {
+          scholar_no: idsArray // Fetch only parents with the selected scholar numbers
+        }
+      });
+    } else {
+      // Fetch all parents if no specific IDs are selected
+      parentsData = await ParentModel.findAll();
+    }
+
+    // Step 2: Send messages to each selected parent and record in SendedMsgModel
+    for (let parent of parentsData) {
+      const { mobile_no, scholar_no, sch_short_nm } = parent; // Destructure properties
+
+      await sendedMsgModel.create({
+        mobile_no: mobile_no, // Mobile number from ParentModel
+        scholar_no: scholar_no, // Scholar number from ParentModel
+        sch_short_nm: sch_short_nm ? sch_short_nm : null, // Short name or null if not available
+        msg_id: new_msg_id, // Message ID from request
+        sended_date: new Date(), // Current date and time
+        sended_by: admin_id, // Admin ID from request
+        is_fcm_sended: 0, // Default value for FCM sent status
+      });
+    }
+
+    // Return success response
+    res.status(200).json({
+      status: "success",
+      parentsData: parentsData.length,
+      message: "Messages sent successfully",
     });
   } catch (error) {
-    console.error("Error fetching msgBody with msgBody:", error);
+    console.error("Error sending messages:", error);
     res.status(500).json({
       status: "error",
       message: "Internal server error",
@@ -156,6 +226,9 @@ for (let i = 0; i < parentsData.length; i++) {
   }
 });
 
+// Get All Msg getallmsg
+// ====new working
+// Start 10-10 working ==============
 exports.getmsgMaster = asyncHandler(async (req, res) => {
   try {
     // Extract pagination parameters from the query
@@ -222,6 +295,8 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
   }
 });
 
+// ===========end 10-10-2024 working
+// =================old
 // exports.getmsgMaster = asyncHandler(async (req, res) => {
 //   try {
 //     const msgMaster = await msgMasterModel.findAll({
@@ -352,11 +427,63 @@ exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+//  100 % Working Code start============
 
+// exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
+//   try {
+//     const {mobile} = req.params;
+  
+//     const msgSendedMaster = await sendedMsgModel.findAll({
+//       limit: 100,
+//   order: [['sended_msg_id', 'DESC']] ,
+//   where: {
+//     mobile_no: mobile // Replace with the mobile number you want to filter by
+//   },
+//       include: [
+//         {
+//           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+//          },
+//          {
+//           model: studentMainDetailModel, // Join with studentMainDetailModel
+//           as: 'student', // Use the alias 'student' from the association
+//           // attributes: ['student_name'], // Fetch only the student_name
+//         }
+//       ],
+//     });
+//     if(msgSendedMaster.length > 0)
+//       {
+//           res.status(200).json({
+//             status: true,
+//             length:msgSendedMaster.length,
+//             data: msgSendedMaster,
+//           });
+//         }
+//         else
+//         {
+//           res.status(200).json({
+//             status: false,
+//             length:msgSendedMaster.length,
+//             data: msgSendedMaster,
+//           });
+//         }
+//   } catch (error) {
+//     console.error("Error fetching msgMaster with msgMaster:", error);
+//     res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });
+// Chage above code
 exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {mobile} = req.params;
   
+    // Get the current date and time
+    const now = new Date();
+    const today = new Date(); // Current date
+
     const msgSendedMaster = await sendedMsgModel.findAll({
       limit: 100,
   order: [['sended_msg_id', 'DESC']] ,
@@ -366,7 +493,13 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
       include: [
         {
           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
-         },
+          where: {
+            show_upto: {
+              [Op.gte]: startOfDay(today), // Start of today's date
+              [Op.lte]: endOfDay(today)    // End of today's date
+            }
+          }
+        },
          {
           model: studentMainDetailModel, // Join with studentMainDetailModel
           as: 'student', // Use the alias 'student' from the association
@@ -399,7 +532,7 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
     });
   }
 });
-
+//  100 % Working Code start============
 exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {mobile} = req.params;
@@ -502,7 +635,8 @@ exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
 
     // Get the current date and time
     const now = new Date();
-    
+    const today = new Date(); // Current date
+
     // Calculate the start of today (midnight)
     const startOfToday = new Date(now);
     startOfToday.setHours(0, 0, 0, 0);
@@ -520,14 +654,20 @@ exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
       order: [['sended_msg_id', 'DESC']],
       where: {
         mobile_no: mobile,
-        sended_date: {
-          [Op.gte]: startOfYesterday, // Greater than or equal to the start of yesterday
-          [Op.lte]: endOfYesterday // Less than or equal to the end of yesterday
-        }
+        // sended_date: {
+        //   [Op.gte]: startOfYesterday, // Greater than or equal to the start of yesterday
+        //   [Op.lte]: endOfYesterday // Less than or equal to the end of yesterday
+        // }
       },
       include: [
         {
           model: msgMasterModel, // Include the msgMasterModel to get additional details
+          where: {
+            show_upto: {
+              [Op.gte]: startOfDay(today), // Start of today's date
+              [Op.lte]: endOfDay(today)    // End of today's date
+            }
+          }
         },
         {
           model: studentMainDetailModel, // Join with studentMainDetailModel
@@ -536,6 +676,27 @@ exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
         }
       ],
     });
+
+    // const msgSendedMaster = await sendedMsgModel.findAll({
+    //   order: [['sended_msg_id', 'DESC']],
+    //   where: {
+    //     mobile_no: mobile,
+    //     sended_date: {
+    //       [Op.gte]: startOfYesterday, // Greater than or equal to the start of yesterday
+    //       [Op.lte]: endOfYesterday // Less than or equal to the end of yesterday
+    //     }
+    //   },
+    //   include: [
+    //     {
+    //       model: msgMasterModel, // Include the msgMasterModel to get additional details
+    //     },
+    //     {
+    //       model: studentMainDetailModel, // Join with studentMainDetailModel
+    //       as: 'student', // Use the alias 'student' from the association
+    //       // attributes: ['student_name'], // Fetch only the student_name
+    //     }
+    //   ],
+    // });
 
     // Check if any messages were found
     if (msgSendedMaster.length > 0) {

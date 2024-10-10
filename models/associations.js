@@ -5,6 +5,7 @@ const msgMasterModel = require('./msgMasterModel');
 const msgBodyModel = require('./msgBodyModel');
 const sendedMsgModel = require('./sendedMsgModel');
 const studentMainDetailModel = require('./studentModel');
+const schoolModel = require('./schoolMasterModel');
 const feesDisplayModel = require('./feesModel');
 // Define the associations
 groupModel.hasMany(subGroupModel, { foreignKey: 'msg_group_id' });
@@ -47,10 +48,22 @@ studentMainDetailModel.hasMany(feesDisplayModel, {
   as: 'fees' // This can be whatever you want, but ensure it's not conflicting
 });
 // end for fees model
+// School id match with school id and display school
+// In your schoolModel.js
+schoolModel.hasMany(msgMasterModel, {
+  foreignKey: 'school_id', // The field in msgMasterModel that refers to sch_id
+  sourceKey: 'sch_id',
+});
 
+// In your msgMasterModel.js
+msgMasterModel.belongsTo(schoolModel, {
+  foreignKey: 'school_id', // The field in msgMasterModel that refers to sch_id
+  targetKey: 'sch_id',
+});
+// School id match with school id and display school
 module.exports = {
   groupModel,
   subGroupModel,
-  msgMasterModel,msgBodyModel,sendedMsgModel,studentMainDetailModel,feesDisplayModel
+  msgMasterModel,msgBodyModel,sendedMsgModel,studentMainDetailModel,feesDisplayModel,schoolModel
 };
 

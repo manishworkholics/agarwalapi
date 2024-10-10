@@ -27,7 +27,9 @@ router.put('/staredStatusUpdateMsgDetail/:sended_msg_id',authMiddleware, MsgCont
 // App mobile app End
 
 router.post('/insertMsgData',authMiddleware, MsgController.insertMsgData);
-router.post('/SentMsgToScholarData',authMiddleware, MsgController.SentMsgToScholarData);
+// =========================ye api seprate school + admin ko use hogi=======================================
+router.get('/SentMsgToScholarData',authMiddleware, MsgController.SentMsgToScholarData);
+// ==============================================================
 router.get('/test',authMiddleware, MsgController.getmsgbody);
 
 module.exports = router;

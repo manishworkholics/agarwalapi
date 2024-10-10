@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
 const validateApiKey = require("./middlewares/api-key-middleware"); // Adjust the path accordingly
-
+const multer =require("multer");
 const parentRoutes = require("./routes/parentRoutes");
 const teacherRoutes = require("./routes/teacherRoute");
 const schoolRoutes = require("./routes/schoolRoutes");
@@ -19,6 +19,8 @@ const msgRoutes = require("./routes/msgRoute");
 const scholarRoutes = require("./routes/scholarRoute");
 const adminRoutes = require("./routes/adminRoute");
 const feesRoutes = require("./routes/feesRoute");
+const writeFileSync = require("fs");
+
 
 dotenv.config();
 const app = express();
@@ -41,6 +43,54 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
+//************************************************
+// Image path access to directory **** IMP TO ACCESS DATA
+//************************************************
+
+app.use("/Uploads/", express.static("Uploads/"));
+//Configuration for Multer image and pdf
+const imagestorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "Uploads/image/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + Date.now() + ".png");
+  },
+});
+app.use("/Uploads/", express.static("Uploads/"));
+//Configuration for Multer image and pdf
+const pdfstorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "Uploads/pdf/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + Date.now() + ".pdf");
+  },
+});
+// const videostorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "Uploads/video/");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + Date.now() + ".mp4");
+//   },
+// });
+
+const imageStorage = multer({ storage: imagestorage }); //For Image
+const pdfStorage = multer({ storage: pdfstorage }); //For Pdf
+// const videoStorage = multer({ storage: videostorage }); //For Video
+// //image Upload ===========
+// old working 100 %
+app.use(
+  "/api/v1/admin/imageUpload_Use",
+  imageStorage.single("file"),
+  adminRoutes
+);
+app.use(
+  "/api/v1/admin/pdfUpload_Use",
+  pdfStorage.single("file"),
+  adminRoutes
+);
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/fees", feesRoutes);

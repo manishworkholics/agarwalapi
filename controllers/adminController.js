@@ -6,7 +6,58 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 // Secret key for signing JWT (use a secure key and store it in env variables)
 const JWT_SECRET = process.env.JWT_SECRET ;
+const MAIN_URL = process.env.MAIN_URL;
 const { generateToken } = require('../middlewares/jwtUtils');
+
+
+
+
+exports.videoUpload = asyncHandler(async (req, res, next) => {
+  try {
+    const Url = MAIN_URL + "Uploads/video/" + req.file.filename;
+    const filename = req.file.filename;
+    res.status(200).json({
+      status: "success",
+      message: "Created Successfully",
+      filename: filename,
+      url: Url,
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+});
+
+
+exports.imageUpload = asyncHandler(async (req, res, next) => {
+  try {
+    const Url = process.env.MAIN_URL + "Uploads/image/" + req.file.filename;
+    const filename = req.file.filename;
+
+    res.status(200).json({
+      status: "success",
+      message: "Created Successfully",
+      imagename: filename,
+      url: Url,
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+});
+exports.pdfUpload = asyncHandler(async (req, res, next) => {
+  try {
+    const Url = process.env.MAIN_URL + "Uploads/pdf/" + req.file.filename;
+    const filename = req.file.filename;
+
+    res.status(200).json({
+      status: "success",
+      message: "Created Successfully",
+      imagename: filename,
+      url: Url,
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+});
 
 exports.createAdmin = asyncHandler(async (req, res) => {
   try {

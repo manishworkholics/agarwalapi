@@ -5,6 +5,6 @@ exports.generateToken = (user) => {
     return jwt.sign(
         { id: user.id, role: user.role },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' } // Token expires in 1 hour
+        { expiresIn: '10h' } // Token expires in 1 hour
     );
 };

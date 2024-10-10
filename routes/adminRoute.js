@@ -10,6 +10,8 @@ router.put('/updateProfileDetail/:admin_id',authMiddleware, adminController.upda
 router.get('/getAllAdmin',authMiddleware, adminController.getAllAdmin);
 router.get('/getSingleAdmin/:id',authMiddleware, adminController.getSingleAdmin);
 
+router.post("/imageUpload", adminController.imageUpload);
+router.post("/pdfUpload", adminController.pdfUpload);
 
 
 module.exports = router;
