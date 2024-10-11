@@ -17,6 +17,10 @@ router.put('/updateSingleGroupData/:msg_group_id',authMiddleware, MsgController.
 
 router.get('/getMsgDetail',authMiddleware, MsgController.getmsgMaster);
 // App mobile app start
+//this is for just single master msg
+router.get('/get_single_mst_msg_by_msg_id',authMiddleware, MsgController.get_Single_Msg_master_Detail_by_msg_id);
+
+//getSingleMsgDetail by  sended_msg_id
 router.get('/getSingleMsgDetail/:sended_msg_id',authMiddleware, MsgController.getSingleMsgDetail);
 router.get('/getInboxMsgDetail/:mobile',authMiddleware, MsgController.getInboxMsgDetail);
 router.get('/getSeenMsgDetail/:mobile',authMiddleware, MsgController.getSeenMsgDetail);

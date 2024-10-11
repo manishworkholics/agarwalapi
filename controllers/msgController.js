@@ -14,7 +14,7 @@ const {
   groupModel,
   subGroupModel,
   msgMasterModel,
-  msgBodyModel,sendedMsgModel,studentMainDetailModel
+  msgBodyModel,sendedMsgModel,studentMainDetailModel,schoolModel
 } = require("../models/associations");
 
 const db = require("../config/db.config");
@@ -264,9 +264,37 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
 
     // Check if any data exists
     if (msgMaster.length > 0) {
+      // Prepare an array of school IDs for querying
+      const schoolIds = msgMaster.flatMap(msg => msg.school_id.split(',').map(Number)); // Extract and convert school_ids
+
+      // Fetch all matching school records for the extracted IDs
+      const schools = await schoolModel.findAll({
+        where: {
+          sch_id: {
+            [Op.in]: schoolIds, // Use Op.in to match multiple IDs
+          },
+        },
+      });
+
+      // Create a mapping of school IDs to their full data
+      const schoolMapping = schools.reduce((acc, school) => {
+        acc[school.sch_id] = school; // Store the entire school object
+        return acc;
+      }, {});
+
+      // Add full school data to each msgMaster record
+      const msgMasterWithSchoolData = msgMaster.map(msg => {
+        const ids = msg.school_id.split(',').map(Number);
+        const schoolData = ids.map(id => schoolMapping[id]).filter(Boolean); // Get the full school data based on IDs
+        return {
+          ...msg.toJSON(), // Convert Sequelize instance to plain object
+          schools: schoolData, // Add full school data to the message object
+        };
+      });
+
       res.status(200).json({
         status: "success",
-        data: msgMaster,
+        data: msgMasterWithSchoolData,
         pagination: {
           currentPage: page,
           totalPages: totalPages,
@@ -294,6 +322,73 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+// exports.getmsgMaster = asyncHandler(async (req, res) => {
+//   try {
+//     // Extract pagination parameters from the query
+//     const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+//     const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+//     const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+//     // Fetch records with pagination
+//     const msgMaster = await msgMasterModel.findAll({
+//       include: [
+//         {
+//           model: subGroupModel, // Include the subGroupModel to get msg_sgroup_mst
+//           include: [
+//             {
+//               model: groupModel, // Include the groupModel within subGroupModel
+//             },
+//           ],
+//         },
+//         {
+//           model: msgBodyModel, // Include the msgBodyModel to fetch data from msg_body
+//           order: [["ordersno", "ASC"]], // Order the results by ordersno
+//         },
+//       ],
+//       limit: limit, // Apply limit for pagination
+//       offset: offset, // Apply offset for pagination
+//     });
+
+//     // Fetch the total count of records
+//     const totalCount = await msgMasterModel.count(); // Get total count of records for pagination
+
+//     // Calculate total pages
+//     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
+
+//     // Check if any data exists
+//     if (msgMaster.length > 0) {
+//       res.status(200).json({
+//         status: "success",
+//         data: msgMaster,
+//         pagination: {
+//           currentPage: page,
+//           totalPages: totalPages,
+//           limit: limit,
+//         },
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: "success",
+//         message: "No Data Found",
+//         data: null,
+//         pagination: {
+//           currentPage: page,
+//           totalPages: 0, // No pages if no data is found
+//           limit: limit,
+//         },
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error fetching msgMaster:", error);
+//     res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });
 
 // ===========end 10-10-2024 working
 // =================old
@@ -356,7 +451,62 @@ exports.getmsgbody = asyncHandler(async (req, res) => {
 });
 // ============================ App Related app ki api start ===================================
 // ============================ App Related app ki api start ===================================
+exports.get_Single_Msg_master_Detail_by_msg_id = asyncHandler(async (req, res) => {
+  try {
+    const {msg_id} = req.query;
+  
+    const msgMaster = await msgMasterModel.findOne({ where: { msg_id: msg_id },},{
+      include: [
+        {
+          model: subGroupModel, // Include the subGroupModel to get msg_sgroup_mst
+          include: [
+            {
+              model: groupModel, // Include the groupModel within subGroupModel
+            },
+          ],
+        },
+        {
+          model: msgBodyModel, // Include the msgBodyModel to fetch data from msg_body
+          order: [["ordersno", "ASC"]], // Order the results by ordersno
+        },
+      ],
+    
+    });
+   
+    const msgMaster_body = await msgBodyModel.findAll({ where: { msg_id: msg_id },  order: [['ordersno', 'ASC']],});
+   
+    const parsedMsgMasterBody = msgMaster_body.map((msg) => {
+      return {
+        ...msg.toJSON(), // Ensure sequelize data is converted to a plain object
+        data_text: JSON.parse(msg.data_text), // Parse data_text from string to JSON
+      };
+    });
 
+
+    if(msgMaster)
+      {
+          res.status(200).json({
+            status: true,
+             data: {msg_detail:msgMaster,msg_body:parsedMsgMasterBody},
+          });
+        }
+        else
+        {
+          res.status(200).json({
+            status: false,
+            data: {msg_detail:msgMaster,msg_body:msgMaster_body},
+          });
+        }
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+// By sended_msg_id
 exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {sended_msg_id} = req.params;
@@ -475,6 +625,8 @@ exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
 //     });
 //   }
 // });
+//  100 % Working Code End============
+
 // Chage above code
 exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
   try {
@@ -495,10 +647,10 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
           where: {
             show_upto: {
-              [Op.gte]: startOfDay(today), // Start of today's date
-              [Op.lte]: endOfDay(today)    // End of today's date
+              [Op.gt]: today // Show only messages where show_upto is greater than today
             }
           }
+        
         },
          {
           model: studentMainDetailModel, // Join with studentMainDetailModel
