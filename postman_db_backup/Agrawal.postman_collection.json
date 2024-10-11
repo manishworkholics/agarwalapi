@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mobile_no\":\"7692898921\"\r\n}",
+							"raw": "{\r\n    \"mobile_no\":\"7415309294\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -39,13 +39,41 @@
 					"response": []
 				},
 				{
+					"name": "Resent Otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_no\":\"7415309294\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/parents/resentOtp",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"parents",
+								"resentOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "otp-verify",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mobile_no\":\"7692898921\",\r\n    \"otp\": \"9173\"\r\n}",
+							"raw": "{\r\n    \"mobile_no\":\"7692898921\",\r\n    \"otp\": \"9173\",\r\n    \"fcm_token\":\"xyz\",\r\n    \"mobile_uuid\":\"xyz\",\"mobile_info\":\"xyz\",\"mobile_platform\":\"Android\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,6 +89,75 @@
 								"api",
 								"parents",
 								"otp-verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test sms",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_no\":\"7692898921\",\r\n    \"otp\": \"9173\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://tagsolutions.in/sms-panel/api/http/index.php?username=APSCHOOL&apikey=E669B-455B0&apirequest=Text&sender=ACTIDR&mobile=&message=OTP for Login on app is 4570. Please do not share this with anyone for security reasons.&route=TRANS&TemplateID=1407167332525147046&format=JSON",
+							"protocol": "http",
+							"host": [
+								"tagsolutions",
+								"in"
+							],
+							"path": [
+								"sms-panel",
+								"api",
+								"http",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "APSCHOOL"
+								},
+								{
+									"key": "apikey",
+									"value": "E669B-455B0"
+								},
+								{
+									"key": "apirequest",
+									"value": "Text"
+								},
+								{
+									"key": "sender",
+									"value": "ACTIDR"
+								},
+								{
+									"key": "mobile",
+									"value": ""
+								},
+								{
+									"key": "message",
+									"value": "OTP for Login on app is 4570. Please do not share this with anyone for security reasons."
+								},
+								{
+									"key": "route",
+									"value": "TRANS"
+								},
+								{
+									"key": "TemplateID",
+									"value": "1407167332525147046"
+								},
+								{
+									"key": "format",
+									"value": "JSON"
+								}
 							]
 						}
 					},
@@ -397,6 +494,265 @@
 								"category",
 								"updateCategory",
 								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "Add Support",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NjU3NDksImV4cCI6MTcyODQ2OTM0OX0.Ludyb-tWhRbmDW_Ll23dQVUsHHAdpT31_VCT-BxHIuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberassign\":1,\r\n    \"pagecode\":\"SUPPORT\",\r\n    \"title\":\"SUPPORT\", \r\n    \"detail\":\"<p><br><strong>Contact Us</strong></p><p>Thank you for your interest in Agrawal Public School! We value your feedback, questions, and inquiries. Here's how you can reach us:</p><p><strong>Customer Support:</strong> For assistance with technical issues, account inquiries, or general support, please email our customer support team at support@Agrawal.com. We strive to respond to all inquiries promptly and provide the assistance you need.</p><p><strong>Partnerships and Collaborations:</strong> If you're interested in partnering with Agrawal Public School or collaborating on wellness initiatives, please reach out to our partnerships team at partnerships@Agrawal.com. We welcome opportunities to work together in promoting health and well-being in the workplace.</p><p><strong>Media and Press Inquiries:</strong> For media inquiries, press releases, or interview requests, please contact our media relations team at media@Agrawal.com. We're happy to provide information, insights, or arrange interviews with our team members.</p><p><strong>Feedback and Suggestions:</strong> Your feedback is invaluable to us as we strive to improve our platform and services. If you have suggestions, ideas, or feedback to share, please email us at feedback@Agrawal.com. We appreciate your input and are dedicated to incorporating it into our ongoing efforts to enhance Agrawal Public School.</p><p><strong>General Inquiries:</strong> For any other inquiries or information not covered above, please feel free to reach out to us at info@Agrawal.com. We're here to assist you and provide any information you may need about Agrawal Public School and our offerings.</p>\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/addpage",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"addpage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add T&C",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NjU3NDksImV4cCI6MTcyODQ2OTM0OX0.Ludyb-tWhRbmDW_Ll23dQVUsHHAdpT31_VCT-BxHIuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numberassign\":2,\r\n     \"title\":\"TERMSANDCONDITION\", \r\n     \"pagecode\":\"TERMSANDCONDITION\",\r\n     \"detail\":\"<p><br><strong>Terms And Condition</strong></p><p>Thank you for your interest in Agrawal Public School! We value your feedback, questions, and inquiries. Here's how you can reach us:</p><p><strong>Customer Support:</strong> For assistance with technical issues, account inquiries, or general support, please email our customer support team at support@Agrawal.com. We strive to respond to all inquiries promptly and provide the assistance you need.</p><p><strong>Partnerships and Collaborations:</strong> If you're interested in partnering with Agrawal Public School or collaborating on wellness initiatives, please reach out to our partnerships team at partnerships@Agrawal.com. We welcome opportunities to work together in promoting health and well-being in the workplace.</p><p><strong>Media and Press Inquiries:</strong> For media inquiries, press releases, or interview requests, please contact our media relations team at media@Agrawal.com. We're happy to provide information, insights, or arrange interviews with our team members.</p><p><strong>Feedback and Suggestions:</strong> Your feedback is invaluable to us as we strive to improve our platform and services. If you have suggestions, ideas, or feedback to share, please email us at feedback@Agrawal.com. We appreciate your input and are dedicated to incorporating it into our ongoing efforts to enhance Agrawal Public School.</p><p><strong>General Inquiries:</strong> For any other inquiries or information not covered above, please feel free to reach out to us at info@Agrawal.com. We're here to assist you and provide any information you may need about Agrawal Public School and our offerings.</p>\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/addpage",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"addpage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Pages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NTgzMDQsImV4cCI6MTcyODQ2MTkwNH0.Erdw6pCYjjtocjJV2kBEEnMXT6KVXCOBOEtCxNlhBsA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/getpageDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"getpageDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App use only pages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NjU3NDksImV4cCI6MTcyODQ2OTM0OX0.Ludyb-tWhRbmDW_Ll23dQVUsHHAdpT31_VCT-BxHIuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/getAppPageDetail",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"getAppPageDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODE0MjAsImV4cCI6MTcyODM4NTAyMH0.m3kijlrqVMu2mmw1qoieOaKs0KbMojVrOYsQMctz1Ig",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/getSinglepageDetail/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"getSinglepageDetail",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update SUPPORT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODE0MjAsImV4cCI6MTcyODM4NTAyMH0.m3kijlrqVMu2mmw1qoieOaKs0KbMojVrOYsQMctz1Ig",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n     \"title\":\"SUPPORT\",  \r\n     \"detail\":\"Phone Nu : 0731-2578654 ,Address : 5683 Nipania\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/updatepage/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"updatepage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updatet T AND C",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODE0MjAsImV4cCI6MTcyODM4NTAyMH0.m3kijlrqVMu2mmw1qoieOaKs0KbMojVrOYsQMctz1Ig",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n      \"title\":\"TERMSANDCONDITION\", \r\n     \"detail\":\"Phone Nu : 0731-2578654 ,Address : 5683 Nipania\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/pages/updatepage/2",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"updatepage",
+								"2"
 							]
 						}
 					},
@@ -905,7 +1261,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDA0MTAsImV4cCI6MTcyODA0NDAxMH0.9LMdD0gtARcf09NKI2vdEEP42eEHciaATu1WbrCOAqs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODcxNjMsImV4cCI6MTcyODM5MDc2M30.Z6B59jtOX0A7g6aMAUMs3zCFPpz5dAprjhJkKKx4f2I",
 									"type": "string"
 								}
 							]
@@ -1242,7 +1598,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg1NjIyMjEsImV4cCI6MTcyODU5ODIyMX0.-ri4OtRTIci1NYn0BXu7AmGVMWdmSE1OG3m5TFe5XNQ",
 									"type": "string"
 								}
 							]
@@ -1282,7 +1638,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
 									"type": "string"
 								}
 							]
@@ -1291,7 +1647,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"subject_text\": \"Information regarding duration of second\",\r\n  \"show_upto\": \"2024-09-30\",\r\n  \"msg_priority\": 1,\r\n  \"msg_sgroup_id\": 5,\r\n  \"is_reply_type\": 0,\r\n  \"is_reply_required_any\": 0,\r\n  \"is_active\": 1,\r\n  \"entry_by\": 1,\r\n  \"message_body\": [\r\n    {\r\n      \"msg_type\": \"text-display\",\r\n      \"data_text\": \"{\\\"title\\\":\\\"Result of WMT APS of July 18\\\",\\\"link\\\":\\\"https://app.actindore.com/uploads/july%2018%20class%209th.pdf\\\"}\",\r\n      \"order_number\": 1,\r\n      \"is_reply_required\":0\r\n    },\r\n    {\r\n      \"msg_type\": \"IMAGE-DISPLAY\",\r\n      \"data_text\": \"{\"link\":\"https://apsindore.com/wp-content/uploads/2022/12/deco.jpg\"}\",\r\n      \"order_number\": 2,\r\n      \"is_reply_required\":0\r\n    }\r\n  ]\r\n}\r\n",
+							"raw": "{\r\n    \"subject_text\": \"9 All inpute etc available in this msggg  Testing Msg Contain All Dataaa\",\r\n    \"show_upto\": \"2024-12-30\",\r\n    \"msg_priority\": 1,\r\n    \"msg_sgroup_id\": 5,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 0,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Reminder - 1 for Second Term outstanding fee/charges.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. There should be no need to remind and make calls to you in this regard. We are again requesting you to deposit any outstanding fee at the earliest because if outstanding fee is delayed further then you will not be eligible to obtain your ward's marksheet. Hence deposit the fee at the earliest and in future also please be careful about depositing the fee within stipulated time.<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Scholar Allotment Compliance (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://app.actindore.com/uploads/image_65783b8f8eb5c_1.png\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://pay.actindore.com\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://app.actindore.com/uploads/aa3.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1307,6 +1663,112 @@
 								"api",
 								"msg",
 								"insertMsgData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sent To Scholar button",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=276&admin_id=115",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"SentMsgToScholarData"
+							],
+							"query": [
+								{
+									"key": "new_msg_id",
+									"value": "276"
+								},
+								{
+									"key": "admin_id",
+									"value": "115"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sent To Selected Scholar button Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg1NjAxMzEsImV4cCI6MTcyODU5NjEzMX0.1LO23EWG-4ErU0WsWHkwKYof7PwsG_HYkf5o-HeNZlU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=262&admin_id=115&selected_ids=22010005,22010007,21010002,22010202,44010105,22010105",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"SentMsgToScholarData"
+							],
+							"query": [
+								{
+									"key": "new_msg_id",
+									"value": "262"
+								},
+								{
+									"key": "admin_id",
+									"value": "115"
+								},
+								{
+									"key": "selected_ids",
+									"value": "22010005,22010007,21010002,22010202,44010105,22010105"
+								}
 							]
 						}
 					},
@@ -1339,7 +1801,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDA0MTAsImV4cCI6MTcyODA0NDAxMH0.9LMdD0gtARcf09NKI2vdEEP42eEHciaATu1WbrCOAqs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
 									"type": "string"
 								}
 							]
@@ -1347,7 +1809,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/getMsgDetail?page=1&limit=2",
+							"raw": "{{Agrawal}}/api/msg/getMsgDetail?page=250&limit=1",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1359,11 +1821,11 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "250"
 								},
 								{
 									"key": "limit",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}
@@ -1371,7 +1833,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Single msg detail",
+					"name": "Get Single msg By  sended_msg_iddetail",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1401,14 +1863,14 @@
 					"response": []
 				},
 				{
-					"name": "App Get Inbox Message By Number",
+					"name": "App Onlu Get Master Single msg by msg_id",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2NDAyMTAsImV4cCI6MTcyODY3NjIxMH0.DN-Oft3t_s2Jk8lzTb8wl-k0k3ILXk4lvnArcVAbz58",
 									"type": "string"
 								}
 							]
@@ -1416,7 +1878,42 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/getInboxMsgDetail/7692898925",
+							"raw": "{{Agrawal}}/api/msg/get_single_mst_msg_by_msg_id?msg_id=278",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"get_single_mst_msg_by_msg_id"
+							],
+							"query": [
+								{
+									"key": "msg_id",
+									"value": "278"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Inbox Message By Number",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getInboxMsgDetail/9009436798",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1424,7 +1921,7 @@
 								"api",
 								"msg",
 								"getInboxMsgDetail",
-								"7692898925"
+								"9009436798"
 							]
 						}
 					},
@@ -1438,7 +1935,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
 									"type": "string"
 								}
 							]
@@ -1468,7 +1965,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg1NjAxMzEsImV4cCI6MTcyODU5NjEzMX0.1LO23EWG-4ErU0WsWHkwKYof7PwsG_HYkf5o-HeNZlU",
 									"type": "string"
 								}
 							]
@@ -1476,7 +1973,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/getLastdayMsgDetail/7692898925",
+							"raw": "{{Agrawal}}/api/msg/getLastdayMsgDetail/9009436798",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1484,7 +1981,7 @@
 								"api",
 								"msg",
 								"getLastdayMsgDetail",
-								"7692898925"
+								"9009436798"
 							]
 						}
 					},
@@ -1498,7 +1995,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
 									"type": "string"
 								}
 							]
@@ -2060,7 +2557,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzOTA0NDMsImV4cCI6MTcyODM5NDA0M30.7efjXr5Xm_ZoKprnHx9ZTtJakflMGO5UOEPd_-PNf60",
 									"type": "string"
 								}
 							]
@@ -2069,7 +2566,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"full_name\": \"Admin Doe\",\r\n  \"adminuser_name\": \"admin\",\r\n  \"admin_password\": \"admin@gmail.com\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567890\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"raw": "{\r\n  \"full_name\": \"Admin Chandan\",\r\n  \"adminuser_name\": \"chandan\",\r\n  \"admin_password\": \"chandan@gmail.com\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567894\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2093,6 +2590,16 @@
 				{
 					"name": "Login",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NjU1MDAsImV4cCI6MTcyODQ2OTEwMH0.b3NV3slb3SEoatAcvOSjwyv7i9P5_7LUuVx1-hslbf4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -2165,7 +2672,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzOTAwMTYsImV4cCI6MTcyODM5MzYxNn0.gh42vxGOaWxo_FoyZmFBxhIMWMZeXgAH7bLn-QBWwVY",
 									"type": "string"
 								}
 							]
@@ -2174,7 +2681,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"admin_id\": 107,\r\n  \"old_password\": \"securepassword123\",\r\n  \"new_password\": \"newPassword456\"\r\n}",
+							"raw": "{\r\n  \"admin_id\": 112,\r\n  \"old_password\": \"admin@gmail.com2\",\r\n  \"new_password\": \"admin@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2206,7 +2713,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDE5NzcsImV4cCI6MTcyODA0NTU3N30.NWxzYJ5uvHOLvlEIJ_lXdVZOEnUzd0UVMypvUBRFkJQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODE0MjAsImV4cCI6MTcyODM4NTAyMH0.m3kijlrqVMu2mmw1qoieOaKs0KbMojVrOYsQMctz1Ig",
 									"type": "string"
 								}
 							]
@@ -2223,7 +2730,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/admin/getAllAdmin?page=1&limit=2",
+							"raw": "{{Agrawal}}/api/admin/getAllAdmin?page=2&limit=2",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -2235,7 +2742,7 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "limit",
@@ -2329,6 +2836,77 @@
 								"api",
 								"combine",
 								"dashboardcount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parent",
+			"item": []
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "Add Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/DELL/Desktop/images/Screenshot_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/v1/admin/imageUpload_Use/imageUpload",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"imageUpload_Use",
+								"imageUpload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Pdf",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/DELL/Desktop/images/dd12-13_0.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/v1/admin/pdfUpload_Use/pdfUpload",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"pdfUpload_Use",
+								"pdfUpload"
 							]
 						}
 					},
