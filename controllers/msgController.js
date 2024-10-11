@@ -474,13 +474,36 @@ exports.get_Single_Msg_master_Detail_by_msg_id = asyncHandler(async (req, res) =
     });
    
     const msgMaster_body = await msgBodyModel.findAll({ where: { msg_id: msg_id },  order: [['ordersno', 'ASC']],});
-   
-    const parsedMsgMasterBody = msgMaster_body.map((msg) => {
-      return {
-        ...msg.toJSON(), // Ensure sequelize data is converted to a plain object
-        data_text: JSON.parse(msg.data_text), // Parse data_text from string to JSON
-      };
-    });
+  //  ==100 % working code start
+    // const parsedMsgMasterBody = msgMaster_body.map((msg) => {
+    //   return {
+    //     ...msg.toJSON(), // Ensure sequelize data is converted to a plain object
+    //     data_text: JSON.parse(msg.data_text), // Parse data_text from string to JSON
+    //   };
+    // });
+// 100 % working code end 
+const parsedMsgMasterBody = msgMaster_body.map((msg) => {
+  const dataText = JSON.parse(msg.data_text);
+
+  if (dataText.options && typeof dataText.options === 'string') {
+    // Convert the options from a semicolon-separated string to an array of objects
+    const optionsArray = dataText.options
+      .split(';')
+      .filter(option => option.trim() !== '') // Remove any empty options
+      .map((option, index) => ({
+        [`option${index + 1}`]: option.trim() // Use dynamic keys for option1, option2, etc.
+      }));
+
+    // Update data_text with the new options array
+    dataText.options = optionsArray;
+  }
+
+  return {
+    ...msg.toJSON(),
+    data_text: dataText,
+  };
+});
+
 
 
     if(msgMaster)
