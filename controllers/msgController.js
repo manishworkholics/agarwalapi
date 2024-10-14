@@ -323,7 +323,7 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
   }
 });
 
-
+// 0ldddd
 // exports.getmsgMaster = asyncHandler(async (req, res) => {
 //   try {
 //     // Extract pagination parameters from the query
@@ -675,6 +675,7 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
           }
         
         },
+       
          {
           model: studentMainDetailModel, // Join with studentMainDetailModel
           as: 'student', // Use the alias 'student' from the association
@@ -1417,61 +1418,530 @@ exports.updateSubGroup = asyncHandler(async (req, res) => {
 
 
 
+// 100 % Working This code is for App developer inbox like inbox type Don't edit
+exports.AppInbox_testing2 = asyncHandler(async (req, res) => {
+  try {
+    const { mobile } = req.params;
+    const today = new Date(); // Get the current date
 
-// exports.getSearchDetail = asyncHandler(async (req, res) => {
-//   try {
-//     const {mobile,searchquery} = req.query;
-  
-//     // Get the current date and time
-//     const now = new Date();
-//     const today = new Date(); // Current date
+    // Fetching all messages along with related group, subgroup, and student details
+    const msgSendedMaster2 = await sendedMsgModel.findAll({
+      limit: 100,
+      order: [["sended_msg_id", "DESC"]],
+      where: {
+        mobile_no: mobile, // Filter by mobile number
+      },
+      include: [
+        {
+          model: msgMasterModel,
+          as: "msg_mst", // Include msgMaster with alias
+          where: {
+            show_upto: {
+              [Op.gt]: today, // Show messages where show_upto is greater than today
+            },
+          },
+          include: [
+            {
+              model: subGroupModel, // Include subgroup
+              as: "subgroup", // Alias for subgroup
+              include: [
+                {
+                  model: groupModel, // Include group
+                  as: "group", // Alias for group
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: studentMainDetailModel, // Include student details
+          as: "student", // Alias for student
+        },
+      ],
+    });
 
+    // Organize messages by group and subgroup
+    const groupedData = {};
 
-//     const msgSendedMaster = await sendedMsgModel.findAll({
-//       limit: 100,
-//   order: [['sended_msg_id', 'DESC']] ,
-//   where: {
-//     mobile_no: mobile // Replace with the mobile number you want to filter by
-//   },
-//       include: [
-//         {
-//           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
-//           // where: {
-//           //   show_upto: {
-//           //     [Op.gt]: today // Show only messages where show_upto is greater than today
-//           //   }
-//           // }
-        
-//         },
-//          {
-//           model: studentMainDetailModel, // Join with studentMainDetailModel
-//           as: 'student', // Use the alias 'student' from the association
-//           // attributes: ['student_name'], // Fetch only the student_name
-//         }
-//       ],
-//     });
-//     if(msgSendedMaster.length > 0)
-//       {
-//           res.status(200).json({
-//             status: true,
-//             length:msgSendedMaster.length,
-//             data: msgSendedMaster,
-//           });
-//         }
-//         else
-//         {
-//           res.status(200).json({
-//             status: false,
-//             length:msgSendedMaster.length,
-//             data: msgSendedMaster,
-//           });
-//         }
-//   } catch (error) {
-//     console.error("Error fetching msgMaster with msgMaster:", error);
-//     res.status(500).json({
-//       status: "error",
-//       message: "Internal server error",
-//       error: error.message,
-//     });
-//   }
-// });
+    msgSendedMaster2.forEach((message) => {
+      const group = message.msg_mst.subgroup.group;
+      const subgroup = message.msg_mst.subgroup;
+
+      // Initialize group in the groupedData if not already present
+      if (!groupedData[group.msg_group_id]) {
+        groupedData[group.msg_group_id] = {
+          msg_group_id: group.msg_group_id,
+          msg_group_name: group.msg_group_name,
+          subgroups: {},
+        };
+      }
+
+      // Initialize subgroup in the group's subgroups if not already present
+      if (!groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id]) {
+        groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id] = {
+          msg_sgroup_id: subgroup.msg_sgroup_id,
+          msg_sgroup_name: subgroup.msg_sgroup_name,
+          messages: [],
+        };
+      }
+
+      // Push message to the corresponding subgroup
+      groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id].messages.push({
+        sended_msg_id: message.sended_msg_id,
+        msg_id: message.msg_id,
+        mobile_no: message.mobile_no,
+        sch_short_nm: message.sch_short_nm,
+        scholar_no: message.scholar_no,
+        sended_date: message.sended_date,
+        sended_by: message.sended_by,
+        is_seen: message.is_seen,
+        seen_on: message.seen_on,
+        is_starred: message.is_starred,
+        starred_on: message.starred_on,
+        is_reply_done: message.is_reply_done,
+        reply_on: message.reply_on,
+        is_fcm_sended: message.is_fcm_sended,
+        admission_id: message.admission_id,
+        class_subject_videos_id: message.class_subject_videos_id,
+        class_id: message.class_id,
+        subject_id: message.subject_id,
+        msg_mst: {
+          msg_id: message.msg_mst.msg_id,
+          subject_text: message.msg_mst.subject_text,
+          show_upto: message.msg_mst.show_upto,
+          msg_priority: message.msg_mst.msg_priority,
+          msg_sgroup_id: message.msg_mst.msg_sgroup_id,
+          is_reply_type: message.msg_mst.is_reply_type,
+          is_reply_required_any: message.msg_mst.is_reply_required_any,
+          is_active: message.msg_mst.is_active,
+          school_id: message.msg_mst.school_id,
+          createdAt: message.msg_mst.createdAt,
+        },
+        student: {
+          student_main_id: message.student.student_main_id,
+          student_name: message.student.student_name,
+          color: message.student.color,
+          student_number: message.student.student_number,
+          student_family_mobile_number: message.student.student_family_mobile_number,
+        },
+      });
+    });
+
+    // Convert groupedData into an array format for better response formatting
+    const response2 = Object.values(groupedData).map((group) => ({
+      ...group,
+      subgroups: Object.values(group.subgroups),
+    }));
+
+    res.status(200).json({
+      status: true,
+      length: msgSendedMaster2.length,
+      groupedData: response2,
+    });
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+// This is for seen msg 100 % Working
+exports.AppgetSeenMsgDetail_testing2 = asyncHandler(async (req, res) => {
+  try {
+    const { mobile } = req.params;
+    const today = new Date(); // Get the current date
+
+    // Fetching all messages along with related group, subgroup, and student details
+    const msgSendedMaster2 = await sendedMsgModel.findAll({
+      limit: 100,
+      order: [["sended_msg_id", "DESC"]],
+      where: {
+        mobile_no: mobile, // Filter by mobile number
+        is_seen:1
+      },
+      include: [
+        {
+          model: msgMasterModel,
+          
+          include: [
+            {
+              model: subGroupModel, // Include subgroup
+              as: "subgroup", // Alias for subgroup
+              include: [
+                {
+                  model: groupModel, // Include group
+                  as: "group", // Alias for group
+                },
+              ],
+            }, 
+             
+          ],
+        },
+        {
+          model: studentMainDetailModel, // Include student details
+          as: "student", // Alias for student
+        },
+      ],
+    });
+
+    // Organize messages by group and subgroup
+    const groupedData = {};
+
+    msgSendedMaster2.forEach((message) => {
+      const group = message.msg_mst.subgroup.group;
+      const subgroup = message.msg_mst.subgroup;
+
+      // Initialize group in the groupedData if not already present
+      if (!groupedData[group.msg_group_id]) {
+        groupedData[group.msg_group_id] = {
+          msg_group_id: group.msg_group_id,
+          msg_group_name: group.msg_group_name,
+          subgroups: {},
+        };
+      }
+
+      // Initialize subgroup in the group's subgroups if not already present
+      if (!groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id]) {
+        groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id] = {
+          msg_sgroup_id: subgroup.msg_sgroup_id,
+          msg_sgroup_name: subgroup.msg_sgroup_name,
+          messages: [],
+        };
+      }
+
+      // Push message to the corresponding subgroup
+      groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id].messages.push({
+        sended_msg_id: message.sended_msg_id,
+        msg_id: message.msg_id,
+        mobile_no: message.mobile_no,
+        sch_short_nm: message.sch_short_nm,
+        scholar_no: message.scholar_no,
+        sended_date: message.sended_date,
+        sended_by: message.sended_by,
+        is_seen: message.is_seen,
+        seen_on: message.seen_on,
+        is_starred: message.is_starred,
+        starred_on: message.starred_on,
+        is_reply_done: message.is_reply_done,
+        reply_on: message.reply_on,
+        is_fcm_sended: message.is_fcm_sended,
+        admission_id: message.admission_id,
+        class_subject_videos_id: message.class_subject_videos_id,
+        class_id: message.class_id,
+        subject_id: message.subject_id,
+        msg_mst: {
+          msg_id: message.msg_mst.msg_id,
+          subject_text: message.msg_mst.subject_text,
+          show_upto: message.msg_mst.show_upto,
+          msg_priority: message.msg_mst.msg_priority,
+          msg_sgroup_id: message.msg_mst.msg_sgroup_id,
+          is_reply_type: message.msg_mst.is_reply_type,
+          is_reply_required_any: message.msg_mst.is_reply_required_any,
+          is_active: message.msg_mst.is_active,
+          school_id: message.msg_mst.school_id,
+          createdAt: message.msg_mst.createdAt,
+        },
+        student: {
+          student_main_id: message.student.student_main_id,
+          student_name: message.student.student_name,
+          color: message.student.color,
+          student_number: message.student.student_number,
+          student_family_mobile_number: message.student.student_family_mobile_number,
+        },
+      });
+    });
+
+    // Convert groupedData into an array format for better response formatting
+    const response2 = Object.values(groupedData).map((group) => ({
+      ...group,
+      subgroups: Object.values(group.subgroups),
+    }));
+
+    res.status(200).json({
+      status: true,
+      length: msgSendedMaster2.length,
+      groupedData: response2,
+    });
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+// LastDay Msg 100 % Working
+exports.AppgetLastdayMsgDetail_testing2 = asyncHandler(async (req, res) => {
+  try {
+    const { mobile } = req.params;
+     // Get the current date and time
+     const now = new Date();
+     const today = new Date(); // Current date
+ 
+     // Calculate the start of today (midnight)
+     const startOfToday = new Date(now);
+     startOfToday.setHours(0, 0, 0, 0);
+ 
+     // Calculate the start of yesterday (midnight)
+     const startOfYesterday = new Date(now);
+     startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+     startOfYesterday.setHours(0, 0, 0, 0);
+ 
+     // Calculate the end of yesterday (just before midnight)
+     const endOfYesterday = new Date(startOfYesterday);
+     endOfYesterday.setHours(23, 59, 59, 999); // Last millisecond of the day
+ 
+    // Fetching all messages along with related group, subgroup, and student details
+    const msgSendedMaster2 = await sendedMsgModel.findAll({
+      limit: 100,
+      order: [["sended_msg_id", "DESC"]],
+      where: {
+        mobile_no: mobile, // Filter by mobile number
+      },
+      include: [
+        {
+          model: msgMasterModel,
+          as: "msg_mst", // Include msgMaster with alias
+          where: {
+            show_upto: {
+              [Op.gte]: startOfDay(today), // Start of today's date
+              [Op.lte]: endOfDay(today)    // End of today's date
+            },
+          },
+          include: [
+            {
+              model: subGroupModel, // Include subgroup
+              as: "subgroup", // Alias for subgroup
+              include: [
+                {
+                  model: groupModel, // Include group
+                  as: "group", // Alias for group
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: studentMainDetailModel, // Include student details
+          as: "student", // Alias for student
+        },
+      ],
+    });
+
+    // Organize messages by group and subgroup
+    const groupedData = {};
+
+    msgSendedMaster2.forEach((message) => {
+      const group = message.msg_mst.subgroup.group;
+      const subgroup = message.msg_mst.subgroup;
+
+      // Initialize group in the groupedData if not already present
+      if (!groupedData[group.msg_group_id]) {
+        groupedData[group.msg_group_id] = {
+          msg_group_id: group.msg_group_id,
+          msg_group_name: group.msg_group_name,
+          subgroups: {},
+        };
+      }
+
+      // Initialize subgroup in the group's subgroups if not already present
+      if (!groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id]) {
+        groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id] = {
+          msg_sgroup_id: subgroup.msg_sgroup_id,
+          msg_sgroup_name: subgroup.msg_sgroup_name,
+          messages: [],
+        };
+      }
+
+      // Push message to the corresponding subgroup
+      groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id].messages.push({
+        sended_msg_id: message.sended_msg_id,
+        msg_id: message.msg_id,
+        mobile_no: message.mobile_no,
+        sch_short_nm: message.sch_short_nm,
+        scholar_no: message.scholar_no,
+        sended_date: message.sended_date,
+        sended_by: message.sended_by,
+        is_seen: message.is_seen,
+        seen_on: message.seen_on,
+        is_starred: message.is_starred,
+        starred_on: message.starred_on,
+        is_reply_done: message.is_reply_done,
+        reply_on: message.reply_on,
+        is_fcm_sended: message.is_fcm_sended,
+        admission_id: message.admission_id,
+        class_subject_videos_id: message.class_subject_videos_id,
+        class_id: message.class_id,
+        subject_id: message.subject_id,
+        msg_mst: {
+          msg_id: message.msg_mst.msg_id,
+          subject_text: message.msg_mst.subject_text,
+          show_upto: message.msg_mst.show_upto,
+          msg_priority: message.msg_mst.msg_priority,
+          msg_sgroup_id: message.msg_mst.msg_sgroup_id,
+          is_reply_type: message.msg_mst.is_reply_type,
+          is_reply_required_any: message.msg_mst.is_reply_required_any,
+          is_active: message.msg_mst.is_active,
+          school_id: message.msg_mst.school_id,
+          createdAt: message.msg_mst.createdAt,
+        },
+        student: {
+          student_main_id: message.student.student_main_id,
+          student_name: message.student.student_name,
+          color: message.student.color,
+          student_number: message.student.student_number,
+          student_family_mobile_number: message.student.student_family_mobile_number,
+        },
+      });
+    });
+
+    // Convert groupedData into an array format for better response formatting
+    const response2 = Object.values(groupedData).map((group) => ({
+      ...group,
+      subgroups: Object.values(group.subgroups),
+    }));
+
+    res.status(200).json({
+      status: true,
+      length: msgSendedMaster2.length,
+      groupedData: response2,
+    });
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+// Starred 100% working
+exports.AppgetStaredMsgDetail_testing2 = asyncHandler(async (req, res) => {
+  try {
+    const { mobile } = req.params;
+    const today = new Date(); // Get the current date
+
+    // Fetching all messages along with related group, subgroup, and student details
+    const msgSendedMaster2 = await sendedMsgModel.findAll({
+      limit: 100,
+      order: [["sended_msg_id", "DESC"]],
+      where: {
+        mobile_no: mobile, // Filter by mobile number
+        is_starred:1
+      },
+      include: [
+        {
+          model: msgMasterModel,
+          as: "msg_mst", // Include msgMaster with alias
+          include: [
+            {
+              model: subGroupModel, // Include subgroup
+              as: "subgroup", // Alias for subgroup
+              include: [
+                {
+                  model: groupModel, // Include group
+                  as: "group", // Alias for group
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: studentMainDetailModel, // Include student details
+          as: "student", // Alias for student
+        },
+      ],
+    });
+
+    // Organize messages by group and subgroup
+    const groupedData = {};
+
+    msgSendedMaster2.forEach((message) => {
+      const group = message.msg_mst.subgroup.group;
+      const subgroup = message.msg_mst.subgroup;
+
+      // Initialize group in the groupedData if not already present
+      if (!groupedData[group.msg_group_id]) {
+        groupedData[group.msg_group_id] = {
+          msg_group_id: group.msg_group_id,
+          msg_group_name: group.msg_group_name,
+          subgroups: {},
+        };
+      }
+
+      // Initialize subgroup in the group's subgroups if not already present
+      if (!groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id]) {
+        groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id] = {
+          msg_sgroup_id: subgroup.msg_sgroup_id,
+          msg_sgroup_name: subgroup.msg_sgroup_name,
+          messages: [],
+        };
+      }
+
+      // Push message to the corresponding subgroup
+      groupedData[group.msg_group_id].subgroups[subgroup.msg_sgroup_id].messages.push({
+        sended_msg_id: message.sended_msg_id,
+        msg_id: message.msg_id,
+        mobile_no: message.mobile_no,
+        sch_short_nm: message.sch_short_nm,
+        scholar_no: message.scholar_no,
+        sended_date: message.sended_date,
+        sended_by: message.sended_by,
+        is_seen: message.is_seen,
+        seen_on: message.seen_on,
+        is_starred: message.is_starred,
+        starred_on: message.starred_on,
+        is_reply_done: message.is_reply_done,
+        reply_on: message.reply_on,
+        is_fcm_sended: message.is_fcm_sended,
+        admission_id: message.admission_id,
+        class_subject_videos_id: message.class_subject_videos_id,
+        class_id: message.class_id,
+        subject_id: message.subject_id,
+        msg_mst: {
+          msg_id: message.msg_mst.msg_id,
+          subject_text: message.msg_mst.subject_text,
+          show_upto: message.msg_mst.show_upto,
+          msg_priority: message.msg_mst.msg_priority,
+          msg_sgroup_id: message.msg_mst.msg_sgroup_id,
+          is_reply_type: message.msg_mst.is_reply_type,
+          is_reply_required_any: message.msg_mst.is_reply_required_any,
+          is_active: message.msg_mst.is_active,
+          school_id: message.msg_mst.school_id,
+          createdAt: message.msg_mst.createdAt,
+        },
+        student: {
+          student_main_id: message.student.student_main_id,
+          student_name: message.student.student_name,
+          color: message.student.color,
+          student_number: message.student.student_number,
+          student_family_mobile_number: message.student.student_family_mobile_number,
+        },
+      });
+    });
+
+    // Convert groupedData into an array format for better response formatting
+    const response2 = Object.values(groupedData).map((group) => ({
+      ...group,
+      subgroups: Object.values(group.subgroups),
+    }));
+
+    res.status(200).json({
+      status: true,
+      length: msgSendedMaster2.length,
+      groupedData: response2,
+    });
+  } catch (error) {
+    console.error("Error fetching msgMaster with msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});

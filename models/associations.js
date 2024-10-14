@@ -61,6 +61,17 @@ msgMasterModel.belongsTo(schoolModel, {
   targetKey: 'sch_id',
 });
 // School id match with school id and display school
+
+// link group and subgroup in msg
+msgMasterModel.belongsTo(subGroupModel, {
+  foreignKey: 'msg_sgroup_id', // foreign key in msgMaster
+  as: 'subgroup',              // Alias to use in your query
+});
+subGroupModel.belongsTo(groupModel, {
+  foreignKey: 'msg_group_id', // Foreign key in subgroup model
+  as: 'group',                // Alias for the group association
+});
+// link group and subgroup in msg
 module.exports = {
   groupModel,
   subGroupModel,

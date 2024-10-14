@@ -24,6 +24,7 @@ router.get('/get_single_mst_msg_by_msg_id',authMiddleware, MsgController.get_Sin
 //getSingleMsgDetail by  sended_msg_id
 router.get('/getSingleMsgDetail/:sended_msg_id',authMiddleware, MsgController.getSingleMsgDetail);
 router.get('/getInboxMsgDetail/:mobile',authMiddleware, MsgController.getInboxMsgDetail);
+
 router.get('/getSeenMsgDetail/:mobile',authMiddleware, MsgController.getSeenMsgDetail);
 router.get('/getStaredMsgDetail/:mobile',authMiddleware, MsgController.getStaredMsgDetail);
 router.get('/getLastdayMsgDetail/:mobile',authMiddleware, MsgController.getLastdayMsgDetail);
@@ -36,5 +37,5 @@ router.post('/insertMsgData',authMiddleware, MsgController.insertMsgData);
 router.get('/SentMsgToScholarData',authMiddleware, MsgController.SentMsgToScholarData);
 // ==============================================================
 router.get('/test',authMiddleware, MsgController.getmsgbody);
-
+// router.get('/testing2/:mobile',authMiddleware, MsgController.testing2);
 module.exports = router;
