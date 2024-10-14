@@ -978,7 +978,77 @@ exports.staredStatusUpdateMsgDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+// App Only Use 
+exports.getSearchDetail = asyncHandler(async (req, res) => {
+  try {
+    const { mobile, searchquery } = req.query;
 
+    // Check if mobile number is provided
+    if (!mobile) {
+      return res.status(400).json({
+        status: false,
+        message: "Mobile number is required",
+      });
+    }
+
+    // Set up the where clause for the query
+    const whereClause = {
+      mobile_no: mobile,
+    };
+
+    // If search query is provided, add it to the where clause
+    if (searchquery) {
+      whereClause[Sequelize.Op.and] = [
+        ...whereClause[Sequelize.Op.and] || [],
+        Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('msg_mst.subject_text')), {
+          [Sequelize.Op.like]: `%${searchquery.toLowerCase()}%`, // Use lower case for both column and query
+        }),
+      ];
+    }
+
+    const msgSendedMaster = await sendedMsgModel.findAll({
+      limit: 100, // Adjust limit as needed
+      order: [['sended_msg_id', 'DESC']],
+      where: whereClause,
+      include: [
+        {
+          model: msgMasterModel, // Include message master model
+          // attributes: ['subject_text'], // Uncomment if you want to fetch only specific fields
+        },
+        {
+          model: studentMainDetailModel, // Include student details model
+          as: 'student', // Use the alias 'student' from the association
+          // attributes: ['student_name'], // Uncomment if you want to fetch only specific fields
+        },
+      ],
+    });
+
+    // Return the results
+    if (msgSendedMaster.length === 0) {
+      return res.status(200).json({
+        status: false,
+        length: 0,
+        message: "No messages found",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      length: msgSendedMaster.length,
+      message: "Work available",
+      data: msgSendedMaster,
+    });
+
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
 // ============================ App Related app ki api End ===================================
 // ============================ App Related app ki api End ===================================
 
@@ -1344,3 +1414,64 @@ exports.updateSubGroup = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+
+
+// exports.getSearchDetail = asyncHandler(async (req, res) => {
+//   try {
+//     const {mobile,searchquery} = req.query;
+  
+//     // Get the current date and time
+//     const now = new Date();
+//     const today = new Date(); // Current date
+
+
+//     const msgSendedMaster = await sendedMsgModel.findAll({
+//       limit: 100,
+//   order: [['sended_msg_id', 'DESC']] ,
+//   where: {
+//     mobile_no: mobile // Replace with the mobile number you want to filter by
+//   },
+//       include: [
+//         {
+//           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
+//           // where: {
+//           //   show_upto: {
+//           //     [Op.gt]: today // Show only messages where show_upto is greater than today
+//           //   }
+//           // }
+        
+//         },
+//          {
+//           model: studentMainDetailModel, // Join with studentMainDetailModel
+//           as: 'student', // Use the alias 'student' from the association
+//           // attributes: ['student_name'], // Fetch only the student_name
+//         }
+//       ],
+//     });
+//     if(msgSendedMaster.length > 0)
+//       {
+//           res.status(200).json({
+//             status: true,
+//             length:msgSendedMaster.length,
+//             data: msgSendedMaster,
+//           });
+//         }
+//         else
+//         {
+//           res.status(200).json({
+//             status: false,
+//             length:msgSendedMaster.length,
+//             data: msgSendedMaster,
+//           });
+//         }
+//   } catch (error) {
+//     console.error("Error fetching msgMaster with msgMaster:", error);
+//     res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });

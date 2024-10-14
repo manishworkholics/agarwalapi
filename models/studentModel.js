@@ -27,6 +27,15 @@ const studentModel = sequelize.define('student_main_detail', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  tab_active_by_mobile: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  tab_active_status: {
+    type: DataTypes.TINYINT,
+    allowNull: true,
+    defaultValue:0
+  },
   // parents_id: {
   //   type: DataTypes.INTEGER, // Updated to INTEGER to match Parent model's ID
   //   allowNull: true,

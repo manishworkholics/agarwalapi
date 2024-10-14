@@ -16,6 +16,7 @@ router.get('/getSingleGroupData/:id',authMiddleware, MsgController.getSingleGrou
 router.put('/updateSingleGroupData/:msg_group_id',authMiddleware, MsgController.updateSingleGroupData);
 
 router.get('/getMsgDetail',authMiddleware, MsgController.getmsgMaster);
+router.get('/getSearchDetail',authMiddleware, MsgController.getSearchDetail);
 // App mobile app start
 //this is for just single master msg
 router.get('/get_single_mst_msg_by_msg_id',authMiddleware, MsgController.get_Single_Msg_master_Detail_by_msg_id);

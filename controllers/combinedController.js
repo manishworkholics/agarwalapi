@@ -113,3 +113,54 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
     }
   });
   
+
+  exports.updateStudentTabStatus = asyncHandler(async (req, res) => {
+    try {
+      const { mobile, student_main_id, status } = req.body; // Assuming you're sending data in the request body
+  
+      // Validate input
+      if (!mobile || !student_main_id || (status !== 0 && status !== 1)) {
+        return res.status(400).json({
+          status: false,
+          message: "Mobile number, student ID, and status (0 or 1) are required",
+        });
+      }
+  
+      // Find the student entry
+      const student = await studentMainModel.findOne({
+        where: {
+          mobile_no: mobile,
+          student_main_id: student_main_id,
+        },
+      });
+  
+      // Check if student exists
+      if (!student) {
+        return res.status(404).json({
+          status: false,
+          message: "Student not found",
+        });
+      }
+  
+      // Update the student's tab_active_by_mobile and tab_active_status
+      student.tab_active_by_mobile = mobile;
+      student.tab_active_status = status; // 0 or 1
+  
+      await student.save(); // Save the updated instance
+  
+      // Return success response
+      return res.status(200).json({
+        status: true,
+        message: "Student status updated successfully",
+        data: student,
+      });
+  
+    } catch (error) {
+      console.error("Error updating student status:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "Internal server error",
+        error: error.message,
+      });
+    }
+  });
