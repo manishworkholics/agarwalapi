@@ -116,7 +116,7 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
 
   exports.updateStudentTabStatus = asyncHandler(async (req, res) => {
     try {
-      const { mobile, student_main_id, status } = req.body; // Assuming you're sending data in the request body
+      const { student_main_id,mobile, status } = req.body; // Assuming you're sending data in the request body
   
       // Validate input
       if (!mobile || !student_main_id || (status !== 0 && status !== 1)) {
@@ -125,12 +125,16 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
           message: "Mobile number, student ID, and status (0 or 1) are required",
         });
       }
-  
+      
+  if(status == 0)
+  {
+    mobile = null;
+  }
+
       // Find the student entry
       const student = await studentMainModel.findOne({
         where: {
-          mobile_no: mobile,
-          student_main_id: student_main_id,
+         student_main_id: student_main_id,
         },
       });
   
@@ -143,10 +147,12 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
       }
   
       // Update the student's tab_active_by_mobile and tab_active_status
+     
       student.tab_active_by_mobile = mobile;
       student.tab_active_status = status; // 0 or 1
-  
       await student.save(); // Save the updated instance
+   
+      
   
       // Return success response
       return res.status(200).json({
