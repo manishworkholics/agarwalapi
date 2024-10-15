@@ -84,6 +84,10 @@ const schoolModel = sequelize.define('sch_mst', {
   mail_email_id  : {
     type: DataTypes.STRING,
     allowNull: true,
+  },
+  is_deleted : {
+    type: DataTypes.INTEGER,
+    defaultValue:0
   }, 
 }, {
   tableName: 'sch_mst', 
