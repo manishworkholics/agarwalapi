@@ -50,6 +50,10 @@ const subGroupModel = sequelize.define('msg_sgroup_mst', {
     allowNull: true,     // Set updatedAt to be required
     defaultValue: DataTypes.NOW, // Automatically set to current time if not provided
   },
+  is_deleted : {
+    type: DataTypes.INTEGER,
+    defaultValue:0
+  }, 
 }, {
   tableName: 'msg_sgroup_mst', 
    timestamps: true,

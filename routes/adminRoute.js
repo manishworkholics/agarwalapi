@@ -9,6 +9,7 @@ router.put('/updatePassword',authMiddleware, adminController.updatePassword);
 router.put('/updateProfileDetail/:admin_id',authMiddleware, adminController.updateProfileDetail);
 router.get('/getAllAdmin',authMiddleware, adminController.getAllAdmin);
 router.get('/getSingleAdmin/:id',authMiddleware, adminController.getSingleAdmin);
+router.delete('/deleteAdmin/:id',authMiddleware, adminController.deleteAdmin);
 
 router.post("/imageUpload", adminController.imageUpload);
 router.post("/pdfUpload", adminController.pdfUpload);

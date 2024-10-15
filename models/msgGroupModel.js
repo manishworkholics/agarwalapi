@@ -35,6 +35,10 @@ const groupModel = sequelize.define('msg_group_mst', {
     type: DataTypes.INTEGER,
     allowNull: true,
   }, 
+   is_deleted : {
+    type: DataTypes.INTEGER,
+    defaultValue:0
+  }, 
 }, {
   tableName: 'msg_group_mst', 
    timestamps: false,

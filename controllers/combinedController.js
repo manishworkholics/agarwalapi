@@ -113,60 +113,116 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
     }
   });
   
-
   exports.updateStudentTabStatus = asyncHandler(async (req, res) => {
     try {
-      const { student_main_id,mobile, status } = req.body; // Assuming you're sending data in the request body
-  
-      // Validate input
-      if (!mobile || !student_main_id || (status !== 0 && status !== 1)) {
-        return res.status(400).json({
-          status: false,
-          message: "Mobile number, student ID, and status (0 or 1) are required",
-        });
-      }
-      
-  if(status == 0)
-  {
-    mobile = null;
-  }
+        // Destructure variables from request body
+        const { student_main_id, mobile, status } = req.body;
 
-      // Find the student entry
-      const student = await studentMainModel.findOne({
-        where: {
-         student_main_id: student_main_id,
-        },
-      });
-  
-      // Check if student exists
-      if (!student) {
-        return res.status(404).json({
-          status: false,
-          message: "Student not found",
+        // Validate input
+        if (!mobile || !student_main_id || (status !== 0 && status !== 1)) {
+            return res.status(400).json({
+                status: false,
+                message: "Mobile number, student ID, and status (0 or 1) are required",
+            });
+        }
+
+        // Check if status is 0 and set mobile to null if true
+        let updatedMobile = mobile; // Use a new variable to store mobile value
+        if (status == 0) {
+            updatedMobile = null; // Assign null to the new variable
+        }
+
+        // Find the student entry
+        const student = await studentMainModel.findOne({
+            where: {
+                student_main_id: student_main_id,
+            },
         });
-      }
+
+        // Check if student exists
+        if (!student) {
+            return res.status(404).json({
+                status: false,
+                message: "Student not found",
+            });
+        }
+
+        // Update the student's tab_active_by_mobile and tab_active_status
+        student.tab_active_by_mobile = updatedMobile; // Use the new variable
+        student.tab_active_status = status; // 0 or 1
+        await student.save(); // Save the updated instance
+
+        // Return success response
+        return res.status(200).json({
+            status: true,
+            message: "Student status updated successfully",
+            data: student,
+        });
+
+    } catch (error) {
+        console.error("Error updating student status:", error);
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error",
+            error: error.message,
+        });
+    }
+});
+
+// 100 % working code 
+  // exports.updateStudentTabStatus = asyncHandler(async (req, res) => {
+  //   try {
+  //     const { student_main_id,mobile, status } = req.body; // Assuming you're sending data in the request body
   
-      // Update the student's tab_active_by_mobile and tab_active_status
+  //     // Validate input
+  //     if (!mobile || !student_main_id || (status !== 0 && status !== 1)) {
+  //       return res.status(400).json({
+  //         status: false,
+  //         message: "Mobile number, student ID, and status (0 or 1) are required",
+  //       });
+  //     }
+      
+  // if(status == 0)
+  // {
+  //   mobile = null;
+  // }
+
+  //     // Find the student entry
+  //     const student = await studentMainModel.findOne({
+  //       where: {
+  //        student_main_id: student_main_id,
+  //       },
+  //     });
+  
+  //     // Check if student exists
+  //     if (!student) {
+  //       return res.status(404).json({
+  //         status: false,
+  //         message: "Student not found",
+  //       });
+  //     }
+  
+  //     // Update the student's tab_active_by_mobile and tab_active_status
      
-      student.tab_active_by_mobile = mobile;
-      student.tab_active_status = status; // 0 or 1
-      await student.save(); // Save the updated instance
+  //     student.tab_active_by_mobile = mobile;
+  //     student.tab_active_status = status; // 0 or 1
+  //     await student.save(); // Save the updated instance
    
       
   
-      // Return success response
-      return res.status(200).json({
-        status: true,
-        message: "Student status updated successfully",
-        data: student,
-      });
+  //     // Return success response
+  //     return res.status(200).json({
+  //       status: true,
+  //       message: "Student status updated successfully",
+  //       data: student,
+  //     });
   
-    } catch (error) {
-      console.error("Error updating student status:", error);
-      return res.status(500).json({
-        status: "error",
-        message: "Internal server error",
-        error: error.message,
-      });
-    }
-  });
+  //   } catch (error) {
+  //     console.error("Error updating student status:", error);
+  //     return res.status(500).json({
+  //       status: "error",
+  //       message: "Internal server error",
+  //       error: error.message,
+  //     });
+  //   }
+  // });

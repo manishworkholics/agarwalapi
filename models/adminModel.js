@@ -61,6 +61,10 @@ const adminModel = sequelize.define('admin_mst', {
   parent_admin_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
+  }, 
+  is_deleted : {
+    type: DataTypes.INTEGER,
+    defaultValue:0
   },   
 }, {
   tableName: 'admin_mst', 

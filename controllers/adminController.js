@@ -290,12 +290,14 @@ exports.getAllAdmin = asyncHandler(async (req, res) => {
 
     // Fetch records with pagination
     const allAdmin = await adminModel.findAll({
-      limit: limit,  // Apply limit for pagination
+      where: { is_deleted: 0 }, limit: limit,  // Apply limit for pagination
       offset: offset, // Apply offset for pagination
     });
 
     // Fetch the total count of records
-    const totalCount = await adminModel.count(); // Get total count of records for pagination
+    const totalCount = await adminModel.count({
+      where: { is_deleted: 0 }, // Count only non-deleted records
+    }); // Get total count of records for pagination
 
     // Calculate total pages
     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
@@ -403,6 +405,59 @@ exports.updatePasswordAdmin = asyncHandler(async (req, res) => {
       status: false,
       message: "Error inserting admin record",
       error: error.message, // Return the error message for debugging (optional)
+    });
+  }
+});
+
+
+exports.deleteAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params; // Extract admin ID from request parameters
+
+    // Find the admin by ID
+    const adminDetail = await adminModel.findOne({
+      where: { admin_id: id } // Use the admin_id to query the database
+    });
+
+    if (!adminDetail) {
+      return res.status(404).json({
+        status: false,
+        message: "Admin not found",
+        data: null
+      });
+    }
+
+    // Toggle the is_deleted status (1 to 0 or 0 to 1)
+    const newStatus = adminDetail.is_deleted === 1 ? 0 : 1;
+
+    // Update only the is_deleted field
+    await adminModel.update(
+      {
+        is_deleted: newStatus,
+        edit_date: new Date(), // Update the edit_date
+      },
+      {
+        where: { admin_id: id }
+      }
+    );
+
+    // Respond with the updated status
+    res.status(200).json({
+      status: true,
+      message: `Admin status updated to ${newStatus === 1 ? "deleted" : "active"}`,
+      data: {
+        admin_id: id,
+        is_deleted: newStatus,
+        edit_date: new Date()
+      }
+    });
+  } catch (error) {
+    console.error("Error updating admin status:", error.message);
+
+    res.status(500).json({
+      status: false,
+      message: "An error occurred",
+      error: error.message // Return the error message for debugging (optional)
     });
   }
 });

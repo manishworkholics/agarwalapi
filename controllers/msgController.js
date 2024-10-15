@@ -1136,7 +1136,7 @@ exports.updateSingleGroupData = asyncHandler(async (req, res) => {
     });
   }
 });
-
+// GetAll Group
 exports.getGroupData = asyncHandler(async (req, res) => {
   try {
     // Extract pagination parameters from the query
@@ -1146,12 +1146,18 @@ exports.getGroupData = asyncHandler(async (req, res) => {
 
     // Fetch records with pagination
     const Groups = await groupModel.findAll({
+      where: {
+        is_deleted: 0, // Filter to exclude deleted records
+    },
       limit: limit, // Apply limit for pagination
       offset: offset, // Apply offset for pagination
     });
 
     // Fetch the total count of records
-    const totalCount = await groupModel.count(); // Get total count of records for pagination
+    const totalCount = await groupModel.count(
+      {where: {
+        is_deleted: 0, // Filter to exclude deleted records
+    },}); // Get total count of records for pagination
 
     // Calculate total pages
     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
@@ -1318,12 +1324,17 @@ exports.getSubGroupData = asyncHandler(async (req, res) => {
           attributes: ["msg_group_id", "msg_group_name"], // Select relevant fields from group
         },
       ],
+      where: {
+        is_deleted: 0, // Only include undeleted records
+    },
       limit: limit,  // Apply limit for pagination
       offset: offset, // Apply offset for pagination
     });
 
     // Fetch the total count of records
-    const totalCount = await subGroupModel.count(); // Get total count of records for pagination
+    const totalCount = await subGroupModel.count({ where: {
+      is_deleted: 0, // Only include undeleted records
+  },}); // Get total count of records for pagination
 
     // Calculate total pages
     const totalPages = Math.ceil(totalCount / limit); // Calculate total pages based on count and limit
@@ -1939,6 +1950,225 @@ exports.AppgetStaredMsgDetail_testing2 = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+
+// Delete group (soft delete by updating is_deleted status)
+exports.deleteGroup = asyncHandler(async (req, res) => {
+  try {
+      const { id } = req.params; // Get the group ID from the URL parameters
+
+      // Find the group by ID
+      const group = await groupModel.findOne({
+          where: {
+              msg_group_id: id,
+          },
+      });
+
+      // Check if the group exists
+      if (!group) {
+          return res.status(404).json({
+              status: false,
+              message: "Group not found",
+          });
+      }
+
+      // Update the is_deleted status to 1
+      group.is_deleted = 1;
+      await group.save(); // Save the updated instance
+
+      // Return success response
+      return res.status(200).json({
+          status: true,
+          message: "Group deleted successfully",
+          data: group,
+      });
+
+  } catch (error) {
+      console.error("Error deleting group:", error);
+      return res.status(500).json({
+          status: "error",
+          message: "Internal server error",
+          error: error.message,
+      });
+  }
+});
+
+exports.deleteSubGroup = asyncHandler(async (req, res) => {
+  const { msg_sgroup_id } = req.params; // Get the subgroup ID from request parameters
+
+  try {
+      // Find the subgroup by ID
+      const subgroup = await subGroupModel.findOne({
+          where: {
+              msg_sgroup_id: msg_sgroup_id,
+              is_deleted: 0, // Ensure the subgroup is not already deleted
+          },
+      });
+
+      // Check if the subgroup exists
+      if (!subgroup) {
+          return res.status(404).json({
+              status: false,
+              message: "Subgroup not found or already deleted.",
+          });
+      }
+
+      // Update the is_deleted status to 1
+      subgroup.is_deleted = 1;
+      await subgroup.save(); // Save the updated subgroup
+
+      // Return success response
+      return res.status(200).json({
+          status: true,
+          message: "Subgroup deleted successfully.",
+          data: subgroup,
+      });
+      
+  } catch (error) {
+      console.error("Error deleting subgroup:", error);
+      return res.status(500).json({
+          status: "error",
+          message: "Internal server error",
+          error: error.message,
+      });
+  }
+});
+
+exports.searchGroups = asyncHandler(async (req, res) => {
+  try {
+    const { searchquery, page = 1, limit = 10 } = req.query;
+
+    // Check if search query is provided
+    if (!searchquery) {
+      return res.status(400).json({
+        status: false,
+        message: "searchquery is required",
+      });
+    }
+
+    // Calculate the offset based on the current page and limit
+    const offset = (page - 1) * limit;
+
+    // Search query for groups
+    const whereClause = {
+      [Sequelize.Op.and]: [
+        Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('msg_group_name')), {
+          [Sequelize.Op.like]: `%${searchquery.toLowerCase()}%`, // Case-insensitive search on group name
+        }),
+        { is_deleted: 0 } // Only include undeleted groups
+      ],
+    };
+
+    // Fetch the total number of matching records (for pagination)
+    const totalRecords = await groupModel.count({
+      where: whereClause,
+    });
+
+    // Fetch the paginated records that match the search query
+    const groups = await groupModel.findAll({
+      where: whereClause, // Apply search query filter
+      limit: parseInt(limit), // Limit the number of results per page
+      offset: parseInt(offset), // Skip records for pagination
+      order: [['msg_group_id', 'DESC']], // Order by group ID in descending order
+    });
+
+    // Return the results
+    if (groups.length === 0) {
+      return res.status(200).json({
+        status: false,
+        length: 0,
+        message: "No groups found",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      length: groups.length,
+      totalRecords, // Include the total number of matching records
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(totalRecords / limit), // Calculate total pages
+      message: "Groups found",
+      data: groups,
+    });
+
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+exports.searchSubGroups = asyncHandler(async (req, res) => {
+  try {
+    const { searchquery, page = 1, limit = 10 } = req.query;
+
+    // Check if search query is provided
+    if (!searchquery) {
+      return res.status(400).json({
+        status: false,
+        message: "searchquery is required",
+      });
+    }
+
+    // Calculate the offset based on the current page and limit
+    const offset = (page - 1) * limit;
+
+    // Search query for subgroups
+    const whereClause = {
+      [Sequelize.Op.and]: [
+        Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('msg_sgroup_name')), {
+          [Sequelize.Op.like]: `%${searchquery.toLowerCase()}%`, // Case-insensitive search on subgroup name
+        }),
+        { is_deleted: 0 } // Only include undeleted subgroups
+      ],
+    };
+
+    // Fetch the total number of matching records (for pagination)
+    const totalRecords = await subGroupModel.count({
+      where: whereClause,
+    });
+
+    // Fetch the paginated records that match the search query
+    const subGroups = await subGroupModel.findAll({
+      where: whereClause, // Apply search query filter
+      limit: parseInt(limit), // Limit the number of results per page
+      offset: parseInt(offset), // Skip records for pagination
+      order: [['msg_sgroup_id', 'DESC']], // Order by subgroup ID in descending order
+    });
+
+    // Return the results
+    if (subGroups.length === 0) {
+      return res.status(200).json({
+        status: false,
+        length: 0,
+        message: "No subgroups found",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      length: subGroups.length,
+      totalRecords, // Include the total number of matching records
+      currentPage: parseInt(page),
+      totalPages: Math.ceil(totalRecords / limit), // Calculate total pages
+      message: "Subgroups found",
+      data: subGroups,
+    });
+
+  } catch (error) {
+    console.error("Error fetching subgroups:", error);
+    return res.status(500).json({
       status: "error",
       message: "Internal server error",
       error: error.message,

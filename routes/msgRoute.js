@@ -7,9 +7,15 @@ const { authMiddleware } = require('../middlewares/authMiddleware.js');
 router.post('/addSubGroup',authMiddleware, MsgController.addSubGroup);
 router.get('/getSubGroupDetail',authMiddleware, MsgController.getSubGroupData);
 router.get('/getSingleSubGroup/:id',authMiddleware, MsgController.getSingleSubGroup);
+router.delete('/deleteSubGroup/:msg_sgroup_id',authMiddleware, MsgController.deleteSubGroup);
 router.put('/updateSubGroup/:id',authMiddleware, MsgController.updateSubGroup);
 
+router.get('/searchGroups',authMiddleware, MsgController.searchGroups);
+router.get('/searchSubGroups',authMiddleware, MsgController.searchSubGroups);
+
+
 router.get('/getGroupDetail',authMiddleware, MsgController.getGroupData);
+router.delete('/deleteGroup/:id',authMiddleware, MsgController.deleteGroup);
 router.post('/addSingleGroupData',authMiddleware, MsgController.addSingleGroupData);
 
 router.get('/getSingleGroupData/:id',authMiddleware, MsgController.getSingleGroupData);

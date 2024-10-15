@@ -87,11 +87,11 @@ exports.getSchool = asyncHandler(async (req, res) => {
     const offset = (page - 1) * limit;
 
     // Fetch total records count for calculating total pages
-    const totalRecords = await schoolModel.count({where:{is_active: 1}});
+    const totalRecords = await schoolModel.count({where:{is_deleted: 0}});
 
     // Fetch paginated records from the schoolModel
     const school_detail = await schoolModel.findAll({
-       where: { is_active: 1 },
+       where: { is_deleted: 0 },
        limit: limit,
       offset: offset,
     });
