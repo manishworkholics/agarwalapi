@@ -104,15 +104,17 @@ exports.generateOtp = asyncHandler(async (req, res) => {
       .status(200)
       .json({ status: false, message: "Mobile number is required" });
   }
-
+  
   const otp = crypto.randomInt(1000, 10000).toString();
   
     const otpCreated = new Date();
 
   // Check if mobile number exists
   const user = await ParentReg.findOne({ where: { mobile_no } });
+  
   if (user) {
-    let response ='';
+    
+    let response =null;
     // Sms Gateway start
   //  response = await sendOTPToMobile(mobile_no,otp);
   // Sms Gateway End
@@ -141,7 +143,7 @@ exports.generateOtp = asyncHandler(async (req, res) => {
     const otp = crypto.randomInt(1000, 10000).toString();
   
     const otpCreated = new Date();
-    let response ='';
+    let response =null;
     // Sms Gateway start
   //  response = await sendOTPToMobile(mobile_no,otp);
   // Sms Gateway End
@@ -248,7 +250,7 @@ const token = generateToken(tokenuser);
     return res.status(200).json({
       status: true,
       message: "OTP verified successfully",
-      token: token, // Return the JWT token
+      token: token, user// Return the JWT token
     });
     
   } else {

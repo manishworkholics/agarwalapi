@@ -14,7 +14,7 @@ const {
   groupModel,
   subGroupModel,
   msgMasterModel,
-  msgBodyModel,sendedMsgModel,studentMainDetailModel,schoolModel
+  msgBodyModel,sendedMsgModel,studentMainDetailModel,schoolModel,RepliedMessageModel,RepliedMsgBodyModel
 } = require("../models/associations");
 
 const db = require("../config/db.config");
@@ -453,8 +453,28 @@ exports.getmsgbody = asyncHandler(async (req, res) => {
 // ============================ App Related app ki api start ===================================
 exports.get_Single_Msg_master_Detail_by_msg_id = asyncHandler(async (req, res) => {
   try {
-    const {msg_id} = req.query;
-  
+    const {msg_id,sended_msg_id} = req.query;
+    if(!msg_id || !sended_msg_id)
+      {
+          res.status(200).json({
+            status: false,
+            length:0,
+            data: null,message:"msg_id & sended_msg_id Required"
+          });
+        }
+// ========================================
+
+// Step 1: Update the is_seen status for the specified message
+const change = await sendedMsgModel.update(
+  { is_seen: 1,seen_on:new Date() }, // Set is_seen to 1
+  {
+    where: {
+      sended_msg_id: sended_msg_id,  
+    },
+  }
+);
+
+// ========================================
     const msgMaster = await msgMasterModel.findOne({ where: { msg_id: msg_id },},{
       include: [
         {
@@ -2168,6 +2188,74 @@ exports.searchSubGroups = asyncHandler(async (req, res) => {
 
   } catch (error) {
     console.error("Error fetching subgroups:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+
+
+// API to insert into RepliedMessageModel and multiple RepliedMsgBodyModel entries
+exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
+  const transaction = await sequelize.transaction(); // Start a transaction
+  try {
+    const { msg_id, mobile_no, app_user_id, replyBodies } = req.body;
+
+    // Validate required fields for RepliedMessageModel
+    if (!msg_id || !mobile_no) {
+      return res.status(400).json({
+        status: false,
+        message: "msg_id and mobile_no are required",
+      });
+    }
+
+    // Validate that replyBodies is an array
+    if (!Array.isArray(replyBodies) || replyBodies.length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "replyBodies must be a non-empty array",
+      });
+    }
+
+    // Insert into RepliedMessageModel
+    const newRepliedMessage = await RepliedMessageModel.create({
+      sended_msg_id: msg_id,
+      msg_id,
+      mobile_no,
+      reply_date_time: reply_date_time || new Date(), // Defaults to current date if not provided
+      app_user_id,
+    }, { transaction });
+
+    // Get the newly inserted replied_msg_id
+    const replied_msg_id = newRepliedMessage.replied_msg_id;
+
+    // Prepare bulk insert data for RepliedMsgBodyModel
+    const bodyInsertData = replyBodies.map((body) => ({
+      replied_msg_id: replied_msg_id, // Use the replied_msg_id from newRepliedMessage
+      msg_body_id: msg_id, // Assuming each body is linked to the same message ID
+      data_reply_text: body.data_reply_text, // Body text for each entry
+    }));
+
+    // Bulk insert into RepliedMsgBodyModel
+    const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(bodyInsertData, { transaction });
+
+    // Commit the transaction if all inserts succeed
+    await transaction.commit();
+
+    // Return success response with data from both inserts
+    return res.status(201).json({
+      status: true,
+      message: "Data inserted into RepliedMessageModel and multiple RepliedMsgBodyModel records successfully",
+      repliedMessage: newRepliedMessage,
+      repliedMsgBodies: newRepliedMsgBodies,
+    });
+  } catch (error) {
+    // Rollback the transaction if there's an error
+    await transaction.rollback();
+    console.error("Error inserting data:", error);
     return res.status(500).json({
       status: "error",
       message: "Internal server error",

@@ -1110,7 +1110,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDA0MTAsImV4cCI6MTcyODA0NDAxMH0.9LMdD0gtARcf09NKI2vdEEP42eEHciaATu1WbrCOAqs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzE5NzQsImV4cCI6MTcyOTAwNzk3NH0.jlFZBvwBK1vxroD77p3zcKSEE0bQcODCiLyr4frjdr4",
 									"type": "string"
 								}
 							]
@@ -1118,7 +1118,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/school/getSchool?page=1&limit=2",
+							"raw": "{{Agrawal}}/api/school/getSchool?page=1&limit=200",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1134,7 +1134,50 @@
 								},
 								{
 									"key": "limit",
+									"value": "200"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzE5NzQsImV4cCI6MTcyOTAwNzk3NH0.jlFZBvwBK1vxroD77p3zcKSEE0bQcODCiLyr4frjdr4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/school/getSearch_school_Detail?page=1&limit=2&searchquery=SCHOOL",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"getSearch_school_Detail"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
 									"value": "2"
+								},
+								{
+									"key": "searchquery",
+									"value": "SCHOOL"
 								}
 							]
 						}
@@ -1243,6 +1286,45 @@
 								"school",
 								"updateSchool",
 								"27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzE5NzQsImV4cCI6MTcyOTAwNzk3NH0.jlFZBvwBK1vxroD77p3zcKSEE0bQcODCiLyr4frjdr4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/school/deleteSchool/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"school",
+								"deleteSchool",
+								"1"
 							]
 						}
 					},
@@ -1559,7 +1641,7 @@
 			]
 		},
 		{
-			"name": "Combine",
+			"name": "Combine /Profile",
 			"item": [
 				{
 					"name": "get Combine homepage info",
@@ -1598,7 +1680,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg1NjIyMjEsImV4cCI6MTcyODU5ODIyMX0.-ri4OtRTIci1NYn0BXu7AmGVMWdmSE1OG3m5TFe5XNQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4OTYzNDUsImV4cCI6MTcyODkzMjM0NX0.h5pajLeMM7MhqY-Bdrf1yJNnCf3mvJW3tglap2xwkcM",
 									"type": "string"
 								}
 							]
@@ -1624,6 +1706,44 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "App All Id Tap Student Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5ODkxNDksImV4cCI6MTcyOTAyNTE0OX0.a41LGRmqqU_s2e6nz7f5DSOR1zLbIvGIlegvl0Qb9ac",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mobile\": 7692898925,\r\n  \"student_main_id\": 7,\r\n  \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/combine/updateStudentTabStatus",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"combine",
+								"updateStudentTabStatus"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1638,7 +1758,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzQ4OTgsImV4cCI6MTcyOTAxMDg5OH0.bp95kTYQG54wEf48m1mxaFrCuVx_JJh6sidQbsVyz6E",
 									"type": "string"
 								}
 							]
@@ -1647,7 +1767,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"subject_text\": \"9 All inpute etc available in this msggg  Testing Msg Contain All Dataaa\",\r\n    \"show_upto\": \"2024-12-30\",\r\n    \"msg_priority\": 1,\r\n    \"msg_sgroup_id\": 5,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 0,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Reminder - 1 for Second Term outstanding fee/charges.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. There should be no need to remind and make calls to you in this regard. We are again requesting you to deposit any outstanding fee at the earliest because if outstanding fee is delayed further then you will not be eligible to obtain your ward's marksheet. Hence deposit the fee at the earliest and in future also please be careful about depositing the fee within stipulated time.<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Scholar Allotment Compliance (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://app.actindore.com/uploads/image_65783b8f8eb5c_1.png\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://pay.actindore.com\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://app.actindore.com/uploads/aa3.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
+							"raw": "{\r\n    \"subject_text\": \"15 RamNavmi festival\",\r\n    \"show_upto\": \"2024-12-30\",\r\n    \"msg_priority\": 1,\r\n    \"msg_sgroup_id\": 4,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 0,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Reminder - 1 for Second Term outstanding fee/charges.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. There should be no need to remind and make calls to you in this regard. We are again requesting you to deposit any outstanding fee at the earliest because if outstanding fee is delayed further then you will not be eligible to obtain your ward's marksheet. Hence deposit the fee at the earliest and in future also please be careful about depositing the fee within stipulated time.<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Scholar Allotment Compliance (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://app.actindore.com/uploads/image_65783b8f8eb5c_1.png\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://pay.actindore.com\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://app.actindore.com/uploads/aa3.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1669,7 +1789,7 @@
 					"response": []
 				},
 				{
-					"name": "Sent To Scholar button",
+					"name": "Sent To All Scholar button",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1679,7 +1799,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzQ4OTgsImV4cCI6MTcyOTAxMDg5OH0.bp95kTYQG54wEf48m1mxaFrCuVx_JJh6sidQbsVyz6E",
 									"type": "string"
 								}
 							]
@@ -1696,7 +1816,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=276&admin_id=115",
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=284&admin_id=115",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1708,7 +1828,7 @@
 							"query": [
 								{
 									"key": "new_msg_id",
-									"value": "276"
+									"value": "284"
 								},
 								{
 									"key": "admin_id",
@@ -1801,7 +1921,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5NzQ4OTgsImV4cCI6MTcyOTAxMDg5OH0.bp95kTYQG54wEf48m1mxaFrCuVx_JJh6sidQbsVyz6E",
 									"type": "string"
 								}
 							]
@@ -1809,7 +1929,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/getMsgDetail?page=250&limit=1",
+							"raw": "{{Agrawal}}/api/msg/getMsgDetail?page=1&limit=10",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1821,11 +1941,50 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "250"
+									"value": "1"
 								},
 								{
 									"key": "limit",
-									"value": "1"
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Only getSearchDetail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4ODY3MjcsImV4cCI6MTcyODkyMjcyN30._x8LAdT32HkXzfx1w5eieBa6CBNBuFDeBPDEuvq7KeM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getSearchDetail?mobile=9009436798&searchquery=all",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getSearchDetail"
+							],
+							"query": [
+								{
+									"key": "mobile",
+									"value": "9009436798"
+								},
+								{
+									"key": "searchquery",
+									"value": "all"
 								}
 							]
 						}
@@ -1870,7 +2029,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2NDAyMTAsImV4cCI6MTcyODY3NjIxMH0.DN-Oft3t_s2Jk8lzTb8wl-k0k3ILXk4lvnArcVAbz58",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4ODQ3NzksImV4cCI6MTcyODkyMDc3OX0.DXGchin0S3GMJB43jjVV03_51GO7d1jFHV01dDFPYMU",
 									"type": "string"
 								}
 							]
@@ -1905,7 +2064,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4OTkxMTcsImV4cCI6MTcyODkzNTExN30.4JESRnvOrwDNJZQUwiC8Vr8snKN90kMAa8O5XrPY58Y",
 									"type": "string"
 								}
 							]
@@ -1935,7 +2094,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5MDQ3NDUsImV4cCI6MTcyODk0MDc0NX0.AXdkGfMgrKvhi6u_NofHb-2FAMJGn65VZs54XIcIGWw",
 									"type": "string"
 								}
 							]
@@ -1995,7 +2154,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg2MzcwMDEsImV4cCI6MTcyODY3MzAwMX0.VL-ZjhEMR9lv04qvyVKa57uKb1vFH_Ev94VWshns0Qw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5MDgyODEsImV4cCI6MTcyODk0NDI4MX0.BWhAKY_H9WTCfkP5LNDCrJHiW1GMoDWL0xz0CegzbCs",
 									"type": "string"
 								}
 							]
@@ -2003,7 +2162,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/getStaredMsgDetail/7692898925",
+							"raw": "{{Agrawal}}/api/msg/getStaredMsgDetail/9009436798",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -2011,7 +2170,37 @@
 								"api",
 								"msg",
 								"getStaredMsgDetail",
-								"7692898925"
+								"9009436798"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "testing2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4OTkxMTcsImV4cCI6MTcyODkzNTExN30.4JESRnvOrwDNJZQUwiC8Vr8snKN90kMAa8O5XrPY58Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/testing2/9009436798",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"testing2",
+								"9009436798"
 							]
 						}
 					},
@@ -2133,6 +2322,45 @@
 							"response": []
 						},
 						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5OTUyMjQsImV4cCI6MTcyOTAzMTIyNH0.G8V4XxvwRvT9xnc-OGfdceFPXyAAl73FgufRPA3IgdA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/deleteGroup/1",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"deleteGroup",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update Group",
 							"request": {
 								"auth": {
@@ -2179,7 +2407,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDA0MTAsImV4cCI6MTcyODA0NDAxMH0.9LMdD0gtARcf09NKI2vdEEP42eEHciaATu1WbrCOAqs",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5OTUyMjQsImV4cCI6MTcyOTAzMTIyNH0.G8V4XxvwRvT9xnc-OGfdceFPXyAAl73FgufRPA3IgdA",
 											"type": "string"
 										}
 									]
@@ -2187,7 +2415,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{Agrawal}}/api/msg/getGroupDetail?page=1&limit=20",
+									"raw": "{{Agrawal}}/api/msg/getGroupDetail?page=1&limit=200",
 									"host": [
 										"{{Agrawal}}"
 									],
@@ -2203,7 +2431,50 @@
 										},
 										{
 											"key": "limit",
-											"value": "20"
+											"value": "200"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Group",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5OTUyMjQsImV4cCI6MTcyOTAzMTIyNH0.G8V4XxvwRvT9xnc-OGfdceFPXyAAl73FgufRPA3IgdA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/searchGroups?page=1&limit=200&searchquery=Session ",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"searchGroups"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "200"
+										},
+										{
+											"key": "searchquery",
+											"value": "Session "
 										}
 									]
 								}
@@ -2253,7 +2524,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDE5NzcsImV4cCI6MTcyODA0NTU3N30.NWxzYJ5uvHOLvlEIJ_lXdVZOEnUzd0UVMypvUBRFkJQ",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5MDQ3NDUsImV4cCI6MTcyODk0MDc0NX0.AXdkGfMgrKvhi6u_NofHb-2FAMJGn65VZs54XIcIGWw",
 											"type": "string"
 										}
 									]
@@ -2278,6 +2549,49 @@
 										{
 											"key": "limit",
 											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search SubGroup Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5OTUyMjQsImV4cCI6MTcyOTAzMTIyNH0.G8V4XxvwRvT9xnc-OGfdceFPXyAAl73FgufRPA3IgdA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/searchSubGroups?page=1&limit=200&searchquery=Information",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"searchSubGroups"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "200"
+										},
+										{
+											"key": "searchquery",
+											"value": "Information"
 										}
 									]
 								}
@@ -2347,6 +2661,45 @@
 										"api",
 										"msg",
 										"addSubGroup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5OTY1NjMsImV4cCI6MTcyOTAzMjU2M30.2dVWIqmRxDTWIzk_zFHgr0fajWdsSxfbzlKwJivjuCg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/deleteSubGroup/2",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"deleteSubGroup",
+										"2"
 									]
 								}
 							},
@@ -2595,7 +2948,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg0NjU1MDAsImV4cCI6MTcyODQ2OTEwMH0.b3NV3slb3SEoatAcvOSjwyv7i9P5_7LUuVx1-hslbf4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4ODQ3NzksImV4cCI6MTcyODkyMDc3OX0.DXGchin0S3GMJB43jjVV03_51GO7d1jFHV01dDFPYMU",
 									"type": "string"
 								}
 							]
@@ -2620,6 +2973,45 @@
 								"api",
 								"admin",
 								"loginAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5ODkxNDksImV4cCI6MTcyOTAyNTE0OX0.a41LGRmqqU_s2e6nz7f5DSOR1zLbIvGIlegvl0Qb9ac",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/admin/deleteAdmin/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"deleteAdmin",
+								"1"
 							]
 						}
 					},
@@ -2713,7 +3105,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzODE0MjAsImV4cCI6MTcyODM4NTAyMH0.m3kijlrqVMu2mmw1qoieOaKs0KbMojVrOYsQMctz1Ig",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5ODkxNDksImV4cCI6MTcyOTAyNTE0OX0.a41LGRmqqU_s2e6nz7f5DSOR1zLbIvGIlegvl0Qb9ac",
 									"type": "string"
 								}
 							]
@@ -2730,7 +3122,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/admin/getAllAdmin?page=2&limit=2",
+							"raw": "{{Agrawal}}/api/admin/getAllAdmin?page=1&limit=2",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -2742,7 +3134,7 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "limit",
