@@ -9,26 +9,30 @@ const RepliedMessageModel = sequelize.define('replied_msg', {
     allowNull: false,
   },
   sended_msg_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   msg_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   mobile_no: {
     type: DataTypes.STRING(20),
     allowNull: false,
-    
   },
   reply_date_time: {
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW
   },
-  parents_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
+ 
+  student_main_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  student_number: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
 }, {
   tableName: 'replied_msg', // Customize the table name according to your requirements

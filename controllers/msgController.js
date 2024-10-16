@@ -489,8 +489,7 @@ const change = await sendedMsgModel.update(
           model: msgBodyModel, // Include the msgBodyModel to fetch data from msg_body
           order: [["ordersno", "ASC"]], // Order the results by ordersno
         },
-      ],
-    
+      ],    
     });
    
     const msgMaster_body = await msgBodyModel.findAll({ where: { msg_id: msg_id },  order: [['ordersno', 'ASC']],});
@@ -511,7 +510,8 @@ const parsedMsgMasterBody = msgMaster_body.map((msg) => {
       .split(';')
       .filter(option => option.trim() !== '') // Remove any empty options
       .map((option, index) => ({
-        [`option${index + 1}`]: option.trim() // Use dynamic keys for option1, option2, etc.
+        [`option`]: option.trim() // Use dynamic keys for option1, option2, etc.
+        // [`option${index + 1}`]: option.trim() // Use dynamic keys for option1, option2, etc.
       }));
 
     // Update data_text with the new options array
@@ -2197,12 +2197,9 @@ exports.searchSubGroups = asyncHandler(async (req, res) => {
 });
 
 
-
-// API to insert into RepliedMessageModel and multiple RepliedMsgBodyModel entries
 exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
-  const transaction = await sequelize.transaction(); // Start a transaction
   try {
-    const { msg_id, mobile_no, app_user_id, replyBodies } = req.body;
+    const { msg_id, mobile_no,student_main_id,student_number,sended_msg_id, replyBodies } = req.body;
 
     // Validate required fields for RepliedMessageModel
     if (!msg_id || !mobile_no) {
@@ -2222,12 +2219,11 @@ exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
 
     // Insert into RepliedMessageModel
     const newRepliedMessage = await RepliedMessageModel.create({
-      sended_msg_id: msg_id,
+      sended_msg_id: sended_msg_id,
       msg_id,
-      mobile_no,
-      reply_date_time: reply_date_time || new Date(), // Defaults to current date if not provided
-      app_user_id,
-    }, { transaction });
+      mobile_no,student_main_id,student_number,
+      reply_date_time: new Date(), // Defaults to current date if not provided
+    });
 
     // Get the newly inserted replied_msg_id
     const replied_msg_id = newRepliedMessage.replied_msg_id;
@@ -2235,15 +2231,13 @@ exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
     // Prepare bulk insert data for RepliedMsgBodyModel
     const bodyInsertData = replyBodies.map((body) => ({
       replied_msg_id: replied_msg_id, // Use the replied_msg_id from newRepliedMessage
-      msg_body_id: msg_id, // Assuming each body is linked to the same message ID
+      msg_body_id: body.msg_body_id, // Assuming body contains msg_body_id
+      msg_type: body.msg_type, // Assuming msg_type is present in the body
       data_reply_text: body.data_reply_text, // Body text for each entry
     }));
 
     // Bulk insert into RepliedMsgBodyModel
-    const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(bodyInsertData, { transaction });
-
-    // Commit the transaction if all inserts succeed
-    await transaction.commit();
+    const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(bodyInsertData);
 
     // Return success response with data from both inserts
     return res.status(201).json({
@@ -2253,8 +2247,6 @@ exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
       repliedMsgBodies: newRepliedMsgBodies,
     });
   } catch (error) {
-    // Rollback the transaction if there's an error
-    await transaction.rollback();
     console.error("Error inserting data:", error);
     return res.status(500).json({
       status: "error",
@@ -2263,3 +2255,133 @@ exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+// Get All Reply Messages Sorted by Latest
+exports.getAllReplyMessages = asyncHandler(async (req, res) => {
+  const { page = 1, limit = 10 } = req.query; // Default to page 1 and limit 10
+
+  try {
+    // Parse page and limit to integers
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    
+    // Calculate offset
+    const offset = (pageNum - 1) * limitNum;
+
+    // Fetch total count of reply messages for pagination
+    const totalCount = await RepliedMessageModel.count();
+
+    // Fetch reply messages with pagination, sorted by replied_msg_id in descending order
+    const repliedMessages = await RepliedMessageModel.findAll({
+      include: [
+        {
+          model: msgMasterModel,
+          as: 'message',
+        },
+        {
+          model: RepliedMsgBodyModel,
+          as: 'replyBodies',
+        },
+        {
+          model: sendedMsgModel,
+          as: 'sendedMessage',
+        },
+      ],
+      order: [['replied_msg_id', 'DESC']], // Sort by replied_msg_id in descending order
+      limit: limitNum,
+      offset: offset,
+    });
+
+    // Extract school IDs from messages and fetch their details
+    const schoolDetails = await Promise.all(repliedMessages.map(async (msg) => {
+      const schoolIds = msg.message.school_id.split(','); // Split the school_id string
+      const schools = await schoolModel.findAll({
+        where: {
+          sch_id: {
+            [Op.in]: schoolIds, // Use Sequelize's Op.in to fetch multiple records
+          },
+        },
+      });
+
+      return {
+        ...msg.get(), // Include all message data
+        schools, // Add the fetched school details
+      };
+    }));
+
+    // Return the combined data with school details and pagination info
+    return res.status(200).json({
+      status: true,
+      message: "All reply messages retrieved successfully, sorted by latest",
+      data: schoolDetails,
+      pagination: {
+        total: totalCount,
+        page: pageNum,
+        limit: limitNum,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching reply messages:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+// exports.getAllReplyMessages = asyncHandler(async (req, res) => {
+//   try {
+//     // Fetch all reply messages, sorted by reply_date_time in descending order
+//     const repliedMessages = await RepliedMessageModel.findAll({
+//       include: [
+//         {
+//           model: msgMasterModel,
+//           as: 'message', // Alias must match the 'as' used in the association
+//         },
+//         {
+//           model: RepliedMsgBodyModel,
+//           as: 'replyBodies', // This will include reply body data
+//         },
+//         {
+//           model: sendedMsgModel,
+//           as: 'sendedMessage', // Include sended message data
+//           // attributes: ['msg_id', 'message_text'], // Select specific fields if needed
+//         },
+//       ],
+//       order: [['replied_msg_id', 'DESC']], // Sort by replied_msg_id in descending order
+//     });
+
+//     // Extract school IDs from messages and fetch their details
+//     const schoolDetails = await Promise.all(repliedMessages.map(async (msg) => {
+//       const schoolIds = msg.message.school_id.split(','); // Split the school_id string
+//       const schools = await schoolModel.findAll({
+//         where: {
+//           sch_id: {
+//             [Op.in]: schoolIds, // Use Sequelize's Op.in to fetch multiple records
+//           },
+//         },
+//       });
+
+//       return {
+//         ...msg.get(), // Include all message data
+//         schools, // Add the fetched school details
+//       };
+//     }));
+
+//     // Return the combined data with school details
+//     return res.status(200).json({
+//       status: true,
+//       message: "All reply messages retrieved successfully, sorted by latest",
+//       data: schoolDetails,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching reply messages:", error);
+//     return res.status(500).json({
+//       status: "error",
+//       message: "Internal server error",
+//       error: error.message,
+//     });
+//   }
+// });

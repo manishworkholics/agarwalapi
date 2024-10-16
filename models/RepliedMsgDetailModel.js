@@ -16,6 +16,10 @@ const RepliedMsgDetailModel = sequelize.define('replied_msg_body', {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
+  msg_type: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   data_reply_text: {
     type: DataTypes.TEXT,
     allowNull: true,  // Assuming that the reply text is optional

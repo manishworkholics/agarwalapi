@@ -42,6 +42,9 @@ router.post('/insertMsgData',authMiddleware, MsgController.insertMsgData);
 // =========================ye api seprate school + admin ko use hogi=======================================
 router.get('/SentMsgToScholarData',authMiddleware, MsgController.SentMsgToScholarData);
 // ==============================================================
+router.post('/insertRepliedMessageAndBodies',authMiddleware, MsgController.insertRepliedMessageAndBodies);
+router.get('/getAllReplyMessages',authMiddleware, MsgController.getAllReplyMessages);
+// ==============================================================
 router.get('/test',authMiddleware, MsgController.getmsgbody);
 // router.get('/testing2/:mobile',authMiddleware, MsgController.testing2);
 module.exports = router;

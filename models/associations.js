@@ -74,6 +74,34 @@ subGroupModel.belongsTo(groupModel, {
   as: 'group',                // Alias for the group association
 });
 // link group and subgroup in msg
+
+// ==========reply msg
+// In RepliedMessageModel definition
+RepliedMessageModel.belongsTo(msgMasterModel, {
+  foreignKey: 'msg_id', // Foreign key in RepliedMessageModel
+  as: 'message',        // Alias for the association
+});
+
+// In MessageModel definition (optional, if needed)
+msgMasterModel.hasMany(RepliedMessageModel, {
+  foreignKey: 'msg_id',
+  as: 'repliedMessages',
+});
+RepliedMessageModel.hasMany(RepliedMsgBodyModel, {
+  foreignKey: 'replied_msg_id',
+  as: 'replyBodies', // Alias for linking reply bodies with the message
+});
+
+RepliedMsgBodyModel.belongsTo(RepliedMessageModel, {
+  foreignKey: 'replied_msg_id',
+  as: 'repliedMessage', // Optional alias for reverse association
+});
+RepliedMessageModel.belongsTo(sendedMsgModel, {
+  foreignKey: 'sended_msg_id', // This should match the foreign key in RepliedMessageModel
+  as: 'sendedMessage', // Alias for the association
+});
+// ==========reply msg
+
 module.exports = {
   groupModel,
   subGroupModel,
