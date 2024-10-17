@@ -1761,7 +1761,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkwNzIwNTcsImV4cCI6MTcyOTEwODA1N30.sNbOoELRwupyBqJqTtyokOxZHh-zgfR0w0_gwJfB6qE",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNTYxMzQsImV4cCI6MTcyOTE5MjEzNH0.GJ8srNsIdGUdi0pUSXGIw12YsOW_SdnI_XX-8UAb-mQ",
 											"type": "string"
 										}
 									]
@@ -1770,12 +1770,86 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"msg_id\": 283,\r\n    \"mobile_no\": 9009436798,\r\n    \"student_main_id\":14,\r\n    \"sended_msg_id\":161128,\r\n    \"student_number\":\"44010105\",\r\n    \"replyBodies\": [\r\n        {\r\n            \"msg_body_id\": 798,\r\n            \"msg_type\": \"OPTION-INPUT\",\r\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":\\\"Commerce\\\"}}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 799,\r\n            \"msg_type\": \"TEXTBOX-INPUT\",\r\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Mr. Manglesh Rohatg\\\"}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 800,\r\n            \"msg_type\": \"CHECKBOX-INPUT\",\r\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":true,\\\"1\\\":true,\\\"2\\\":true}}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 803,\r\n            \"msg_type\": \"FILE-INPUT\",\r\n            \"data_reply_text\": \"{\\\"imageURI\\\":\\\"file:///data/user/0/com.nway.ag.aps/files/1651047780871.jpg\\\",\\\"imageURIsave\\\":\\\"http://app.actindore.com/uploads/r_camera_6268fd5ca3bf4_8.jpg\\\"}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 804,\r\n            \"msg_type\": \"CAMERA-INPUT\",\r\n            \"data_reply_text\": \"{\\\"imageURI\\\":\\\"file:///data/user/0/com.nway.ag.emessenger/files/1728545221471.jpg\\\",\\\"imageURIsave\\\":\\\"https://app.actindore.com/uploads/r_camera_670781ca9d462_9978.jpg\\\"}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 805,\r\n            \"msg_type\": \"TEXTAREA-INPUT\",\r\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Agarwal Public School, Campus\\\"}\"\r\n        }\r\n    ]\r\n}\r\n",
+									"raw": "{\r\n    \"msg_id\": 283,\r\n    \"mobile_no\": 9009436798,\r\n    \"student_main_id\":14,\r\n    \"sended_msg_id\":161128,\r\n    \"student_number\":\"44010105\",\r\n    \"replyBodies\": [\r\n        {\r\n            \"msg_body_id\": 798,\r\n            \"msg_type\": \"OPTION-INPUT\",\r\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":\\\"Commerce\\\"}}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 799,\r\n            \"msg_type\": \"TEXTBOX-INPUT\",\r\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Mr. Manglesh Rohatg\\\"}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 800,\r\n            \"msg_type\": \"CHECKBOX-INPUT\",\r\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":true,\\\"1\\\":true,\\\"2\\\":true}}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 803,\r\n            \"msg_type\": \"FILE-INPUT\",\r\n            \"data_reply_text\": \"{\\\"imageURIsave\\\":\\\"http://app.actindore.com/uploads/r_camera_6268fd5ca3bf4_8.jpg\\\"}\"\r\n        },\r\n           {\r\n            \"msg_body_id\": 804,\r\n            \"msg_type\": \"CAMERA-INPUT\",\r\n            \"data_reply_text\": \"{\\\"imageURIsave\\\":\\\"https://app.actindore.com/uploads/r_camera_670781ca9d462_9978.jpg\\\"}\"\r\n        },\r\n        {\r\n            \"msg_body_id\": 805,\r\n            \"msg_type\": \"TEXTAREA-INPUT\",\r\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Agarwal Public School, Campus\\\"}\"\r\n        }\r\n    ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
+								},
+								"url": {
+									"raw": "{{Agrawal}}/api/msg/insertRepliedMessageAndBodies",
+									"host": [
+										"{{Agrawal}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"insertRepliedMessageAndBodies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "testing Reply msg Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "msg_id",
+											"value": "283",
+											"type": "text"
+										},
+										{
+											"key": "mobile_no",
+											"value": "9009436798",
+											"type": "text"
+										},
+										{
+											"key": "student_main_id",
+											"value": "14",
+											"type": "text"
+										},
+										{
+											"key": "sended_msg_id",
+											"value": "161128",
+											"type": "text"
+										},
+										{
+											"key": "student_number",
+											"value": "44010105",
+											"type": "text"
+										},
+										{
+											"key": "replyBodies",
+											"value": "[\n        {\n            \"msg_body_id\": 798,\n            \"msg_type\": \"OPTION-INPUT\",\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":\\\"Commerce\\\"}}\"\n        },\n        {\n            \"msg_body_id\": 799,\n            \"msg_type\": \"TEXTBOX-INPUT\",\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Mr. Manglesh Rohatg\\\"}\"\n        },\n        {\n            \"msg_body_id\": 800,\n            \"msg_type\": \"CHECKBOX-INPUT\",\n            \"data_reply_text\": \"{\\\"selected\\\":{\\\"0\\\":true,\\\"1\\\":true,\\\"2\\\":true}}\"\n        },\n        {\n            \"msg_body_id\": 803,\n            \"msg_type\": \"FILE-INPUT\",\n            \"data_reply_text\": \"{\\\"imageURI\\\":\\\"file:///data/user/0/com.nway.ag.aps/files/1651047780871.jpg\\\",\\\"imageURIsave\\\":\\\"\\\"}\"\n        },\n        {\n            \"msg_body_id\": 804,\n            \"msg_type\": \"CAMERA-INPUT\",\n            \"data_reply_text\": \"{\\\"imageURI\\\":\\\"file:///data/user/0/com.nway.ag.emessenger/files/1728545221471.jpg\\\",\\\"imageURIsave\\\":\\\"\\\"}\"\n        },\n        {\n            \"msg_body_id\": 805,\n            \"msg_type\": \"TEXTAREA-INPUT\",\n            \"data_reply_text\": \"{\\\"text\\\":\\\"Agarwal Public School, Campus\\\"}\"\n        }\n    ]",
+											"type": "text"
+										},
+										{
+											"key": "file-803",
+											"type": "file",
+											"src": "/C:/Users/DELL/Desktop/images/Screenshot_1.jpg"
+										},
+										{
+											"key": "file-804",
+											"type": "file",
+											"src": "/C:/Users/DELL/Desktop/images/Screenshot_4.jpg"
+										}
+									]
 								},
 								"url": {
 									"raw": "{{Agrawal}}/api/msg/insertRepliedMessageAndBodies",
@@ -1840,7 +1914,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkwNzI3MTAsImV4cCI6MTcyOTEwODcxMH0.jcDZ3EbrdZoGikaBzIFhFQtrbg19o2rE_fTN35gmDEE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
 									"type": "string"
 								}
 							]
@@ -1849,7 +1923,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"subject_text\": \"16 Sharad Purnima festival\",\r\n    \"show_upto\": \"2024-12-30\",\r\n    \"msg_priority\": 1,\r\n    \"msg_sgroup_id\": 4,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 1,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Festival Celebration at school.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. .<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Celebration  (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://nss-main.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/07175734/Blogsharadpurnima2024.jpg\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://www.youtube.com/watch?v=mwMk-iuuFQ4\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://apsindore.com/wp-content/uploads/2023/01/Combine%20Boarder%20and%20IIT-JEE%20Fees%20Structure.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
+							"raw": "{\r\n    \"subject_text\": \"19 hanuman jayanti festival\",\r\n    \"show_upto\": \"2024-12-30\",\r\n    \"msg_priority\": 1,\r\n    \"msg_sgroup_id\": 4,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 1,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Festival Celebration at school.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. .<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Celebration  (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://nss-main.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/07175734/Blogsharadpurnima2024.jpg\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"title for youtube.\\\",\\\"link\\\":\\\"https://www.youtube.com/watch?v=mwMk-iuuFQ4\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://apsindore.com/wp-content/uploads/2023/01/Combine%20Boarder%20and%20IIT-JEE%20Fees%20Structure.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1881,7 +1955,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkwNzI3MTAsImV4cCI6MTcyOTEwODcxMH0.jcDZ3EbrdZoGikaBzIFhFQtrbg19o2rE_fTN35gmDEE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNTYxMzQsImV4cCI6MTcyOTE5MjEzNH0.GJ8srNsIdGUdi0pUSXGIw12YsOW_SdnI_XX-8UAb-mQ",
 									"type": "string"
 								}
 							]
@@ -1898,7 +1972,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=285&admin_id=115",
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=288&admin_id=115",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1910,7 +1984,7 @@
 							"query": [
 								{
 									"key": "new_msg_id",
-									"value": "285"
+									"value": "288"
 								},
 								{
 									"key": "admin_id",
@@ -2074,7 +2148,7 @@
 					"response": []
 				},
 				{
-					"name": "App 2 Get Single msg By  sended_msg_iddetail",
+					"name": "xxxxx App 2 Get Single msg By  sended_msg_iddetail",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2111,7 +2185,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkwNjk0OTAsImV4cCI6MTcyOTEwNTQ5MH0.ZtSUUKXIvhVniKjBFo-X1qGdvrIIgS6gJDHG2dwaRSM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
 									"type": "string"
 								}
 							]
@@ -2150,7 +2224,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkwNzI3MTAsImV4cCI6MTcyOTEwODcxMH0.jcDZ3EbrdZoGikaBzIFhFQtrbg19o2rE_fTN35gmDEE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
 									"type": "string"
 								}
 							]
@@ -2831,157 +2905,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Teacher",
-					"item": [
-						{
-							"name": "get All Teacher",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{Agrawal}}/api/teacher/getAllTeachers?page=1&limit=20",
-									"host": [
-										"{{Agrawal}}"
-									],
-									"path": [
-										"api",
-										"teacher",
-										"getAllTeachers"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "1"
-										},
-										{
-											"key": "limit",
-											"value": "20"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Single Sub Group",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{Agrawal}}/api/teacher/getTeacher/1",
-									"host": [
-										"{{Agrawal}}"
-									],
-									"path": [
-										"api",
-										"teacher",
-										"getTeacher",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Add Teacher",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"mobileNo\": \"1234567890\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Agrawal}}/api/teacher/createTeacher",
-									"host": [
-										"{{Agrawal}}"
-									],
-									"path": [
-										"api",
-										"teacher",
-										"createTeacher"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"name\": \"John Doe222\",\r\n  \"mobileNo\": \"1234567890\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Agrawal}}/api/teacher/updateTeacher/1",
-									"host": [
-										"{{Agrawal}}"
-									],
-									"path": [
-										"api",
-										"teacher",
-										"updateTeacher",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				}
 			]
 		},
@@ -2996,7 +2919,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgzOTA0NDMsImV4cCI6MTcyODM5NDA0M30.7efjXr5Xm_ZoKprnHx9ZTtJakflMGO5UOEPd_-PNf60",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0LCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQxNTUsImV4cCI6MTcyOTE4MDE1NX0.YY6N51Yz5BqtOdwiLk0qew_Qh56lDzhwYOD6efET4FA",
 									"type": "string"
 								}
 							]
@@ -3005,7 +2928,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"full_name\": \"Admin Chandan\",\r\n  \"adminuser_name\": \"chandan\",\r\n  \"admin_password\": \"chandan@gmail.com\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567894\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
+							"raw": "{\r\n  \"full_name\": \"admin\",\r\n  \"adminuser_name\": \"admin@gmail.com\",\r\n  \"admin_password\": \"admin@gmail.com\",\r\n  \"is_active\": 1,\r\n  \"admin_type\": \"superadmin\",\r\n  \"mobile_no\": \"1234567494\",\r\n  \"added_admin_id\": 1,\r\n  \"parent_admin_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3043,7 +2966,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"adminuser_name\": \"admin\",\r\n  \"admin_password\": \"admin@gmail.com\"\r\n}",
+							"raw": "{\r\n \"adminuser_name\": \"admin\",\r\n \"admin_password\": \"admin@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3267,6 +3190,157 @@
 								"api",
 								"admin",
 								"getSingleAdmin",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "get All Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/teacher/getAllTeachers?page=1&limit=20",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"teacher",
+								"getAllTeachers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Sub Group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/teacher/getTeacher/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"teacher",
+								"getTeacher",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Teacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"mobileNo\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/teacher/createTeacher",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"teacher",
+								"createTeacher"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwNDUzNzEsImV4cCI6MTcyODA0ODk3MX0.D6tD5bORPDC6C_6gKAmSkRP9_2QufSXgXJnwFZruwrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe222\",\r\n  \"mobileNo\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/teacher/updateTeacher/1",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"teacher",
+								"updateTeacher",
 								"1"
 							]
 						}
