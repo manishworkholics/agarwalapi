@@ -92,9 +92,9 @@ exports.logout = asyncHandler(async (req, res) => {
     message: "An error occurred",
     error: error.message, // Return the error message for debugging (optional)
   });
-}
-  
+}  
 });
+
 // Generate OTP
 exports.generateOtp = asyncHandler(async (req, res) => {
   const { mobile_no } = req.body;
@@ -127,31 +127,31 @@ exports.generateOtp = asyncHandler(async (req, res) => {
       .status(200)
       .json({ status: true, message: "OTP sent successfullyyy", otp ,response});
   } else {
-    // return res.status(200).json({ status: false, message: "User Not Exist" });
+     return res.status(200).json({ status: false, message: "User Not Exist" });
    
-   const dta= await ParentReg.create(
-      {
-        mobile_no: mobile_no,
-        is_verified: 1,
-        registerby_mobile:1
-      },
-      {
-        ignoreDuplicates: true, // Optional: to avoid inserting duplicates
-      }
-    );
+  //  const dta= await ParentReg.create(
+  //     {
+  //       mobile_no: mobile_no,
+  //       is_verified: 1,
+  //       registerby_mobile:1
+  //     },
+  //     {
+  //       ignoreDuplicates: true, // Optional: to avoid inserting duplicates
+  //     }
+  //   );
 
-    const otp = crypto.randomInt(1000, 10000).toString();
+  //   const otp = crypto.randomInt(1000, 10000).toString();
   
-    const otpCreated = new Date();
-    let response =null;
-    // Sms Gateway start
-  //  response = await sendOTPToMobile(mobile_no,otp);
-  // Sms Gateway End
-    const user = await ParentReg.findOne({ where: { mobile_no } });
-    user.otp = otp;
-    user.otp_datetime = otpCreated;
-    await user.save();
-   return res.status(200).json({ status: true, message: "Account Created and OTP sent successfullyyy", otp ,response});
+  //   const otpCreated = new Date();
+  //   let response =null;
+  //   // Sms Gateway start
+  // //  response = await sendOTPToMobile(mobile_no,otp);
+  // // Sms Gateway End
+  //   const user = await ParentReg.findOne({ where: { mobile_no } });
+  //   user.otp = otp;
+  //   user.otp_datetime = otpCreated;
+  //   await user.save();
+  //  return res.status(200).json({ status: true, message: "Account Created and OTP sent successfullyyy", otp ,response});
 
   }
  

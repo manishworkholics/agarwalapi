@@ -683,28 +683,28 @@ relatedProfiles.forEach(profile => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
-    res.status(200).json({
-              status: true,
-              length:filteredData.length,
-              data: filteredData,scholarNumbers
-            });
+    // res.status(200).json({
+    //           status: true,
+    //           length:filteredData.length,
+    //           data: filteredData,scholarNumbers
+    //         });
 
-    // if(filteredData.length > 0)
-    //   {
-    //       res.status(200).json({
-    //         status: true,
-    //         length:filteredData.length,
-    //         data: filteredData,scholarNumbers
-    //       });
-    //     }
-    //     else
-    //     {
-    //       res.status(200).json({
-    //         status: false,
-    //         length:filteredData.length,
-    //         data: filteredData,
-    //       });
-    //     }
+    if(filteredData.length > 0)
+      {
+          res.status(200).json({
+            status: true,
+            length:filteredData.length,
+            data: filteredData,scholarNumbers
+          });
+        }
+        else
+        {
+          res.status(200).json({
+            status: false,
+            length:filteredData.length,
+            data: filteredData,
+          });
+        }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -764,28 +764,28 @@ exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
-    res.status(200).json({
-              status: true,
-              length:filteredData.length,
-              data: filteredData,scholarNumbers
-            });
+    // res.status(200).json({
+    //           status: true,
+    //           length:filteredData.length,
+    //           data: filteredData,scholarNumbers
+    //         });
 
-// if(msgSendedMaster.length > 0)
-// {
-//     res.status(200).json({
-//       status: true,
-//       length:msgSendedMaster.length,
-//       data: msgSendedMaster,
-//     });
-//   }
-//   else
-//   {
-//     res.status(200).json({
-//       status: false,
-//       length:msgSendedMaster.length,
-//       data: msgSendedMaster,
-//     });
-//   }
+if(filteredData.length > 0)
+{
+    res.status(200).json({
+      status: true,
+      length:filteredData.length,
+      data: filteredData,
+    });
+  }
+  else
+  {
+    res.status(200).json({
+      status: false,
+      length:filteredData.length,
+      data: filteredData,
+    });
+  }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -843,28 +843,28 @@ exports.getStaredMsgDetail = asyncHandler(async (req, res) => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
+    // res.status(200).json({
+    //   status: true,
+    //   length:filteredData.length,
+    //   data: filteredData,scholarNumbers
+    // });
+
+if(filteredData.length > 0)
+{
     res.status(200).json({
       status: true,
       length:filteredData.length,
-      data: filteredData,scholarNumbers
+      data: filteredData,
     });
-
-// if(msgSendedMaster.length > 0)
-// {
-//     res.status(200).json({
-//       status: true,
-//       length:msgSendedMaster.length,
-//       data: msgSendedMaster,
-//     });
-//   }
-//   else
-//   {
-//     res.status(200).json({
-//       status: false,
-//       length:msgSendedMaster.length,
-//       data: msgSendedMaster,
-//     });
-//   }
+  }
+  else
+  {
+    res.status(200).json({
+      status: false,
+      length:filteredData.length,
+      data: filteredData,
+    });
+  }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -949,27 +949,27 @@ relatedProfiles.forEach(profile => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
-    res.status(200).json({
-      status: true,
-      length:filteredData.length,
-      data: filteredData,scholarNumbers
-    });
+    // res.status(200).json({
+    //   status: true,
+    //   length:filteredData.length,
+    //   data: filteredData,scholarNumbers
+    // });
 
-    // // Check if any messages were found
-    // if (msgSendedMaster.length > 0) {
-    //   res.status(200).json({
-    //     status: true,
-    //     length: msgSendedMaster.length,
-    //     data: msgSendedMaster,
-    //   });
-    // } else {
-    //   // Return an empty response if no messages found
-    //   res.status(200).json({
-    //     status: false,
-    //     length: 0,
-    //     data: [] // Return an empty array
-    //   });
-    // }
+    // Check if any messages were found
+    if (filteredData.length > 0) {
+      res.status(200).json({
+        status: true,
+        length: filteredData.length,
+        data: filteredData,
+      });
+    } else {
+      // Return an empty response if no messages found
+      res.status(200).json({
+        status: false,
+        length: 0,
+        data: [] // Return an empty array
+      });
+    }
   } catch (error) {
     console.error("Error fetching last day messages:", error);
     res.status(500).json({
