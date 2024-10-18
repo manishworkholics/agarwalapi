@@ -349,6 +349,198 @@
 			]
 		},
 		{
+			"name": "welcomemsg",
+			"item": [
+				{
+					"name": "get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/appTopWelcomeMsg",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"appTopWelcomeMsg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/getSingleAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"getSingleAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/createAppTopWelcomeMsg",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"createAppTopWelcomeMsg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n  \"detail\": \"2222  Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/updateAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"updateAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Agrawal}}/api/welcomemsg/deleteAppTopWelcomeMsg/3",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"welcomemsg",
+								"deleteAppTopWelcomeMsg",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Catgorys",
 			"item": [
 				{
@@ -1415,198 +1607,6 @@
 			]
 		},
 		{
-			"name": "welcomemsg",
-			"item": [
-				{
-					"name": "get All",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{Agrawal}}/api/welcomemsg/appTopWelcomeMsg",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"welcomemsg",
-								"appTopWelcomeMsg"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Single",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Agrawal}}/api/welcomemsg/getSingleAppTopWelcomeMsg/3",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"welcomemsg",
-								"getSingleAppTopWelcomeMsg",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Copy",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{   \r\n  \"detail\": \"Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Agrawal}}/api/welcomemsg/createAppTopWelcomeMsg",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"welcomemsg",
-								"createAppTopWelcomeMsg"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{   \r\n  \"detail\": \"2222  Welcome to the platform! We are excited to have you here.\"\r\n}\r\n\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Agrawal}}/api/welcomemsg/updateAppTopWelcomeMsg/3",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"welcomemsg",
-								"updateAppTopWelcomeMsg",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjgwMzYyNTEsImV4cCI6MTcyODAzOTg1MX0.64abA-b_j3ODGMahiPkQY68EFL58GvcddhnYhJUci1Q",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Agrawal}}/api/welcomemsg/deleteAppTopWelcomeMsg/3",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"welcomemsg",
-								"deleteAppTopWelcomeMsg",
-								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "Information",
 			"item": [
 				{
@@ -1680,7 +1680,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg4OTYzNDUsImV4cCI6MTcyODkzMjM0NX0.h5pajLeMM7MhqY-Bdrf1yJNnCf3mvJW3tglap2xwkcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyMjc3OTMsImV4cCI6MTcyOTI2Mzc5M30.XOrQE8GCchiO6uRM47QMe1YFUHw6boc5WUujaNI6d78",
 									"type": "string"
 								}
 							]
@@ -1688,7 +1688,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Agrawal}}/api/combine/getRelatedProfile?mobilenumber=7692898925",
+							"raw": "{{Agrawal}}/api/combine/getRelatedProfile?mobilenumber=9009436798",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1700,7 +1700,7 @@
 							"query": [
 								{
 									"key": "mobilenumber",
-									"value": "7692898925"
+									"value": "9009436798"
 								}
 							]
 						}
@@ -1715,7 +1715,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5ODkxNDksImV4cCI6MTcyOTAyNTE0OX0.a41LGRmqqU_s2e6nz7f5DSOR1zLbIvGIlegvl0Qb9ac",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyMjc3OTMsImV4cCI6MTcyOTI2Mzc5M30.XOrQE8GCchiO6uRM47QMe1YFUHw6boc5WUujaNI6d78",
 									"type": "string"
 								}
 							]
@@ -1724,7 +1724,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"mobile\": 7692898925,\r\n  \"student_main_id\": 7,\r\n  \"status\": 1\r\n}",
+							"raw": "{\r\n  \"mobile\": 9009436798,\r\n  \"student_main_id\": 17,\r\n  \"status\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1955,7 +1955,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNTYxMzQsImV4cCI6MTcyOTE5MjEzNH0.GJ8srNsIdGUdi0pUSXGIw12YsOW_SdnI_XX-8UAb-mQ",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNDE3NjMsImV4cCI6MTcyOTI3Nzc2M30.Ayu0znMTaBpYPituQbj5mqXY7Jtvsa66PnRF-sXgIH8",
 									"type": "string"
 								}
 							]
@@ -1972,7 +1972,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=288&admin_id=115",
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=290&admin_id=115",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -1984,7 +1984,7 @@
 							"query": [
 								{
 									"key": "new_msg_id",
-									"value": "288"
+									"value": "290"
 								},
 								{
 									"key": "admin_id",
@@ -2185,7 +2185,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNTUxMzYsImV4cCI6MTcyOTI5MTEzNn0.h-0rXBeEPpWyB5mU30TZlVia8PN66A76SjwaQVUMbMg",
 									"type": "string"
 								}
 							]
@@ -2224,7 +2224,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkxNDQzMDIsImV4cCI6MTcyOTE4MDMwMn0.DOkAYQJVwrlqrlhOAUvXphOxnq8WnxXIIhH8yWnGEuw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNDE3NjMsImV4cCI6MTcyOTI3Nzc2M30.Ayu0znMTaBpYPituQbj5mqXY7Jtvsa66PnRF-sXgIH8",
 									"type": "string"
 								}
 							]
@@ -2247,66 +2247,6 @@
 					"response": []
 				},
 				{
-					"name": "App Get Seen Message By Number Copy",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5MDQ3NDUsImV4cCI6MTcyODk0MDc0NX0.AXdkGfMgrKvhi6u_NofHb-2FAMJGn65VZs54XIcIGWw",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{Agrawal}}/api/msg/getSeenMsgDetail/7692898925",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"msg",
-								"getSeenMsgDetail",
-								"7692898925"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "App Get Last Day Message By Number Copy 2",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg1NjAxMzEsImV4cCI6MTcyODU5NjEzMX0.1LO23EWG-4ErU0WsWHkwKYof7PwsG_HYkf5o-HeNZlU",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{Agrawal}}/api/msg/getLastdayMsgDetail/9009436798",
-							"host": [
-								"{{Agrawal}}"
-							],
-							"path": [
-								"api",
-								"msg",
-								"getLastdayMsgDetail",
-								"9009436798"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "App Get Starred Message By Number Copy 2",
 					"request": {
 						"auth": {
@@ -2314,7 +2254,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEyLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjg5MDgyODEsImV4cCI6MTcyODk0NDI4MX0.BWhAKY_H9WTCfkP5LNDCrJHiW1GMoDWL0xz0CegzbCs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNDE3NjMsImV4cCI6MTcyOTI3Nzc2M30.Ayu0znMTaBpYPituQbj5mqXY7Jtvsa66PnRF-sXgIH8",
 									"type": "string"
 								}
 							]
@@ -2330,6 +2270,66 @@
 								"api",
 								"msg",
 								"getStaredMsgDetail",
+								"9009436798"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Seen Message By Number Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNDE3NjMsImV4cCI6MTcyOTI3Nzc2M30.Ayu0znMTaBpYPituQbj5mqXY7Jtvsa66PnRF-sXgIH8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getSeenMsgDetail/9009436798",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getSeenMsgDetail",
+								"9009436798"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Get Last Day Message By Number Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MjkyNDE3NjMsImV4cCI6MTcyOTI3Nzc2M30.Ayu0znMTaBpYPituQbj5mqXY7Jtvsa66PnRF-sXgIH8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/msg/getLastdayMsgDetail/9009436798",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"msg",
+								"getLastdayMsgDetail",
 								"9009436798"
 							]
 						}
@@ -3413,7 +3413,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/DELL/Desktop/images/Screenshot_1.jpg"
+									"src": "/C:/Users/DELL/Desktop/images/Screenshot_4.jpg"
 								}
 							]
 						},
