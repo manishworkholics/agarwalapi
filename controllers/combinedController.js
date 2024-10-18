@@ -125,20 +125,20 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
                 message: "Mobile number, student ID, and status (0 or 1) are required",
             });
         }
-
+      
         // Check if status is 0 and set mobile to null if true
-        let updatedMobile = mobile; // Use a new variable to store mobile value
-        if (status == 0) {
-            updatedMobile = null; // Assign null to the new variable
-        }
-
+        // let updatedMobile = mobile; // Use a new variable to store mobile value
+        // if (status == 0) {
+        //     updatedMobile = null; // Assign null to the new variable
+        // }
+       
         // Find the student entry
         const student = await studentMainModel.findOne({
             where: {
                 student_main_id: student_main_id,
             },
         });
-
+        
         // Check if student exists
         if (!student) {
             return res.status(404).json({
@@ -146,17 +146,29 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
                 message: "Student not found",
             });
         }
-
+        
         // Update the student's tab_active_by_mobile and tab_active_status
-        student.tab_active_by_mobile = updatedMobile; // Use the new variable
-        student.tab_active_status = status; // 0 or 1
-        await student.save(); // Save the updated instance
-
+        // student.tab_active_by_mobile = status == 0 ? null: mobile; // Use the new variable
+        // student.tab_active_status = status; // 0 or 1
+        // await student.save(); // Save the updated instance
+        await studentMainModel.update(
+          { 
+            tab_active_by_mobile: status === 0 ? null : mobile, 
+            tab_active_status: status // 0 or 1
+          },
+          { 
+            where: { student_main_id: student_main_id } 
+          }
+        );
+        const updatedStudent = await studentMainModel.findOne({
+          where: { student_main_id: student_main_id }
+        });
+        
         // Return success response
         return res.status(200).json({
             status: true,
             message: "Student status updated successfully",
-            data: student,
+            data: updatedStudent
         });
 
     } catch (error) {

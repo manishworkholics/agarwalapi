@@ -31,6 +31,7 @@ const studentModel = sequelize.define('student_main_detail', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+
   tab_active_status: {
     type: DataTypes.TINYINT,
     allowNull: true,

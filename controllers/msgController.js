@@ -527,9 +527,7 @@ const parsedMsgMasterBody = msgMaster_body.map((msg) => {
   };
 });
 
-
-
-    if(msgMaster)
+if(msgMaster)
       {
           res.status(200).json({
             status: true,
@@ -625,55 +623,7 @@ exports.getSingleMsgDetail = asyncHandler(async (req, res) => {
 });
 //  100 % Working Code start============
 
-// exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
-//   try {
-//     const {mobile} = req.params;
-  
-//     const msgSendedMaster = await sendedMsgModel.findAll({
-//       limit: 100,
-//   order: [['sended_msg_id', 'DESC']] ,
-//   where: {
-//     mobile_no: mobile // Replace with the mobile number you want to filter by
-//   },
-//       include: [
-//         {
-//           model: msgMasterModel, // Include the subGroupModel to get msg_sgroup_mst
-//          },
-//          {
-//           model: studentMainDetailModel, // Join with studentMainDetailModel
-//           as: 'student', // Use the alias 'student' from the association
-//           // attributes: ['student_name'], // Fetch only the student_name
-//         }
-//       ],
-//     });
-//     if(msgSendedMaster.length > 0)
-//       {
-//           res.status(200).json({
-//             status: true,
-//             length:msgSendedMaster.length,
-//             data: msgSendedMaster,
-//           });
-//         }
-//         else
-//         {
-//           res.status(200).json({
-//             status: false,
-//             length:msgSendedMaster.length,
-//             data: msgSendedMaster,
-//           });
-//         }
-//   } catch (error) {
-//     console.error("Error fetching msgMaster with msgMaster:", error);
-//     res.status(500).json({
-//       status: "error",
-//       message: "Internal server error",
-//       error: error.message,
-//     });
-//   }
-// });
-//  100 % Working Code End============
 
-// Chage above code
 exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {mobile} = req.params;
@@ -681,12 +631,35 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
     // Get the current date and time
     const now = new Date();
     const today = new Date(); // Current date
+// Check any value tabed start ==========================
+const mobileNumber = mobile.trim();
 
+// Use Sequelize's Op.like to check for the matching number in a comma-separated field
+const relatedProfiles = await studentMainDetailModel.findAll({
+  where: {
+    student_family_mobile_number: {
+      [Op.like]: `%${mobileNumber}%`, // Find rows where mobile_no contains the number
+    },
+  },
+});
+
+let scholarNumbers = [];
+
+// Iterate over related profiles to check tab_active_status
+relatedProfiles.forEach(profile => {
+  if (profile.tab_active_status === 1) {
+    // If tab_active_status is 1, add the student_number to the list
+   scholarNumbers.push(profile.student_number); // Adjust according to your model's field name
+  }
+});
+
+// Check any value tabed start  
     const msgSendedMaster = await sendedMsgModel.findAll({
       limit: 100,
   order: [['sended_msg_id', 'DESC']] ,
   where: {
-    mobile_no: mobile // Replace with the mobile number you want to filter by
+     mobile_no: mobile 
+    // student_number: { [Op.in]: activeStudentNumbers },
   },
       include: [
         {
@@ -706,22 +679,32 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
         }
       ],
     });
-    if(msgSendedMaster.length > 0)
-      {
-          res.status(200).json({
-            status: true,
-            length:msgSendedMaster.length,
-            data: msgSendedMaster,
-          });
-        }
-        else
-        {
-          res.status(200).json({
-            status: false,
-            length:msgSendedMaster.length,
-            data: msgSendedMaster,
-          });
-        }
+    const filteredData = scholarNumbers.length > 0
+    ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
+    : msgSendedMaster; // If scholarNumbers is empty, return all data
+  
+    res.status(200).json({
+              status: true,
+              length:filteredData.length,
+              data: filteredData,scholarNumbers
+            });
+
+    // if(filteredData.length > 0)
+    //   {
+    //       res.status(200).json({
+    //         status: true,
+    //         length:filteredData.length,
+    //         data: filteredData,scholarNumbers
+    //       });
+    //     }
+    //     else
+    //     {
+    //       res.status(200).json({
+    //         status: false,
+    //         length:filteredData.length,
+    //         data: filteredData,
+    //       });
+    //     }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -731,11 +714,33 @@ exports.getInboxMsgDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
 //  100 % Working Code start============
 exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {mobile} = req.params;
-  
+    const mobileNumber = mobile.trim();
+
+    // Use Sequelize's Op.like to check for the matching number in a comma-separated field
+    const relatedProfiles = await studentMainDetailModel.findAll({
+      where: {
+        student_family_mobile_number: {
+          [Op.like]: `%${mobileNumber}%`, // Find rows where mobile_no contains the number
+        },
+      },
+    });
+    
+    let scholarNumbers = [];
+    
+    // Iterate over related profiles to check tab_active_status
+    relatedProfiles.forEach(profile => {
+      if (profile.tab_active_status === 1) {
+        // If tab_active_status is 1, add the student_number to the list
+       scholarNumbers.push(profile.student_number); // Adjust according to your model's field name
+      }
+    });
+    
     const msgSendedMaster = await sendedMsgModel.findAll({
       limit: 100,
   order: [['sended_msg_id', 'DESC']] ,
@@ -754,22 +759,33 @@ exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
         }
       ],
     });
-if(msgSendedMaster.length > 0)
-{
+
+    const filteredData = scholarNumbers.length > 0
+    ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
+    : msgSendedMaster; // If scholarNumbers is empty, return all data
+  
     res.status(200).json({
-      status: true,
-      length:msgSendedMaster.length,
-      data: msgSendedMaster,
-    });
-  }
-  else
-  {
-    res.status(200).json({
-      status: false,
-      length:msgSendedMaster.length,
-      data: msgSendedMaster,
-    });
-  }
+              status: true,
+              length:filteredData.length,
+              data: filteredData,scholarNumbers
+            });
+
+// if(msgSendedMaster.length > 0)
+// {
+//     res.status(200).json({
+//       status: true,
+//       length:msgSendedMaster.length,
+//       data: msgSendedMaster,
+//     });
+//   }
+//   else
+//   {
+//     res.status(200).json({
+//       status: false,
+//       length:msgSendedMaster.length,
+//       data: msgSendedMaster,
+//     });
+//   }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -783,7 +799,27 @@ if(msgSendedMaster.length > 0)
 exports.getStaredMsgDetail = asyncHandler(async (req, res) => {
   try {
     const {mobile} = req.params;
-  
+    const mobileNumber = mobile.trim();
+
+    // Use Sequelize's Op.like to check for the matching number in a comma-separated field
+    const relatedProfiles = await studentMainDetailModel.findAll({
+      where: {
+        student_family_mobile_number: {
+          [Op.like]: `%${mobileNumber}%`, // Find rows where mobile_no contains the number
+        },
+      },
+    });
+    
+    let scholarNumbers = [];
+    
+    // Iterate over related profiles to check tab_active_status
+    relatedProfiles.forEach(profile => {
+      if (profile.tab_active_status === 1) {
+        // If tab_active_status is 1, add the student_number to the list
+       scholarNumbers.push(profile.student_number); // Adjust according to your model's field name
+      }
+    });
+    
     const msgSendedMaster = await sendedMsgModel.findAll({
       limit: 100,
   order: [['sended_msg_id', 'DESC']] ,
@@ -802,22 +838,33 @@ exports.getStaredMsgDetail = asyncHandler(async (req, res) => {
         }
       ],
     });
-if(msgSendedMaster.length > 0)
-{
+
+    const filteredData = scholarNumbers.length > 0
+    ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
+    : msgSendedMaster; // If scholarNumbers is empty, return all data
+  
     res.status(200).json({
       status: true,
-      length:msgSendedMaster.length,
-      data: msgSendedMaster,
+      length:filteredData.length,
+      data: filteredData,scholarNumbers
     });
-  }
-  else
-  {
-    res.status(200).json({
-      status: false,
-      length:msgSendedMaster.length,
-      data: msgSendedMaster,
-    });
-  }
+
+// if(msgSendedMaster.length > 0)
+// {
+//     res.status(200).json({
+//       status: true,
+//       length:msgSendedMaster.length,
+//       data: msgSendedMaster,
+//     });
+//   }
+//   else
+//   {
+//     res.status(200).json({
+//       status: false,
+//       length:msgSendedMaster.length,
+//       data: msgSendedMaster,
+//     });
+//   }
   } catch (error) {
     console.error("Error fetching msgMaster with msgMaster:", error);
     res.status(500).json({
@@ -848,7 +895,29 @@ exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
     // Calculate the end of yesterday (just before midnight)
     const endOfYesterday = new Date(startOfYesterday);
     endOfYesterday.setHours(23, 59, 59, 999); // Last millisecond of the day
+// Check any value tabed start ==========================
+// =============================================
+const mobileNumber = mobile.trim();
 
+// Use Sequelize's Op.like to check for the matching number in a comma-separated field
+const relatedProfiles = await studentMainDetailModel.findAll({
+  where: {
+    student_family_mobile_number: {
+      [Op.like]: `%${mobileNumber}%`, // Find rows where mobile_no contains the number
+    },
+  },
+});
+
+let scholarNumbers = [];
+
+// Iterate over related profiles to check tab_active_status
+relatedProfiles.forEach(profile => {
+  if (profile.tab_active_status === 1) {
+    // If tab_active_status is 1, add the student_number to the list
+   scholarNumbers.push(profile.student_number); // Adjust according to your model's field name
+  }
+});
+// ===================================
     const msgSendedMaster = await sendedMsgModel.findAll({
       order: [['sended_msg_id', 'DESC']],
       where: {
@@ -876,42 +945,31 @@ exports.getLastdayMsgDetail = asyncHandler(async (req, res) => {
       ],
     });
 
-    // const msgSendedMaster = await sendedMsgModel.findAll({
-    //   order: [['sended_msg_id', 'DESC']],
-    //   where: {
-    //     mobile_no: mobile,
-    //     sended_date: {
-    //       [Op.gte]: startOfYesterday, // Greater than or equal to the start of yesterday
-    //       [Op.lte]: endOfYesterday // Less than or equal to the end of yesterday
-    //     }
-    //   },
-    //   include: [
-    //     {
-    //       model: msgMasterModel, // Include the msgMasterModel to get additional details
-    //     },
-    //     {
-    //       model: studentMainDetailModel, // Join with studentMainDetailModel
-    //       as: 'student', // Use the alias 'student' from the association
-    //       // attributes: ['student_name'], // Fetch only the student_name
-    //     }
-    //   ],
-    // });
+    const filteredData = scholarNumbers.length > 0
+    ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
+    : msgSendedMaster; // If scholarNumbers is empty, return all data
+  
+    res.status(200).json({
+      status: true,
+      length:filteredData.length,
+      data: filteredData,scholarNumbers
+    });
 
-    // Check if any messages were found
-    if (msgSendedMaster.length > 0) {
-      res.status(200).json({
-        status: true,
-        length: msgSendedMaster.length,
-        data: msgSendedMaster,
-      });
-    } else {
-      // Return an empty response if no messages found
-      res.status(200).json({
-        status: false,
-        length: 0,
-        data: [] // Return an empty array
-      });
-    }
+    // // Check if any messages were found
+    // if (msgSendedMaster.length > 0) {
+    //   res.status(200).json({
+    //     status: true,
+    //     length: msgSendedMaster.length,
+    //     data: msgSendedMaster,
+    //   });
+    // } else {
+    //   // Return an empty response if no messages found
+    //   res.status(200).json({
+    //     status: false,
+    //     length: 0,
+    //     data: [] // Return an empty array
+    //   });
+    // }
   } catch (error) {
     console.error("Error fetching last day messages:", error);
     res.status(500).json({
