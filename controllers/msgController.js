@@ -32,7 +32,7 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
   try {
     // Extract data from the request body
     const {
-      subject_text,
+      subject_text,msg_chat_type,five_mobile_number,
       show_upto,
       msg_priority,
       msg_sgroup_id,
@@ -45,9 +45,9 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
     const message_body2 = message_body;
     // msg_id ,msg_type,data_text,ordersno  // this message body also insert in difrent table
     const schoolIdsString = school_id.join(','); // Convert array to string "1,2,3"
-
+   
     const newMasterMessage = await msgMasterModel.create({
-      subject_text,
+      subject_text,msg_chat_type,five_mobile_number,
       show_upto,
       msg_priority,
       msg_sgroup_id,
@@ -268,32 +268,61 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
     // Check if any data exists
     if (msgMaster.length > 0) {
       // Prepare an array of school IDs for querying
-      const schoolIds = msgMaster.flatMap(msg => msg.school_id.split(',').map(Number)); // Extract and convert school_ids
+      // const schoolIds = msgMaster.flatMap(msg => msg?.school_id.split(',').map(Number)); // Extract and convert school_ids
+      const schoolIds = msgMaster.flatMap(msg => {
+        return msg?.school_id ? msg.school_id.split(',').map(Number) : [];
+      });
 
       // Fetch all matching school records for the extracted IDs
-      const schools = await schoolModel.findAll({
-        where: {
-          sch_id: {
-            [Op.in]: schoolIds, // Use Op.in to match multiple IDs
-          },
-        },
-      });
+const schools = await schoolModel.findAll({
+  where: {
+    sch_id: {
+      [Op.in]: schoolIds, // Use Op.in to match multiple IDs
+    },
+  },
+});
 
-      // Create a mapping of school IDs to their full data
-      const schoolMapping = schools.reduce((acc, school) => {
-        acc[school.sch_id] = school; // Store the entire school object
-        return acc;
-      }, {});
+// Create a mapping of school IDs to their full data
+const schoolMapping = schools.reduce((acc, school) => {
+  acc[school.sch_id] = school; // Store the entire school object
+  return acc;
+}, {});
 
-      // Add full school data to each msgMaster record
-      const msgMasterWithSchoolData = msgMaster.map(msg => {
-        const ids = msg.school_id.split(',').map(Number);
-        const schoolData = ids.map(id => schoolMapping[id]).filter(Boolean); // Get the full school data based on IDs
-        return {
-          ...msg.toJSON(), // Convert Sequelize instance to plain object
-          schools: schoolData, // Add full school data to the message object
-        };
-      });
+// Add full school data to each msgMaster record
+const msgMasterWithSchoolData = msgMaster.map(msg => {
+  const ids = msg.school_id ? msg.school_id.split(',').map(Number) : []; // Ensure school_id is valid
+  const schoolData = ids.map(id => schoolMapping[id]).filter(Boolean); // Get the full school data based on IDs
+  return {
+    ...msg.toJSON(), // Convert Sequelize instance to plain object
+    schools: schoolData, // Add full school data to the message object
+  };
+});
+
+
+      // Fetch all matching school records for the extracted IDs
+      // const schools = await schoolModel.findAll({
+      //   where: {
+      //     sch_id: {
+      //       [Op.in]: schoolIds, // Use Op.in to match multiple IDs
+      //     },
+      //   },
+      // });
+
+      // // Create a mapping of school IDs to their full data
+      // const schoolMapping = schools.reduce((acc, school) => {
+      //   acc[school.sch_id] = school; // Store the entire school object
+      //   return acc;
+      // }, {});
+
+      // // Add full school data to each msgMaster record
+      // const msgMasterWithSchoolData = msgMaster.map(msg => {
+      //   const ids = msg.school_id.split(',').map(Number);
+      //   const schoolData = ids.map(id => schoolMapping[id]).filter(Boolean); // Get the full school data based on IDs
+      //   return {
+      //     ...msg.toJSON(), // Convert Sequelize instance to plain object
+      //     schools: schoolData, // Add full school data to the message object
+      //   };
+      // });
 
       res.status(200).json({
         status: "success",
@@ -476,7 +505,7 @@ const change = await sendedMsgModel.update(
     },
   }
 );
-
+const getSendedmessDetail = await sendedMsgModel.findOne({ where: { sended_msg_id: sended_msg_id },});
 // ========================================
     const msgMaster = await msgMasterModel.findOne({ where: { msg_id: msg_id },},{
       include: [
@@ -531,7 +560,7 @@ if(msgMaster)
       {
           res.status(200).json({
             status: true,
-             data: {msg_detail:msgMaster,msg_body:parsedMsgMasterBody},
+             data: {msg_detail:msgMaster,msg_body:parsedMsgMasterBody,is_reply_done:getSendedmessDetail.is_reply_done===1?1:0},
           });
         }
         else
@@ -2402,220 +2431,6 @@ const upload = multer({ storage });
 // Middleware for handling file uploads
 // exports.uploadFile = upload.single('file'); // Handle single file upload for FILE-INPUT or CAMERA-INPUT
 exports.uploadFiles = upload.any();
-// Insert function with file handling
-// exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
-//   try {
-//     const { 
-//       msg_id, 
-//       mobile_no, 
-//       student_main_id, 
-//       student_number, 
-//       sended_msg_id, 
-//       replyBodies 
-//     } = req.body;
-
-//     // Validate required fields for RepliedMessageModel
-//     if (!msg_id || !mobile_no) {
-//       return res.status(400).json({
-//         status: false,
-//         message: "msg_id and mobile_no are required",
-//       });
-//     }
-
-//     // Validate that replyBodies is an array
-//     if (!Array.isArray(replyBodies) || replyBodies.length === 0) {
-//       return res.status(400).json({
-//         status: false,
-//         message: "replyBodies must be a non-empty array",
-//       });
-//     }
-
-//     // Insert into RepliedMessageModel
-//     const newRepliedMessage = await RepliedMessageModel.create({
-//       sended_msg_id: sended_msg_id,
-//       msg_id,
-//       mobile_no,
-//       student_main_id,
-//       student_number,
-//       reply_date_time: new Date(), // Defaults to current date if not provided
-//     });
-
-//     // Get the newly inserted replied_msg_id
-//     const replied_msg_id = newRepliedMessage.replied_msg_id;
-
-//     // Prepare bulk insert data for RepliedMsgBodyModel
-//     const bodyInsertData = await Promise.all(replyBodies.map(async (body) => {
-//       let fileUrl = null; // Variable to hold the file URL
-
-//       if (body.msg_type === "FILE-INPUT" || body.msg_type === "CAMERA-INPUT") {
-//         // Check if a file was uploaded
-//         const uploadedFile = req.files.find(file => file.fieldname === `file-${body.msg_body_id}`); // Assuming file is uploaded in req.files with a specific key
-//         if (!uploadedFile) {
-//           return Promise.reject(new Error(`File is required for msg_body_id: ${body.msg_body_id}`));
-//         }
-       
-//         // Process the uploaded file
-//         const savedFileName = uploadedFile.filename.replace(/\s+/g, '');
-
-// const fileExtension = uploadedFile.mimetype;
-// if (fileExtension === 'application/pdf') {
-//   fileUrl = `${process.env.MAIN_URL}Uploads/pdf/${savedFileName}`;
-// } else if (fileExtension.startsWith('image/')) {
-//   fileUrl = `${process.env.MAIN_URL}Uploads/image/${savedFileName}`;
-// }
-
-//         // Use the file URL in the data
-//         return {
-//           replied_msg_id: replied_msg_id,
-//           msg_body_id: body.msg_body_id,
-//           msg_type: body.msg_type,
-//           data_reply_text: JSON.stringify({ imageURIsave: fileUrl }), // Save file URL in the data
-//         };
-//       }
-
-//       // If not a file input, store the regular body data
-//       return {
-//         replied_msg_id: replied_msg_id,
-//         msg_body_id: body.msg_body_id,
-//         msg_type: body.msg_type,
-//         data_reply_text: body.data_reply_text,
-//       };
-//     }));
-
-//     // Catch any errors from the Promise.all
-//     const filteredInsertData = bodyInsertData.filter(data => !(data instanceof Error));
-//     const errorMessages = bodyInsertData.filter(data => data instanceof Error);
-
-//     // If there are any errors, return the first error message
-//     if (errorMessages.length > 0) {
-//       return res.status(400).json({
-//         status: false,
-//         message: errorMessages.map(err => err.message).join(', '),
-//       });
-//     }
-
-//     // Bulk insert into RepliedMsgBodyModel
-//     const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(filteredInsertData);
-
-//     // Return success response with data from both inserts
-//     return res.status(201).json({
-//       status: true,
-//       message: "Data inserted into RepliedMessageModel and multiple RepliedMsgBodyModel records successfully",
-//       repliedMessage: newRepliedMessage,
-//       repliedMsgBodies: newRepliedMsgBodies,
-//     });
-//   } catch (error) {
-//     console.error("Error inserting data:", error);
-//     return res.status(500).json({
-//       status: "error",
-//       message: "Internal server error",
-//       error: error.message,
-//     });
-//   }
-// });
-// exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
-//   try {
-//     const { 
-//       msg_id, 
-//       mobile_no, 
-//       student_main_id, 
-//       student_number, 
-//       sended_msg_id, 
-//       replyBodies 
-//     } = req.body;
-
-//     // Validate required fields for RepliedMessageModel
-//     if (!msg_id || !mobile_no) {
-//       return res.status(400).json({
-//         status: false,
-//         message: "msg_id and mobile_no are required",
-//       });
-//     }
-
-//     // Validate that replyBodies is an array
-//     if (!Array.isArray(replyBodies) || replyBodies.length === 0) {
-//       return res.status(400).json({
-//         status: false,
-//         message: "replyBodies must be a non-empty array",
-//       });
-//     }
-
-//     // Insert into RepliedMessageModel
-//     const newRepliedMessage = await RepliedMessageModel.create({
-//       sended_msg_id: sended_msg_id,
-//       msg_id,
-//       mobile_no,
-//       student_main_id,
-//       student_number,
-//       reply_date_time: new Date(), // Defaults to current date if not provided
-//     });
-
-//     const replied_msg_id = newRepliedMessage.replied_msg_id;
-
-//     const bodyInsertData = await Promise.all(replyBodies.map(async (body) => {
-//       let fileUrl = null;
-
-//       if (body.msg_type === "FILE-INPUT" || body.msg_type === "CAMERA-INPUT") {
-//         // Find the uploaded file with dynamic key
-//         const uploadedFile = req.files.find(file => file.fieldname === `file-${body.msg_body_id}`);
-
-//         if (!uploadedFile) {
-//           return Promise.reject(new Error(`File is required for msg_body_id: ${body.msg_body_id}`));
-//         }
-
-//         // Process the uploaded file
-//         const savedFileName = uploadedFile.filename.replace(/\s+/g, '');
-
-//         const fileExtension = uploadedFile.mimetype;
-//         if (fileExtension === 'application/pdf') {
-//           fileUrl = `${process.env.MAIN_URL}Uploads/pdf/${savedFileName}`;
-//         } else if (fileExtension.startsWith('image/')) {
-//           fileUrl = `${process.env.MAIN_URL}Uploads/image/${savedFileName}`;
-//         }
-
-//         return {
-//           replied_msg_id: replied_msg_id,
-//           msg_body_id: body.msg_body_id,
-//           msg_type: body.msg_type,
-//           data_reply_text: JSON.stringify({ imageURIsave: fileUrl }),
-//         };
-//       }
-
-//       return {
-//         replied_msg_id: replied_msg_id,
-//         msg_body_id: body.msg_body_id,
-//         msg_type: body.msg_type,
-//         data_reply_text: body.data_reply_text,
-//       };
-//     }));
-
-//     const filteredInsertData = bodyInsertData.filter(data => !(data instanceof Error));
-//     const errorMessages = bodyInsertData.filter(data => data instanceof Error);
-
-//     if (errorMessages.length > 0) {
-//       return res.status(400).json({
-//         status: false,
-//         message: errorMessages.map(err => err.message).join(', '),
-//       });
-//     }
-
-//     const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(filteredInsertData);
-
-//     return res.status(201).json({
-//       status: true,
-//       message: "Data inserted successfully",
-//       repliedMessage: newRepliedMessage,
-//       repliedMsgBodies: newRepliedMsgBodies,
-//     });
-//   } catch (error) {
-//     console.error("Error inserting data:", error);
-//     return res.status(500).json({
-//       status: "error",
-//       message: "Internal server error",
-//       error: error.message,
-//     });
-//   }
-// });
 
 // 100 % working below code 17-10-2024 don't delete
 exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
@@ -2659,7 +2474,16 @@ exports.insertRepliedMessageAndBodies = asyncHandler(async (req, res) => {
 
     // Bulk insert into RepliedMsgBodyModel
     const newRepliedMsgBodies = await RepliedMsgBodyModel.bulkCreate(bodyInsertData);
-
+   
+    const result = await sendedMsgModel.update(
+      {
+          is_reply_done: 1,
+          reply_on: new Date() // Sets the current date and time
+      },
+      {
+          where: { sended_msg_id: sended_msg_id }
+      }
+  );
     // Return success response with data from both inserts
     return res.status(201).json({
       status: true,

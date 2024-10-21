@@ -14,19 +14,66 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
 
     if (scholar_detail.length > 0) {
       // Modify the data structure to match your Sequelize model fields
-      const formattedData = scholar_detail.map((item) => ({
-        sch_short_nm: item.SCHOOL_SHORT_NAME, // from request data
-        mobile_no: item.MOBILE_NUMBER, // from request data
-        scholar_no: item.STUDENT_ID, // from request data
-        name: item.STUDENT_NAME, // from request data
-        // Optionally add fields for scholar_type or scholar_otp
-      }));
+      // const formattedData = scholar_detail.map((item) => ({
+      //   sch_short_nm: item.SCHOOL_SHORT_NAME, // from request data
+      //   mobile_no: item.MOBILE_NUMBER, // from request data
+      //   scholar_no: item.STUDENT_ID, // from request data
+      //   name: item.STUDENT_NAME, // from request data
+      //   scholar_dob: item.STUDENT_DOB, // from request data
+      //   scholar_email: item.STUDENT_EMAIL, // from request data
+        
+      //   // Optionally add fields for scholar_type or scholar_otp
+      // }));
 
-      // // Insert records into the database  ye sirf insert karagaa
-      // await scholarModel.bulkCreate(formattedData, {
-      //   ignoreDuplicates: true, // Optional: to avoid inserting duplicates
+      // const formattedData = scholar_detail.map((item) => {
+      //   let scholarType;
+      
+      //   // Check if scholar_no is a number, text, or empty
+      //   if (!item.STUDENT_ID) {
+      //     scholarType = "TEACHER"; // Empty case
+      //   } else if (isNaN(item.STUDENT_ID)) {
+      //     scholarType = item.STUDENT_ID; // Text case
+      //   } else {
+      //     scholarType = "STUDENT"; // Number case
+      //   }
+      
+      //   return {
+      //     sch_short_nm: item.SCHOOL_SHORT_NAME, // from request data
+      //     mobile_no: item.MOBILE_NUMBER, // from request data
+      //     scholar_no: item.STUDENT_ID, // from request data
+      //     name: item.STUDENT_NAME, // from request data
+      //     scholar_dob: item.STUDENT_DOB, // from request data
+      //     scholar_email: item.STUDENT_EMAIL, // from request data
+      //     scholar_type: scholarType, // Assigning the scholar_type based on the condition
+      //     // Optionally add fields for scholar_otp
+      //   };
       // });
-
+      const formattedData = scholar_detail.map((item) => {
+        let scholarType;
+        let scholarNo = item.STUDENT_ID; // Use the provided STUDENT_ID by default
+      
+        // Check and assign scholarType based on STUDENT_ID
+        if (!item.STUDENT_ID) {
+          scholarType = "TEACHER"; // Empty case
+          // Generate an 8-digit random dummy number if STUDENT_ID is not available
+          scholarNo = Math.floor(10000000 + Math.random() * 90000000); 
+        } else if (isNaN(item.STUDENT_ID)) {
+          scholarType = item.STUDENT_ID; // Text case
+        } else {
+          scholarType = "STUDENT"; // Number case
+        }
+      
+        return {
+          sch_short_nm: item.SCHOOL_SHORT_NAME, // from request data
+          mobile_no: item.MOBILE_NUMBER, // from request data
+          scholar_no: scholarNo, // Use either provided or generated scholar number
+          name: item.STUDENT_NAME, // from request data
+          scholar_dob: item.STUDENT_DOB, // from request data
+          scholar_email: item.STUDENT_EMAIL, // from request data
+          scholar_type: scholarType, // Assigning the scholar_type based on the condition
+          // Optionally add fields for scholar_otp
+        };
+      });
       //=======================================
       // Extract mobile numbers from the formatted data
       
@@ -51,7 +98,10 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
               mobile_no: item.mobile_no,
               scholar_no: item.scholar_no,
               is_verified: 1,
-              sch_short_nm:item.sch_short_nm
+              sch_short_nm:item.sch_short_nm,
+              scholar_dob:item.scholar_dob,
+              scholar_email:item.scholar_email,
+              scholar_type:item.scholar_type
             },
             {
               ignoreDuplicates: true, // Optional: to avoid inserting duplicates
@@ -83,7 +133,7 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
         where: {
           student_number: item.scholar_no,
         },
-        // attributes: ['student_number', 'student_family_mobile_number'],  // Fetch the existing records
+       
       });
 
       
@@ -93,14 +143,7 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
         : [];
 
       if (!existingMobileNumbers.includes(item.mobile_no)) {
-        // If the mobile number is not found, push it into the array for later insertion
-        // mobileNumbersToInsert.push(item.mobile_no);
-      
-        // const rec+to_update=
-        // await student_main_detailModel.update(
-        //   { student_family_mobile_number: existingMobileNumbers.join(',') }, // Join the array to save it as a string
-        //   { where: { student_number: item.scholar_no } } // Update the correct student record
-        // );
+        
         const existingMobileNumbers = existingStudenRecord.student_family_mobile_number || ''; // Handle null case
 
         // Combine old mobile numbers with the new mobile number
@@ -136,6 +179,9 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
         student_number: item.scholar_no,
         student_name: item.name,
         student_family_mobile_number: item.mobile_no, // Insert new mobile number
+        student_dob:item.scholar_dob,
+              student_email:item.scholar_email,
+              scholar_type:item.scholar_type,
         createdAt: new Date(),
       });
     }
@@ -311,3 +357,47 @@ exports.getscholarDetail = asyncHandler(async (req, res) => {
 //     });
 //   }
 // });
+
+
+exports.get_MainList_ScholarDetail_DropDown = asyncHandler(async (req, res) => {
+  try {
+   
+    const scholar_main_detail = await student_main_detailModel.findAll({
+    attributes: ['student_main_id','student_family_mobile_number'],
+      order: [
+        ["student_main_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
+      ],
+     
+    });
+
+    // Fetch the total count of records
+    const totalCount = await student_main_detailModel.count(); // Get total count of records for pagination
+
+    // Check if any data exists
+    if (scholar_main_detail.length > 0) {
+      res.status(200).json({
+        status: true,
+        message: "Data_Found",
+        data: scholar_main_detail,
+        totalCount: totalCount, // Include total count in the response
+      });
+    } else {
+      res.status(200).json({
+        status: false,
+        message: "No_Data_Found",
+        data: null,
+        totalCount: 0, // Return total count as 0 if no data found
+      });
+    }
+  } catch (error) {
+    // Log the error to the console for debugging
+    console.error("Error fetching scholar details:", error.message);
+
+    // Send an error response to the client
+    res.status(500).json({
+      status: false,
+      message: "An error occurred",
+      error: error.message, // Return the error message for debugging (optional)
+    });
+  }
+});

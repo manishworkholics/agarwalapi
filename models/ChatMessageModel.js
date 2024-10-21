@@ -13,6 +13,11 @@ const ChatMessage = sequelize.define('Chat_Message', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  // group private
+  chat_type: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   sender_id: {
     type: DataTypes.INTEGER,
     allowNull: false,   

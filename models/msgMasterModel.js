@@ -15,6 +15,10 @@ const msgMasterModel = sequelize.define('msg_mst', {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
+  five_mobile_number: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  }, 
   subject_text: {
     type: DataTypes.STRING,
     allowNull: true,

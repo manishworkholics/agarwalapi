@@ -17,6 +17,18 @@ const Parents = sequelize.define('Parents', {
     type: DataTypes.STRING(15),
     allowNull: true,
   },
+  scholar_dob: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  scholar_email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  scholar_type: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
   // msg_seen_no: {
   //   type: DataTypes.ARRAY(DataTypes.STRING),
   //   allowNull: true,

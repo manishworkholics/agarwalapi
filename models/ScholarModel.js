@@ -34,6 +34,14 @@ const scholarModel = sequelize.define('scholar_data', {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
+  scholar_dob: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  scholar_email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
 }, {
   tableName: 'scholar_data', 
    timestamps: false,

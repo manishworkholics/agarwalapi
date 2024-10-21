@@ -60,7 +60,7 @@ const sendedMsgModel = sequelize.define('sended_msg', {
   },
   is_reply_done: {
     type: DataTypes.TINYINT(3).UNSIGNED,
-    allowNull: true,
+   default:0
   },
   reply_on: {
     type: DataTypes.DATE,

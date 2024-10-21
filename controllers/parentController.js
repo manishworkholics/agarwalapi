@@ -260,3 +260,91 @@ const token = generateToken(tokenuser);
   }
 });
 
+// exports.getAllParent = asyncHandler(async (req, res) => {
+//   try {
+//     // Extract pagination parameters from the query
+//     const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+//     const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+//     const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+//     // Fetch records with pagination
+//     const parent_detail = await ParentReg.findAll({
+//       order: [
+//         ["parents_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
+//       ],
+//       limit: limit,
+//       offset: offset,
+//     });
+
+//     // Fetch the total count of records
+//     const totalCount = await ParentReg.count(); // Get total count of records for pagination
+
+//     // Check if any data exists
+//     if (parent_detail.length > 0) {
+//       res.status(200).json({
+//         status: true,
+//         message: "Data_Found",
+//         data: parent_detail,
+//         totalCount: totalCount, // Include total count in the response
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         message: "No_Data_Found",
+//         data: null,
+//         totalCount: 0, // Return total count as 0 if no data found
+//       });
+//     }
+//   } catch (error) {
+//     // Log the error to the console for debugging
+//     console.error("Error fetching scholar details:", error.message);
+
+//     // Send an error response to the client
+//     res.status(500).json({
+//       status: false,
+//       message: "An error occurred",
+//       error: error.message, // Return the error message for debugging (optional)
+//     });
+//   }
+// });
+
+// exports.getAllParentWebOnly = asyncHandler(async (req, res) => {
+//   try {
+   
+//     const parent_detail = await ParentReg.findAll({
+//     attributes: ['parents_id','mobile_no'], 
+//      order: [
+//         ["parents_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
+//       ],
+    
+//     });
+
+   
+//     // Check if any data exists
+//     if (parent_detail.length > 0) {
+//       res.status(200).json({
+//         status: true,
+//         message: "Data_Found",
+//         data: parent_detail,
+       
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         message: "No_Data_Found",
+//         data: null,
+//         totalCount: 0, // Return total count as 0 if no data found
+//       });
+//     }
+//   } catch (error) {
+//     // Log the error to the console for debugging
+//     console.error("Error fetching scholar details:", error.message);
+
+//     // Send an error response to the client
+//     res.status(500).json({
+//       status: false,
+//       message: "An error occurred",
+//       error: error.message, // Return the error message for debugging (optional)
+//     });
+//   }
+// });

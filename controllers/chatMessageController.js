@@ -17,11 +17,11 @@ const {
 
 // Send a message
 exports.sendMessage1 = asyncHandler(async (req, res) => {
-    const { msg_id,sender_id,mobile_no, group_id, receiver_id, message } = req.body;
+    const { msg_id,sender_id,chat_type,mobile_no, group_id, receiver_id, message } = req.body;
   //group is is main master msg id heeeeeeeeee
     try {
       const newMessage = await ChatMessage.create({
-        sender_id,msg_id,mobile_no,
+        sender_id,msg_id,mobile_no,chat_type,
         group_id: group_id || null,
         receiver_id: receiver_id || null,
         message,
@@ -48,7 +48,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
   
     try {
       const messages = await ChatMessage.findAll({
-        where: { group_id: groupId },
+        where: { group_id: groupId ,chat_type:"GROUPCHAT"},
         order: [['sent_at', 'ASC']], // Order by sent_at ascending
         include: [
             {

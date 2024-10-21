@@ -8,5 +8,8 @@ router.post('/login', parentController.login);
 router.post('/otp', parentController.generateOtp);
 router.post('/resentOtp', parentController.resentOtp);
 router.post('/otp-verify', parentController.otpverify);
+router.post('/otp-verify', parentController.otpverify);
+// router.get('/getAllParent', parentController.getAllParent);
+// router.get('/getAllParentWebOnly', parentController.getAllParentWebOnly);
 
 module.exports = router;

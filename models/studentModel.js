@@ -15,6 +15,18 @@ const studentModel = sequelize.define('student_main_detail', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  student_dob: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  student_email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  scholar_type: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
   color: {
     type: DataTypes.STRING,
     allowNull: true,
