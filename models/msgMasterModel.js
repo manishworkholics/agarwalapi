@@ -10,6 +10,11 @@ const msgMasterModel = sequelize.define('msg_mst', {
     autoIncrement: true,
     primaryKey: true,
   },
+  //GROUPCHAT ,INDIVIDUALCHAT INPUT DISPLAY
+  msg_chat_type: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
   subject_text: {
     type: DataTypes.STRING,
     allowNull: true,

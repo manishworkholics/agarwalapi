@@ -19,6 +19,7 @@ const msgRoutes = require("./routes/msgRoute");
 const scholarRoutes = require("./routes/scholarRoute");
 const adminRoutes = require("./routes/adminRoute");
 const feesRoutes = require("./routes/feesRoute");
+const chatMsgRoutes = require("./routes/chatmessageRoute");
 const writeFileSync = require("fs");
 
 
@@ -94,6 +95,7 @@ app.use(
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/fees", feesRoutes);
+app.use("/api/chat", chatMsgRoutes);
 app.use("/api/parents", parentRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/school", schoolRoutes);

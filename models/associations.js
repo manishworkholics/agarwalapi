@@ -9,6 +9,7 @@ const schoolModel = require('./schoolMasterModel');
 const feesDisplayModel = require('./feesModel');
 const RepliedMessageModel = require('./RepliedMessageModel');
 const RepliedMsgBodyModel = require('./RepliedMsgDetailModel');
+const ChatMessage = require('./ChatMessageModel');
 // Define the associations
 groupModel.hasMany(subGroupModel, { foreignKey: 'msg_group_id' });
 subGroupModel.belongsTo(groupModel, { foreignKey: 'msg_group_id' });
@@ -101,10 +102,15 @@ RepliedMessageModel.belongsTo(sendedMsgModel, {
   as: 'sendedMessage', // Alias for the association
 });
 // ==========reply msg
+// =========Sart chat msg
+// Optional: If you want to ensure associations are set up correctly
+ChatMessage.belongsTo(studentMainDetailModel, { foreignKey: 'sender_id', as: 'sender' });
+ChatMessage.belongsTo(studentMainDetailModel, { foreignKey: 'receiver_id', as: 'receiver' });
 
+// =========Endchat msg
 module.exports = {
   groupModel,
   subGroupModel,
-  msgMasterModel,msgBodyModel,sendedMsgModel,studentMainDetailModel,feesDisplayModel,schoolModel,RepliedMessageModel,RepliedMsgBodyModel
+  msgMasterModel,msgBodyModel,sendedMsgModel,studentMainDetailModel,feesDisplayModel,schoolModel,RepliedMessageModel,RepliedMsgBodyModel,ChatMessage
 };
 
