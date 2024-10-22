@@ -113,6 +113,134 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+exports.get_web_single_msg_master = asyncHandler(async (req, res) => {
+  try {
+    const { msg_id } = req.query; // Extract the msg_id from query parameters
+
+    if (!msg_id) {
+      return res.status(400).json({
+        status: "error",
+        message: "msg_id is required",
+      });
+    }
+
+    // Fetch the single message by msg_id
+    const msgMaster = await msgMasterModel.findOne({
+      where: { msg_id: msg_id }, // Filter by msg_id
+      include: [
+        {
+          model: subGroupModel, // Include subGroupModel to get msg_sgroup_mst
+          include: [
+            {
+              model: groupModel, // Include groupModel within subGroupModel
+            },
+          ],
+        },
+        {
+          model: msgBodyModel, // Include msgBodyModel to fetch data from msg_body
+          order: [["ordersno", "ASC"]], // Order the results by ordersno
+        },
+      ],
+    });
+
+    // Check if data exists
+    if (!msgMaster) {
+      return res.status(404).json({
+        status: "error",
+        message: "Message not found",
+      });
+    }
+
+    // Prepare an array of school IDs for querying
+    const schoolIds = msgMaster?.school_id
+      ? msgMaster.school_id.split(",").map(Number)
+      : [];
+
+    // Fetch all matching school records for the extracted IDs
+    const schools = await schoolModel.findAll({
+      where: {
+        sch_id: {
+          [Op.in]: schoolIds, // Use Op.in to match multiple IDs
+        },
+      },
+    });
+
+    // Create a mapping of school IDs to their full data
+    const schoolMapping = schools.reduce((acc, school) => {
+      acc[school.sch_id] = school; // Store the entire school object
+      return acc;
+    }, {});
+
+    // Add full school data to the msgMaster record
+    const schoolData = schoolIds.map((id) => schoolMapping[id]).filter(Boolean);
+    const msgMasterWithSchoolData = {
+      ...msgMaster.toJSON(), // Convert Sequelize instance to plain object
+      schools: schoolData, // Add full school data to the message object
+    };
+
+    // Return the single message with school data
+    res.status(200).json({
+      status: "success",
+      data: msgMasterWithSchoolData,
+    });
+  } catch (error) {
+    console.error("Error fetching msgMaster:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
+
+exports.delete_web_single_msg_master = asyncHandler(async (req, res) => {
+  try {
+    const { msg_id } = req.query; // Extract the msg_id from query parameters
+
+    if (!msg_id) {
+      return res.status(400).json({
+        status: "error",
+        message: "msg_id is required",
+      });
+    }
+
+    // Fetch the single message by msg_id
+    const msgMaster = await msgMasterModel.findOne({
+      where: { msg_id: msg_id },
+    });
+
+
+    // Check if message exists
+    if (!msgMaster) {
+      return res.status(404).json({
+        status: "error",
+        message: "Message not found",
+      });
+    }
+
+    // Update the is_active status to 0 (soft delete)
+    msgMaster.is_active = 0;
+    await msgMaster.save();
+
+    // Return success response
+    res.status(200).json({
+      status: "success",
+      message: "Message has been deactivated",
+    });
+
+  } catch (error) {
+    console.error("Error updating message status:", error);
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
 // This is to all sent 100 % working
 // exports.SentMsgToScholarData = asyncHandler(async (req, res) => {
 //   try {

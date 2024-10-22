@@ -58,6 +58,8 @@ const imagestorage = multer.diskStorage({
     cb(null, Date.now() + "-" + Date.now() + ".png");
   },
 });
+
+
 app.use("/Uploads/", express.static("Uploads/"));
 //Configuration for Multer image and pdf
 const pdfstorage = multer.diskStorage({
@@ -68,6 +70,7 @@ const pdfstorage = multer.diskStorage({
     cb(null, Date.now() + "-" + Date.now() + ".pdf");
   },
 });
+
 // const videostorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, "Uploads/video/");

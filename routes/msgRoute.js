@@ -22,6 +22,11 @@ router.get('/getSingleGroupData/:id',authMiddleware, MsgController.getSingleGrou
 router.put('/updateSingleGroupData/:msg_group_id',authMiddleware, MsgController.updateSingleGroupData);
 
 router.get('/getMsgDetail',authMiddleware, MsgController.getmsgMaster);
+router.get('/get_web_single_msg_master',authMiddleware, MsgController.get_web_single_msg_master);
+router.delete('/delete_web_single_msg_master',authMiddleware, MsgController.delete_web_single_msg_master);
+
+
+
 router.get('/getSearchDetail',authMiddleware, MsgController.getSearchDetail);
 // App mobile app start
 //this is for just single master msg

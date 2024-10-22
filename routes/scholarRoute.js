@@ -4,6 +4,7 @@ const ScholarController = require('../controllers/scholarController');
 const { authMiddleware } = require('../middlewares/authMiddleware.js');
 
 router.get('/getScholarDetail',authMiddleware, ScholarController.getscholarDetail);
+router.get('/get_full_list_app_active_users_list',authMiddleware, ScholarController.get_full_list_app_active_users_list);
 router.get('/get_MainList_ScholarDetail',authMiddleware, ScholarController.get_MainList_ScholarDetail_DropDown);
 router.post('/insertScholarRecord',authMiddleware, ScholarController.insertScholarRecord);
 

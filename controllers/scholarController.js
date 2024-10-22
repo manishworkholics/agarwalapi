@@ -211,7 +211,132 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
     });
   }
 });
+//BY Active User
+exports.get_full_list_app_active_users_list = asyncHandler(async (req, res) => {
+  try {
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
 
+    // Extract filter parameters from the query
+    const isActive = req.query.active; // '1' for active, '0' for inactive, 'all' for no filter
+    const isVerified = req.query.otpVerified; // '1' for verified, '0' for not verified, 'all' for no filter
+
+    // Create an object for the 'where' clause
+    let whereClause = {};
+    
+    // Apply filters based on the query parameters
+    if (isActive === '1') {
+      whereClause.active_by = 1; // Active users only
+    } else if (isActive === '0') {
+      whereClause.active_by = 0; // Inactive users only
+    }
+    
+    if (isVerified === '1') {
+      whereClause.is_verified = 1; // OTP verified
+    } else if (isVerified === '0') {
+      whereClause.is_verified = 0; // OTP not verified
+    }
+
+    // Fetch records with pagination and filtering
+    const scholar_detail = await parentModel.findAll({
+      where: whereClause,
+      order: [
+        ["parents_id", "DESC"], // Replace 'parents_id' with the column you want to sort by
+      ],
+      limit: limit,
+      offset: offset,
+    });
+
+    // Fetch the total count of records
+    const totalCount = await parentModel.count({ where: whereClause }); // Get total count of records for pagination
+
+    // Check if any data exists
+    if (scholar_detail.length > 0) {
+      res.status(200).json({
+        status: true,
+        message: "Data_Found",
+        data: scholar_detail,
+        totalCount: totalCount, // Include total count in the response
+      });
+    } else {
+      res.status(200).json({
+        status: false,
+        message: "No_Data_Found",
+        data: null,
+        totalCount: 0, // Return total count as 0 if no data found
+      });
+    }
+  } catch (error) {
+    // Log the error to the console for debugging
+    console.error("Error fetching scholar details:", error.message);
+
+    // Send an error response to the client
+    res.status(500).json({
+      status: false,
+      message: "An error occurred",
+      error: error.message, // Return the error message for debugging (optional)
+    });
+  }
+});
+
+// 100% working above created for filter 
+// exports.get_full_list_app_active_users_list = asyncHandler(async (req, res) => {
+//   try {
+//     // Extract pagination parameters from the query
+//     const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+//     const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+//     const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+//     // Fetch records with pagination
+//     const scholar_detail = await parentModel.findAll({
+//       where: {
+//         active_by: 1, // Add condition for active_by
+//       },
+//       order: [
+//         ["parents_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
+//       ],
+//       limit: limit,
+//       offset: offset,
+//     });
+
+//     // Fetch the total count of records
+//     const totalCount = await parentModel.count({  where: {
+//       active_by: 1, // Add condition for active_by
+//     }}); // Get total count of records for pagination
+
+//     // Check if any data exists
+//     if (scholar_detail.length > 0) {
+//       res.status(200).json({
+//         status: true,
+//         message: "Data_Found",
+//         data: scholar_detail,
+//         totalCount: totalCount, // Include total count in the response
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         message: "No_Data_Found",
+//         data: null,
+//         totalCount: 0, // Return total count as 0 if no data found
+//       });
+//     }
+//   } catch (error) {
+//     // Log the error to the console for debugging
+//     console.error("Error fetching scholar details:", error.message);
+
+//     // Send an error response to the client
+//     res.status(500).json({
+//       status: false,
+//       message: "An error occurred",
+//       error: error.message, // Return the error message for debugging (optional)
+//     });
+//   }
+// });
+
+
+//ye parent main ki api heee
 exports.getscholarDetail = asyncHandler(async (req, res) => {
   try {
     // Extract pagination parameters from the query
@@ -220,16 +345,16 @@ exports.getscholarDetail = asyncHandler(async (req, res) => {
     const offset = (page - 1) * limit; // Calculate the offset for pagination
 
     // Fetch records with pagination
-    const scholar_detail = await scholarModel.findAll({
+    const scholar_detail = await parentModel.findAll({
       order: [
-        ["scholar_data_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
+        ["parents_id", "DESC"], // Replace 'scholar_data_id' with the column you want to sort by
       ],
       limit: limit,
       offset: offset,
     });
 
     // Fetch the total count of records
-    const totalCount = await scholarModel.count(); // Get total count of records for pagination
+    const totalCount = await parentModel.count(); // Get total count of records for pagination
 
     // Check if any data exists
     if (scholar_detail.length > 0) {

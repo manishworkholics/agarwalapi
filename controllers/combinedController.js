@@ -5,6 +5,11 @@ const CategoryModel = require("../models/categoryModel");
 const studentMainModel = require("../models/studentModel"); 
 const ScholarModel = require("../models/ScholarModel"); 
 const msgMasterModel = require("../models/msgMasterModel"); 
+const sendedMsgModel = require("../models/sendedMsgModel"); 
+const RepliedMessageModel = require("../models/RepliedMessageModel"); 
+
+const moment = require('moment'); // Optional, helps in handling date manipulation
+
 const { Op } = require('sequelize');
 
 const db = require("../config/db.config");
@@ -92,6 +97,25 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
     try {
       // Count the total rows in the student table
       const studentTotalRows = await studentMainModel.count();
+      
+   // Get the start and end dates for the current month
+const startOfMonth = moment().startOf('month').toDate(); // First day of the current month
+const endOfMonth = moment().endOf('month').toDate();     // Last day of the current month
+
+const sendedMsg_this_month = await sendedMsgModel.count({
+  where: {
+    sended_date: {
+      [Op.between]: [startOfMonth, endOfMonth], // Get rows between the first and last day of the month
+    },
+  },
+});
+const replyMsg_this_month = await RepliedMessageModel.count({
+  where: {
+    reply_date_time: {
+      [Op.between]: [startOfMonth, endOfMonth], // Get rows between the first and last day of the month
+    },
+  },
+});
       const msgTotalRows = await msgMasterModel.count();
       const distinctMobileCount = await ScholarModel.count({
         distinct: true,
@@ -100,7 +124,7 @@ exports.getCombineHomePageDetail = asyncHandler(async (req, res) => {
       res.status(200).json({
         status: true,
         message: "Total rows counted successfully",
-        data: {studentTotalRows:studentTotalRows,distinctMobileCount,msgTotalRows},
+        data: {studentTotalRows:studentTotalRows,distinctMobileCount,msgTotalRows,sendedMsg_this_month,replyMsg_this_month},
       });
     } catch (error) {
       console.error("Error fetching row count:", error.message);

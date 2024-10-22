@@ -13,7 +13,7 @@ const ChatMessage = sequelize.define('Chat_Message', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  // group private
+  // GROUPCHAT  INDIVIDUALCHAT
   chat_type: {
     type: DataTypes.TEXT,
     allowNull: false,
@@ -41,6 +41,12 @@ const ChatMessage = sequelize.define('Chat_Message', {
   sent_at: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
+  },
+  // This id is used for Individual Chat
+  chat_id: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true,
   },
 }, {
   tableName: 'Chat_Message',
