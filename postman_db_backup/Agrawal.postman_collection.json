@@ -1535,7 +1535,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1NzczMjIsImV4cCI6MTcyOTYxMzMyMn0.JXpHanRKeioH5Fl_omqEeu7N9AcTJv4dHkIkzvbeL2g",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NzQ0MjMsImV4cCI6MTcyOTcxMDQyM30.VcHshb_FF8sYtWAtkjT30V5E9Lt40e9wrXQzZNpFe1w",
 									"type": "string"
 								}
 							]
@@ -1551,6 +1551,45 @@
 								"api",
 								"scholar",
 								"getScholarDetail"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getlist_main_student_detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NzQ0MjMsImV4cCI6MTcyOTcxMDQyM30.VcHshb_FF8sYtWAtkjT30V5E9Lt40e9wrXQzZNpFe1w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Agrawal}}/api/scholar/getlist_main_student_detail?page=1&limit=20",
+							"host": [
+								"{{Agrawal}}"
+							],
+							"path": [
+								"api",
+								"scholar",
+								"getlist_main_student_detail"
 							],
 							"query": [
 								{
@@ -1654,7 +1693,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1NzczMjIsImV4cCI6MTcyOTYxMzMyMn0.JXpHanRKeioH5Fl_omqEeu7N9AcTJv4dHkIkzvbeL2g",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NzQ0MjMsImV4cCI6MTcyOTcxMDQyM30.VcHshb_FF8sYtWAtkjT30V5E9Lt40e9wrXQzZNpFe1w",
 									"type": "string"
 								}
 							]
@@ -1949,7 +1988,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1OTI1NzEsImV4cCI6MTcyOTYyODU3MX0.oBg3TKS25JyFMkXTmFIKg9QKvB9g6B79RBvIR-15Lqs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 									"type": "string"
 								}
 							]
@@ -1958,7 +1997,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"subject_text\": \"22 Only Individual  Chat\",\r\n    \"show_upto\": \"2024-12-30 23:59:59\",\r\n    \"msg_priority\": 1,\r\n    \"msg_chat_type\":\"INDIVIDUALCHAT\",\r\n    \"msg_sgroup_id\": 4,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 1,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n     \"five_mobile_number\": [{\"student_main_id\":35,\"mobile_no\":2876583211},{\"student_main_id\":34,\"mobile_no\":9876283211},{\"student_main_id\":33,\"mobile_no\":9886583211}],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Festival Celebration at school.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. .<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Celebration  (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://nss-main.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/07175734/Blogsharadpurnima2024.jpg\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"title for youtube.\\\",\\\"link\\\":\\\"https://www.youtube.com/watch?v=mwMk-iuuFQ4\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://apsindore.com/wp-content/uploads/2023/01/Combine%20Boarder%20and%20IIT-JEE%20Fees%20Structure.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
+							"raw": "{\r\n    \"subject_text\": \"25 Only Individual  Chat\",\r\n    \"show_upto\": \"2024-12-30 23:59:59\",\r\n    \"msg_priority\": 1,\r\n    \"msg_chat_type\":\"INDIVIDUALCHAT\",\r\n    \"msg_sgroup_id\": 4,\r\n    \"is_reply_type\": 0,\r\n    \"is_reply_required_any\": 1,\r\n    \"is_active\": 1,\r\n    \"entry_by\": 1,\r\n    \"school_id\": [1, 2, 3],\r\n     \"five_mobile_number\": [{\"student_main_id\":35,\"mobile_no\":2876583211},{\"student_main_id\":34,\"mobile_no\":9876283211},{\"student_main_id\":33,\"mobile_no\":9886583211}],\r\n    \"message_body\":[\r\n    {\r\n        \"msg_type\": \"text-display\",\r\n        \"data_text\": \"{\\\"text\\\":\\\"(School Name)<br>\\\\r\\\\n<br>\\\\r\\\\nOSC:_______________<br>\\\\r\\\\n<br>\\\\r\\\\nDate: ______________<br>\\\\r\\\\n<br>\\\\r\\\\nTo<br>Dear Parents<br>\\\\r\\\\n<br>\\\\r\\\\nSubject : Festival Celebration at school.<br>\\\\r\\\\n<br>\\\\r\\\\nReference : Our earlier Circular No. OSC: CIR/2023-24/____ Dated: ________<br>\\\\r\\\\n<br>\\\\r\\\\nYou are already delaying the deposition of fee of your ward, now it's our humble request to deposit the fee at the earliest. .<br>\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"TITLE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"*Celebration  (Most important and urgent).\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"IMAGE-DISPLAY\",\r\n        \"data_text\": \"{\\\"link\\\":\\\"https://nss-main.s3.ap-south-1.amazonaws.com/wp-content/uploads/2024/10/07175734/Blogsharadpurnima2024.jpg\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"OPTION-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Select Stream\\\",\\\"options\\\":\\\"Commerce;Science(PCM);Science(PCB);\\\"}\",\r\n        \"order_number\": 1,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"ID Code No.\\\",\\\"placeholder\\\":\\\"Enter Student Id Code No.\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CHECKBOX-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Do you ready with\\\",\\\"options\\\":\\\"Last year Marksheet;Deposit First Term fee;Books & Notebooks;Student I-Card;Bus (if opted) I-Card\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"YOUTUBE-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"title for youtube.\\\",\\\"link\\\":\\\"https://www.youtube.com/watch?v=mwMk-iuuFQ4\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"LINK-DISPLAY\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Weekly Mega Test of class 9th CEP July 11th\\\",\\\"link\\\":\\\"https://apsindore.com/wp-content/uploads/2023/01/Combine%20Boarder%20and%20IIT-JEE%20Fees%20Structure.pdf\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    },\r\n    {\r\n        \"msg_type\": \"FILE-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\",\\\"mime\\\":\\\"image/jpeg;image/png;\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"CAMERA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Add Address Proof\\\"}\", // Added missing comma and fixed the key-value pair\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 1\r\n    },\r\n    {\r\n        \"msg_type\": \"TEXTAREA-INPUT\",\r\n        \"data_text\": \"{\\\"title\\\":\\\"Family Detail Brief\\\",\\\"placeholder\\\":\\\"Type Your Detail here\\\"}\",\r\n        \"order_number\": 2,\r\n        \"is_reply_required\": 0\r\n    }\r\n]\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2081,7 +2120,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1OTI1NzEsImV4cCI6MTcyOTYyODU3MX0.oBg3TKS25JyFMkXTmFIKg9QKvB9g6B79RBvIR-15Lqs",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 									"type": "string"
 								}
 							]
@@ -2098,7 +2137,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=313&admin_id=115",
+							"raw": "{{Agrawal}}/api/msg/SentMsgToScholarData?new_msg_id=324&admin_id=115",
 							"host": [
 								"{{Agrawal}}"
 							],
@@ -2110,7 +2149,7 @@
 							"query": [
 								{
 									"key": "new_msg_id",
-									"value": "313"
+									"value": "324"
 								},
 								{
 									"key": "admin_id",
@@ -3489,7 +3528,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1ODc4NTUsImV4cCI6MTcyOTYyMzg1NX0.LRU7bTOAmiEO5EryFC5ANN0Hv57j5tHNphEYdoASCRc",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 									"type": "string"
 								}
 							]
@@ -3539,7 +3578,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/DELL/Desktop/images/Screenshot_4.jpg"
+									"src": "/C:/Users/DELL/Desktop/images/Screenshot_1.jpg"
 								}
 							]
 						},
@@ -3615,7 +3654,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"GROUPCHAT\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"Hello everyone!\"\r\n}",
+									"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"GROUPCHAT\",\r\n    \"msg_type\":\"TEXT\",\r\n    \"link\":null,\r\n    // \"msg_type\":\"IMAGE\",\r\n    // \"msg_type\":\"PDF\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"Hello everyone!\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3634,7 +3673,101 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "TEXT",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"GROUPCHAT\",\r\n    \"msg_type\":\"TEXT\",\r\n    // \"msg_type\":\"IMAGE\",\r\n    // \"msg_type\":\"PDF\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"Hello everyone!\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{Agrawal}}/api/chat/send_chat_msg1",
+											"host": [
+												"{{Agrawal}}"
+											],
+											"path": [
+												"api",
+												"chat",
+												"send_chat_msg1"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "IMAGE",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"GROUPCHAT\",\r\n    // \"msg_type\":\"TEXT\",\r\n     \"msg_type\":\"IMAGE\",\r\n      \"link\":\"http://206.189.130.102:3550/Uploads/image/1729663221698-1729663221698.png\",\r\n    // \"msg_type\":\"PDF\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"image ho to link dikhagi\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{Agrawal}}/api/chat/send_chat_msg1",
+											"host": [
+												"{{Agrawal}}"
+											],
+											"path": [
+												"api",
+												"chat",
+												"send_chat_msg1"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "PDF",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"GROUPCHAT\",\r\n    //\"msg_type\":\"TEXT\",\r\n    // \"msg_type\":\"IMAGE\",\r\n     \"msg_type\":\"PDF\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"http://206.189.130.102:3550/Uploads/pdf/1729663274673-1729663274673.pdf\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{Agrawal}}/api/chat/send_chat_msg1",
+											"host": [
+												"{{Agrawal}}"
+											],
+											"path": [
+												"api",
+												"chat",
+												"send_chat_msg1"
+											]
+										}
+									},
+									"_postman_previewlanguage": null,
+									"header": null,
+									"cookie": [],
+									"body": null
+								}
+							]
 						},
 						{
 							"name": "Get Group Chatting Msg",
@@ -3647,7 +3780,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1NzU0NjUsImV4cCI6MTcyOTYxMTQ2NX0.pXh_asYOT8F2fYOY64lXifiPHFyqOcF8Wo9od-9Auyo",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 											"type": "string"
 										}
 									]
@@ -3693,14 +3826,14 @@
 					"name": "Individual Chat Copy",
 					"item": [
 						{
-							"name": "Add Chatting msg",
+							"name": "Add Individual Chatting msg",
 							"request": {
 								"auth": {
 									"type": "bearer",
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk0OTIyOTEsImV4cCI6MTcyOTUyODI5MX0.GVGun8J3MkLlFHpXboQYja3opAMcMGyhZZ1Mlen_2GU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 											"type": "string"
 										}
 									]
@@ -3709,7 +3842,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"msg_id\": 290,\r\n    \"sender_id\": 17,\r\n    \"chat_type\":\"INDIVIDUALCHAT\",\r\n    \"group_id\": 290,\r\n    \"mobile_no\": 9009436798,\r\n    \"receiver_id\": null,\r\n    \"message\": \"Hello everyone!\"\r\n}",
+									"raw": "{\r\n  \"msg_id\": 324,\r\n  \"sender_id\": 17,\r\n  \"msg_type\":\"TEXT\",\r\n  \"chat_type\": \"INDIVIDUALCHAT\",\r\n  \"mobile_no\": \"9009436798\",\r\n  \"group_id\": 324,\r\n  \"message\": \"2 Hello everyone! SENT FROM VIRAJ 9009436798\",\r\n  \"receiverMobileNumbers\": [   \r\n    {\"student_main_id\": 32, \"mobilenumber\": \"9876583211\"},\r\n    {\"student_main_id\": 33, \"mobilenumber\": \"9886583211\"},\r\n    {\"student_main_id\": 34, \"mobilenumber\": \"9876283211\"},\r\n    {\"student_main_id\": 35, \"mobilenumber\": \"2876583211\"}\r\n  ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3717,21 +3850,21 @@
 									}
 								},
 								"url": {
-									"raw": "{{Agrawal}}/api/chat/send_chat_msg1",
+									"raw": "{{Agrawal}}/api/chat/send_chat_msg_individual",
 									"host": [
 										"{{Agrawal}}"
 									],
 									"path": [
 										"api",
 										"chat",
-										"send_chat_msg1"
+										"send_chat_msg_individual"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Get Group Chatting Msg",
+							"name": "Get Individual Chatting Msg",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3741,7 +3874,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk1NzU0NjUsImV4cCI6MTcyOTYxMTQ2NX0.pXh_asYOT8F2fYOY64lXifiPHFyqOcF8Wo9od-9Auyo",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIxLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3Mjk2NjA3MDcsImV4cCI6MTcyOTY5NjcwN30.S0jhhALkwS_k-6UTCikWprckevtMIAe4yQmHsqUg1KA",
 											"type": "string"
 										}
 									]
@@ -3758,19 +3891,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{Agrawal}}/api/chat/get_group_chat_message?groupId=290",
+									"raw": "{{Agrawal}}/api/chat/get_individual_chat_messages?msg_id=324&student_main_id=17",
 									"host": [
 										"{{Agrawal}}"
 									],
 									"path": [
 										"api",
 										"chat",
-										"get_group_chat_message"
+										"get_individual_chat_messages"
 									],
 									"query": [
 										{
-											"key": "groupId",
-											"value": "290"
+											"key": "msg_id",
+											"value": "324"
+										},
+										{
+											"key": "student_main_id",
+											"value": "17"
 										}
 									]
 								}
