@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const StudentModel  = require("../models/studentModel"); 
 const db = require("../config/db.config");
 const jwt = require("jsonwebtoken");
+const { Op } = require('sequelize');
 // Secret key for signing JWT (use a secure key and store it in env variables)
 const JWT_SECRET = process.env.JWT_SECRET ;
 const { generateToken } = require('../middlewares/jwtUtils');
@@ -16,12 +17,13 @@ const {
 
 // Send a message
 exports.sendMessage1 = asyncHandler(async (req, res) => {
-    const { msg_id,sender_id,chat_type,mobile_no, group_id, receiver_id, message } = req.body;
+    const { msg_id,sender_id,msg_type,chat_type,mobile_no, group_id, receiver_id, message } = req.body;
   //group is is main master msg id heeeeeeeeee
     try {
       const newMessage = await ChatMessage.create({
         sender_id,msg_id,mobile_no,chat_type,
         group_id: group_id || null,
+        msg_type: msg_type || "TEXT",
         receiver_id: receiver_id || null,
         message,
       });
@@ -111,7 +113,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
         res.status(200).json({
           status: false,
           message: "No_Messages_Found",
-          data: null,
+          data: [],
         });
       }
     } catch (error) {
@@ -126,7 +128,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
 
   // ====================CHat Msg For individual start here=================
   exports.sendMessage_individual_chat = async (req, res) => {
-    const { msg_id, sender_id, chat_type, mobile_no, group_id, message, receiverMobileNumbers } = req.body;
+    const { msg_id, sender_id,msg_type, chat_type, mobile_no, group_id, message, receiverMobileNumbers } = req.body;
 
   try {
     // Check if the receiver mobile numbers are valid
@@ -143,7 +145,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
     // Save the message for each receiver
     const savedMessages = await Promise.all(validReceivers.map(async (receiver) => {
       return await ChatMessage.create({
-        msg_id,
+        msg_id,msg_type,
         sender_id,
         chat_type,
         mobile_no,
@@ -154,14 +156,14 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
     }));
 
     res.status(201).json({
-      status: 'success',
+      status: true,
       data: {
         messages: savedMessages,
       },
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ status: 'error', message: 'Failed to send message.' });
+    res.status(500).json({ status: false, message: 'Failed to send message.' });
   }
   };
   // =>postman post 
@@ -184,17 +186,18 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
   // chat get individual
   // Function to get messages by chat_id
   //Postman =>  http://localhost:3000/api/chat/messages/290?user_ids=1,2,3
-  exports.getMessages_individual_chat = async (req, res) => {
-  const { msg_id } = req.params;
-  const { user_ids } = req.query; // Expecting user_ids to be a comma-separated string
 
+  exports.getMessages_individual_chat = async (req, res) => {
+  // const { msg_id } = req.params;
+  const { user_ids ,msg_id} = req.query; // Expecting user_ids to be a comma-separated string
   const userIdsArray = user_ids.split(',').map(id => parseInt(id, 10)); // Convert to an array of integers
 
+  
   try {
     // Fetch messages that match msg_id and are either sent or received by the users in user_ids
     const messages = await ChatMessage.findAll({
       where: {
-        msg_id,
+        msg_id,chat_type:'INDIVIDUALCHAT',
         [Op.or]: [
           { sender_id: { [Op.in]: userIdsArray } },
           { receiver_id: { [Op.in]: userIdsArray } }
@@ -206,13 +209,13 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
     if (messages.length === 0) {
       return res.status(404).json({ status: 'error', message: 'No messages found for this chat room.' });
     }
-
-    res.json({
-      status: 'success',
-      messages,
+  res.json({
+      status: true,
+      messages,length:messages.length
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ status: 'error', message: 'Failed to retrieve messages.' });
+    res.status(500).json({ status: false, message: 'Failed to retrieve messages.' });
   }
 };
+

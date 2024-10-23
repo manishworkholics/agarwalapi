@@ -11,7 +11,7 @@ router.get('/get_group_chat_message',authMiddleware, ChatMsgController.getChatGr
 router.post('/send_chat_msg_individual',authMiddleware, ChatMsgController.sendMessage_individual_chat);
 
 // Get all messages for a specific chat room (msg_id)
-router.get('/get_individual_chat_messages/:msg_id',authMiddleware, ChatMsgController.getMessages_individual_chat);
+router.get('/get_individual_chat_messages',authMiddleware, ChatMsgController.getMessages_individual_chat);
 module.exports = router;
 
 

@@ -18,6 +18,11 @@ const ChatMessage = sequelize.define('Chat_Message', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  // TEXT IMAGE PDF
+  msg_type: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   sender_id: {
     type: DataTypes.INTEGER,
     allowNull: false,   
