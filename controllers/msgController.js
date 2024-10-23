@@ -383,6 +383,7 @@ exports.getmsgMaster = asyncHandler(async (req, res) => {
           order: [["ordersno", "ASC"]], // Order the results by ordersno
         },
       ],
+      order: [["msg_id", "DESC"]],
       limit: limit, // Apply limit for pagination
       offset: offset, // Apply offset for pagination
     });

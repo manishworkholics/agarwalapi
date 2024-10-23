@@ -106,6 +106,32 @@ RepliedMessageModel.belongsTo(sendedMsgModel, {
 // Optional: If you want to ensure associations are set up correctly
 ChatMessage.belongsTo(studentMainDetailModel, { foreignKey: 'sender_id', as: 'sender' });
 ChatMessage.belongsTo(studentMainDetailModel, { foreignKey: 'receiver_id', as: 'receiver' });
+// Define associations
+// ChatMessage.belongsTo(msgMasterModel, { foreignKey: 'msg_id', as: 'messageDetails' });
+// ChatMessage belongs to msgMasterModel via msg_id
+// ChatMessage.belongsTo(msgMasterModel, {
+//   foreignKey: 'msg_id',
+//   as: 'messageDetails',
+// });
+
+// msgMasterModel.hasMany(ChatMessage, {
+//   foreignKey: 'msg_id',
+//   as: 'messages',
+// });=============
+// =========for indiv chat start
+// Establish the association between msgMasterModel and ChatMessage
+// In ChatMessage model
+// In ChatMessage model
+ChatMessage.belongsTo(msgMasterModel, {
+  foreignKey: 'msg_id', // This should match the foreign key in ChatMessage
+  as: 'messageDetails' // This should match the alias used in the include
+});
+
+// In MsgMasterModel
+msgMasterModel.hasMany(ChatMessage, {
+  foreignKey: 'msg_id', // This should match the foreign key in MsgMasterModel
+});
+// =========for indiv chat end
 
 // =========Endchat msg
 module.exports = {

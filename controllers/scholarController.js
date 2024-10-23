@@ -384,6 +384,67 @@ exports.getscholarDetail = asyncHandler(async (req, res) => {
     });
   }
 });
+exports.getlist_main_student_detail = asyncHandler(async (req, res) => {
+  try {
+    // Extract pagination parameters from the query
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Default to limit of 10 if not provided
+    const offset = (page - 1) * limit; // Calculate the offset for pagination
+
+    // Fetch records with pagination
+    const student_main_detail = await student_main_detailModel.findAll({
+      order: [
+        ["student_main_id", "DESC"], // Sort by student_main_id in descending order
+      ],
+      limit: limit,
+      offset: offset,
+    });
+
+    // Fetch the total count of records
+    const totalCount = await student_main_detailModel.count(); // Get total count of records for pagination
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasMore = page < totalPages; // Check if there are more pages
+
+    // Check if any data exists
+    if (student_main_detail.length > 0) {
+      res.status(200).json({
+        status: true,
+        message: "Data Found",
+        data: student_main_detail,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: totalCount,
+          hasMore: hasMore, // Indicates if more data is available
+        },
+      });
+    } else {
+      res.status(200).json({
+        status: false,
+        message: "No Data Found",
+        data: [],
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: totalCount,
+          hasMore: false, // No more data available if none is found
+        },
+      });
+    }
+  } catch (error) {
+    // Log the error to the console for debugging
+    console.error("Error fetching student details:", error.message);
+
+    // Send an error response to the client
+    res.status(500).json({
+      status: false,
+      message: "An error occurred",
+      error: error.message, // Return the error message for debugging (optional)
+    });
+  }
+});
 
 // exports.getscholarDetail = asyncHandler(async (req, res) => {
 //   try {

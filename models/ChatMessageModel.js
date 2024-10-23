@@ -2,6 +2,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config'); // Adjust this according to your project structure
 const StudentModel = require('./studentModel'); // Import Student model
+const msgMasterModel = require('./msgMasterModel'); // Import Student model
 
 const ChatMessage = sequelize.define('Chat_Message', {
   chat_msg_id: {
@@ -18,6 +19,10 @@ const ChatMessage = sequelize.define('Chat_Message', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  link: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   // TEXT IMAGE PDF
   msg_type: {
     type: DataTypes.TEXT,
@@ -32,9 +37,13 @@ const ChatMessage = sequelize.define('Chat_Message', {
     allowNull: false,
   },
   receiver_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.TEXT,
     allowNull: true,   
   },
+  // receiver_id: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: true,   
+  // },
   group_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -57,5 +66,7 @@ const ChatMessage = sequelize.define('Chat_Message', {
   tableName: 'Chat_Message',
   timestamps: false,
 });
+
+
 
 module.exports = ChatMessage;
