@@ -25,6 +25,10 @@ const Parents = sequelize.define('Parents', {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
+  student_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   scholar_type: {
     type: DataTypes.STRING,
     allowNull: true,

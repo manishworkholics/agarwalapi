@@ -1,5 +1,5 @@
 const db = require("../config/db.config");
-const adminModel = require("../models/adminModel.js");
+ const adminModel = require("../models/adminModel.js");
 const bcrypt = require('bcrypt');
 
 const asyncHandler = require("express-async-handler");
@@ -8,7 +8,13 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET ;
 const MAIN_URL = process.env.MAIN_URL;
 const { generateToken } = require('../middlewares/jwtUtils');
-
+// const {
+//   ChatMessage,msgMasterModel,adminModel,schoolModel,
+//   groupModel,
+//   subGroupModel,    
+//   msgBodyModel,sendedMsgModel,
+//   studentMainDetailModel,feesDisplayModel
+// } = require("../models/associations");
 
 
 
@@ -43,6 +49,7 @@ exports.imageUpload = asyncHandler(async (req, res, next) => {
     next(appErr(error.message));
   }
 });
+
 exports.pdfUpload = asyncHandler(async (req, res, next) => {
   try {
     const Url = process.env.MAIN_URL + "Uploads/pdf/" + req.file.filename;
@@ -70,8 +77,11 @@ exports.createAdmin = asyncHandler(async (req, res) => {
       mobile_no,
       added_admin_id,
       parent_admin_id,
+      school_id
     } = req.body;
 
+ const schoolIdsString = school_id.join(','); // Convert array to string "1,2,3"
+   
     // Check if the username already exists
     const existingUser = await adminModel.findOne({
       where: { adminuser_name }
@@ -106,7 +116,7 @@ exports.createAdmin = asyncHandler(async (req, res) => {
       adminuser_name,
       admin_password,
       admin_password_encrypted: hashedPassword, // Save the hashed password
-     
+      school_id:schoolIdsString,
       is_active,
       admin_type,
       mobile_no,
@@ -115,6 +125,7 @@ exports.createAdmin = asyncHandler(async (req, res) => {
       parent_admin_id,
     });
 
+    
     res.status(200).json({
       status: true,
       message: "New admin created successfully",
@@ -229,9 +240,11 @@ exports.updateProfileDetail = asyncHandler(async (req, res) => {
       admin_type,
       mobile_no,
       added_admin_id,
-      parent_admin_id,
+      parent_admin_id,school_id,
     } = req.body; // Get the admin details from the request body
 // Hash the password before saving
+const schoolIdsString = school_id.join(','); // Convert array to string "1,2,3"
+   
 const salt = await bcrypt.genSalt(10);
 const hashedPassword = await bcrypt.hash(admin_password, salt);
 
@@ -255,7 +268,7 @@ const hashedPassword = await bcrypt.hash(admin_password, salt);
         adminuser_name: adminuser_name,
         admin_password: admin_password,
         admin_password_encrypted:hashedPassword,
-        is_active: is_active,
+        is_active: is_active,school_id:schoolIdsString,
         admin_type: admin_type,
         mobile_no: mobile_no,
         added_admin_id: added_admin_id,
@@ -292,6 +305,7 @@ exports.getAllAdmin = asyncHandler(async (req, res) => {
     const allAdmin = await adminModel.findAll({
       where: { is_deleted: 0 }, limit: limit,  // Apply limit for pagination
       offset: offset, // Apply offset for pagination
+      order: [['admin_id', 'DESC']], 
     });
 
     // Fetch the total count of records
@@ -345,6 +359,13 @@ exports.getSingleAdmin = asyncHandler(async (req, res) => {
 
     const singleAdmin = await adminModel.findOne({
       where: { admin_id: adminId },
+      // include: [
+      //   {
+      //     model: schoolModel,
+      //     as: 'schools', // Alias defined in the association
+      //     // attributes: ['sch_id', 'sch_name'], // Specify the fields to retrieve
+      //   },
+      // ],
     });
 
     if (singleAdmin) {

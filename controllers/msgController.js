@@ -56,6 +56,7 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
       is_active,school_id:schoolIdsString,
       entry_by,
     });
+    
     const newm_msg_id = newMasterMessage?.msg_id;
     // Parse message_body if it's in JSON format or already structured
     const messageBodyArray = Array.isArray(message_body)
@@ -114,6 +115,37 @@ exports.insertMsgData = asyncHandler(async (req, res) => {
   }
 });
 
+// Toggle active/inactive status for a message in msgMasterModel
+exports.toggleMessageStatus = async (req, res) => {
+  try {
+    const { msg_id } = req.query; // Get msg_id from request parameters
+
+    // Find the message by ID
+    const message = await msgMasterModel.findByPk(msg_id);
+
+    if (!message) {
+      return res.status(404).json({ status: false, message: 'Message not found' });
+    }
+
+    // Toggle the is_active status between 1 and 0
+    message.is_active = message.is_active === 1 ? 0 : 1;
+    // Save the updated status
+    await message.save();
+
+    res.status(200).json({
+      status: true,
+      message: `Message ${message.is_active ? 'activated' : 'deactivated'} successfully`,
+      // message,
+    });
+  } catch (error) {
+    console.error('Error toggling message active status:', error);
+    res.status(500).json({
+      status: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+};
 
 exports.get_web_single_msg_master = asyncHandler(async (req, res) => {
   try {
@@ -962,6 +994,18 @@ relatedProfiles.forEach(profile => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
+// Parse the five_mobile_number field for each message
+filteredData.forEach(msg => {
+  if (msg.msg_mst && msg.msg_mst.five_mobile_number) {
+    try {
+      msg.msg_mst.five_mobile_number = JSON.parse(msg.msg_mst.five_mobile_number); // Convert stringified JSON to actual JSON
+    } catch (error) {
+      console.error('Error parsing five_mobile_number:', error);
+    }
+  }
+});
+
+
     // res.status(200).json({
     //           status: true,
     //           length:filteredData.length,
@@ -1043,6 +1087,16 @@ exports.getSeenMsgDetail = asyncHandler(async (req, res) => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
+    // Parse the five_mobile_number field for each message 24/10/2024 change requested for trannn
+filteredData.forEach(msg => {
+  if (msg.msg_mst && msg.msg_mst.five_mobile_number) {
+    try {
+      msg.msg_mst.five_mobile_number = JSON.parse(msg.msg_mst.five_mobile_number); // Convert stringified JSON to actual JSON
+    } catch (error) {
+      console.error('Error parsing five_mobile_number:', error);
+    }
+  }
+});
     // res.status(200).json({
     //           status: true,
     //           length:filteredData.length,
@@ -1122,6 +1176,16 @@ exports.getStaredMsgDetail = asyncHandler(async (req, res) => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
+     // Parse the five_mobile_number field for each message 24/10/2024 change requested for trannn
+filteredData.forEach(msg => {
+  if (msg.msg_mst && msg.msg_mst.five_mobile_number) {
+    try {
+      msg.msg_mst.five_mobile_number = JSON.parse(msg.msg_mst.five_mobile_number); // Convert stringified JSON to actual JSON
+    } catch (error) {
+      console.error('Error parsing five_mobile_number:', error);
+    }
+  }
+});
     // res.status(200).json({
     //   status: true,
     //   length:filteredData.length,
@@ -1228,6 +1292,16 @@ relatedProfiles.forEach(profile => {
     ? msgSendedMaster.filter(msg => scholarNumbers.includes(Number(msg.scholar_no)))
     : msgSendedMaster; // If scholarNumbers is empty, return all data
   
+     // Parse the five_mobile_number field for each message 24/10/2024 change requested for trannn
+filteredData.forEach(msg => {
+  if (msg.msg_mst && msg.msg_mst.five_mobile_number) {
+    try {
+      msg.msg_mst.five_mobile_number = JSON.parse(msg.msg_mst.five_mobile_number); // Convert stringified JSON to actual JSON
+    } catch (error) {
+      console.error('Error parsing five_mobile_number:', error);
+    }
+  }
+});
     // res.status(200).json({
     //   status: true,
     //   length:filteredData.length,

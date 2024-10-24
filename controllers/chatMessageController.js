@@ -129,7 +129,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
 
   // ====================CHat Msg For individual start here=================
   exports.sendMessage_individual_chat = async (req, res) => {
-    const { msg_id, sender_id,msg_type, chat_type, mobile_no, group_id, message, receiverMobileNumbers } = req.body;
+    const { msg_id, sender_id,link,msg_type, chat_type, mobile_no, group_id, message, receiverMobileNumbers } = req.body;
 
   try {
     // Check if the receiver mobile numbers are valid
@@ -159,7 +159,7 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
   // Step 2: Create a single ChatMessage entry
   const savedMessage = await ChatMessage.create({
       msg_id,
-      msg_type,
+      msg_type,link,
       sender_id,
       chat_type,
       mobile_no,
@@ -203,126 +203,119 @@ exports.sendMessage1 = asyncHandler(async (req, res) => {
 
 
   exports.getMessages_individual_chat = async (req, res) => {
-  // const { msg_id } = req.params;
-  const { student_main_id ,msg_id} = req.query; // Expecting user_ids to be a comma-separated string
-  // const userIdsArray = student_main_id.split(',').map(id => parseInt(id, 10)); // Convert to an array of integers
-
+    const { student_main_id, msg_id } = req.query; // Expecting user_ids to be a comma-separated string
   
-  try {
-    // Fetch messages that match msg_id and are either sent or received by the users in user_ids
-    // 100 % working start ========================== 
+    try {
+      const singleMessage = await msgMasterModel.findOne({
+        where: {
+          msg_id: msg_id,
+        },
+        attributes: ["msg_id", "five_mobile_number"], // Only fetching required fields
+      });
   
-    // const messages = await ChatMessage.findAll({
-    //   where: {
-    //     msg_id,chat_type:'INDIVIDUALCHAT',
-       
-    //   },
-    //   include: [
-    //     {
-    //         model: msgMasterModel, // Link to MsgMasterModel
-    //         as: 'messageDetails', // Use the alias defined in the association
-    //          attributes: ['msg_id', 'five_mobile_number', 'msg_chat_type'], // Include only necessary fields
-    //     }
-    // ],
-     
-    //   order: [['sent_at', 'ASC']],
-    // });
-  // 100 % working End ========================== 
-  // below code is same above only filter data of ids
-    // =============================Filter Start
- 
-    // Log all retrieved messages
-    // console.log('All Messages:', JSON.stringify(messages, null, 2));
+      if (!singleMessage) {
+        return res
+          .status(404)
+          .json({ status: false, message: "Message not found" });
+      }
   
-  // Step 2: Fetch the single message from msgMasterModel
-  const singleMessage = await msgMasterModel.findOne({
-    where: {
-        msg_id: msg_id
-    },
-    attributes: ['msg_id', 'five_mobile_number'] // Only fetching required fields
-});
+      const fiveMobileNumbers = JSON.parse(singleMessage.five_mobile_number);
+      const studentIds = fiveMobileNumbers.map((number) =>
+        Number(number.student_main_id)
+      );
+  
+      // console.log('Extracted studentIds:', studentIds); // Debugging log
+      // console.log('student_main_id from request:', student_main_id); // Debugging log
+  
+      const hasMatch = studentIds.includes(Number(student_main_id)); // Ensure both are numbers for comparison
+  
+      // Log the result
+      // console.log('Has match:', hasMatch);
+  
+      // Step 4
+      let message;
+      if (hasMatch) {
+        message = await ChatMessage.findAll({
+          where: {
+            msg_id,
+            chat_type: "INDIVIDUALCHAT",
+          },
+          include: [
+            {
+              model: msgMasterModel,
+              as: "messageDetails",
+              attributes: ["msg_id", "five_mobile_number", "msg_chat_type"],
+            },
+          ],
+          order: [["sent_at", "ASC"]],
+          // logging: console.log // This will log the executed SQL query
+        });
+  // Tranum 24-10-2024  Make sure five_mobile_number is parsed before sending it in the response
+  message = message.map((msg) => {
+    msg.messageDetails.five_mobile_number = JSON.parse(msg.messageDetails.five_mobile_number);
+    return msg;
+  });
+  // tranummm
+        res.json({
+          status: true,
+          messages: message,
+          length: message.length,
+          studentIds,
+        });
+      } else {
+        const all_mix_ids = [];
+        all_mix_ids.push(...studentIds);
+        const stdno = parseInt(student_main_id);
+        all_mix_ids.push(stdno); // Now all_mix_ids is [35, 34, 33, 17]
+  
+        message = await ChatMessage.findAll({
+          where: {
+            msg_id,
+            chat_type: "INDIVIDUALCHAT",
+          },
+          include: [
+            {
+              model: msgMasterModel,
+              as: "messageDetails",
+              attributes: ["msg_id", "five_mobile_number", "msg_chat_type"],
+            },
+          ],
+          order: [["sent_at", "ASC"]],
+          logging: console.log, // This will log the executed SQL query
+        });
+        const filteredMessages = message.filter((message) => {
+          const isMatch = all_mix_ids.includes(Number(message.sender_id)); // Ensure type consistency
+          // console.log(`Checking message sender_id: ${message.sender_id}, is match: ${isMatch}`);
+          return isMatch; // Keep message if there's a match
+        });
+  
+        //Tranummm Ensure that five_mobile_number is parsed to JSON before returning
+      filteredMessages.forEach((msg) => {
+        msg.messageDetails.five_mobile_number = JSON.parse(msg.messageDetails.five_mobile_number);
+      });
 
-// Check if the message exists
-if (!singleMessage) {
-    return res.status(404).json({ status: false, message: 'Message not found' });
-}
 
-// Step 2: Parse the five_mobile_number JSON to extract student IDs
-const fiveMobileNumbers = JSON.parse(singleMessage.five_mobile_number);
-// const studentIds = fiveMobileNumbers.map(number => number.student_main_id); // Extracting student_main_id
-const studentIds = fiveMobileNumbers.map(number => String(number.student_main_id));
-
-//Step 3 now merge studentIds student_main_id
-if (student_main_id && !studentIds.includes(String(student_main_id))) {
-  studentIds.push(String(student_main_id)); // Add student_main_id if not already included
-}
-
-// Step 4 
-//console.log('Student IDs:', studentIds);
-//console.log('Message ID:', msg_id); // Log the message ID being searched
-// const stringStudentIds = studentIds.map(id => String(id)); 
-const messages = await ChatMessage.findAll({
-  where: {
-    msg_id,
-    chat_type: 'INDIVIDUALCHAT',
-    // sender_id: {
-    //   [Op.in]: studentIds // Use as is if they are integers
-    // }
-  },
-  include: [
-    {
-      model: msgMasterModel,
-      as: 'messageDetails',
-      attributes: ['msg_id', 'five_mobile_number', 'msg_chat_type'],
+        if (filteredMessages.length === 0) {
+          return res
+            .status(404)
+            .json({
+              status: "error",
+              message: "No messages found for this chat room.",
+            });
+        } else {
+          res.json({
+            status: true,
+            messages: filteredMessages,
+            length: filteredMessages.length,
+            studentIds,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ status: false, message: "Failed to retrieve messages." });
     }
-  ],
-  order: [['sent_at', 'ASC']],
-  logging: console.log // This will log the executed SQL query
-});
-console.log('msg_id:', msg_id);
-console.log('studentIds:', studentIds);
-// console.log('Filtered Messages:', JSON.stringify(messages, null, 2));
-  
-
-
-
-// Convert studentIds to strings for consistent comparison
-const stringStudentIds = studentIds.map(id => String(id));
-
-// Log all sender_ids for debugging
-console.log('All fetched sender_ids from messages:');
-messages.forEach(message => {
-  console.log('Available sender_id:', message.sender_id);
-});
-
-// Filter messages based on whether the sender_id is in the studentIds array
-const filteredMessages = messages.filter(message => {
-  // Log the current message's sender_id and its type for debugging
-  console.log('Checking message sender_id:', message.sender_id, 'Type:', typeof message.sender_id);
-
-  // Check if the sender_id, converted to a string, exists in stringStudentIds
-  const isMatch = stringStudentIds.includes(String(message.sender_id)); 
-  console.log('Is match:', isMatch);
-  
-  return isMatch; // Return true if it matches
-});
-
-// Log the filtered messages
-console.log('Filtered Messages:', filteredMessages);
-
-    //============================== Filter End
-   
-
-    if (filteredMessages.length === 0) {
-      return res.status(404).json({ status: 'error', message: 'No messages found for this chat room.' });
-    }
-  res.json({
-      status: true,
-      messages:filteredMessages,length:filteredMessages.length,studentIds
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ status: false, message: 'Failed to retrieve messages.' });
-  }
-};
+  };
 

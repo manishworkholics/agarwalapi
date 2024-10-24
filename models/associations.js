@@ -1,5 +1,6 @@
 // models/associations.js
 const groupModel = require('./msgGroupModel');
+const adminModel = require('./adminModel');
 const subGroupModel = require('./msgSubGroupModel');
 const msgMasterModel = require('./msgMasterModel');
 const msgBodyModel = require('./msgBodyModel');
@@ -132,10 +133,14 @@ msgMasterModel.hasMany(ChatMessage, {
   foreignKey: 'msg_id', // This should match the foreign key in MsgMasterModel
 });
 // =========for indiv chat end
+// School display at admin
+// Define Many-to-Many relationship between Admin and School
+// Define associations
 
+// School display at admin
 // =========Endchat msg
 module.exports = {
-  groupModel,
+  groupModel,adminModel,
   subGroupModel,
   msgMasterModel,msgBodyModel,sendedMsgModel,studentMainDetailModel,feesDisplayModel,schoolModel,RepliedMessageModel,RepliedMsgBodyModel,ChatMessage
 };

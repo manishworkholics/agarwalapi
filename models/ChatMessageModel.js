@@ -14,7 +14,7 @@ const ChatMessage = sequelize.define('Chat_Message', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  // GROUPCHAT  INDIVIDUALCHAT
+  // GROUPCHAT  INDIVIDUALCHAT  INPUT DISPLAY
   chat_type: {
     type: DataTypes.TEXT,
     allowNull: false,

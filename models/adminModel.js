@@ -33,7 +33,12 @@ const adminModel = sequelize.define('admin_mst', {
   admin_type: {
     type: DataTypes.STRING,
     allowNull: true,
+    default:"ADMIN"
   }, 
+  school_id: {
+    type: DataTypes.STRING,
+   allowNull: true, 
+  },
   lastlogindt: {
     type: DataTypes.DATE,
     allowNull: true,

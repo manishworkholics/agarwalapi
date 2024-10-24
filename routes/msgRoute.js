@@ -34,6 +34,7 @@ router.get('/get_single_mst_msg_by_msg_id',authMiddleware, MsgController.get_Sin
 
 //getSingleMsgDetail by  sended_msg_id
 router.get('/getSingleMsgDetail/:sended_msg_id',authMiddleware, MsgController.getSingleMsgDetail);
+router.get('/toggleMessageStatus',authMiddleware, MsgController.toggleMessageStatus);
 router.get('/getInboxMsgDetail/:mobile',authMiddleware, MsgController.getInboxMsgDetail);
 
 router.get('/getSeenMsgDetail/:mobile',authMiddleware, MsgController.getSeenMsgDetail);

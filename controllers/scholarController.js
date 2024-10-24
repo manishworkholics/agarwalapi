@@ -96,6 +96,7 @@ exports.insertScholarRecord = asyncHandler(async (req, res) => {
           await parentModel.create(
             {
               mobile_no: item.mobile_no,
+              student_name:item?.name,
               scholar_no: item.scholar_no,
               is_verified: 1,
               sch_short_nm:item.sch_short_nm,
